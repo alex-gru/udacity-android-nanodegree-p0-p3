@@ -1,120 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="#dfeaf1"
-    android:id="@+id/container">
 
-    <TextView
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:textAlignment="center"
-        android:paddingTop="6dp"
-        android:paddingBottom="24dp"
-        android:singleLine="true"
-        android:id="@+id/title"
-        android:textColor="#8d000000"
-        android:text="@string/title"/>
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
-    <Button
-        android:id="@+id/button1"
-        android:text="@string/button1"
-        android:layout_below="@id/title"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:id="@+id/container">
 
-        android:layout_width="110pt"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:padding="6dp"
-        android:layout_marginBottom="12dp"
-        android:textSize="8pt"
-        android:background="#F08C35"
-        android:textColor="#000000"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18dp"
+            android:textAlignment="center"
+            android:paddingTop="6dp"
+            android:paddingBottom="24dp"
+            android:singleLine="true"
+            android:id="@+id/title"
+            android:textColor="@color/colorTextTranslucent"
+            android:text="@string/title"/>
 
-        android:onClick="launchSpotifyStreamer"/>
+        <Button
+            android:id="@+id/btnSpotifyStreamer"
+            android:text="@string/button1"
+            android:layout_below="@id/title"
 
-    <Button
-        android:id="@+id/button2"
-        android:text="@string/button2"
-        android:layout_below="@id/button1"
+            style="@style/ButtonStyle"
+            android:onClick="launchSpotifyStreamer" />
 
-        android:layout_width="110pt"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:padding="6dp"
-        android:layout_marginBottom="12dp"
-        android:textSize="8pt"
-        android:background="#F08C35"
-        android:textColor="#000000"
+        <Button
+            android:id="@+id/btnScoresApp"
+            android:text="@string/button2"
+            android:layout_below="@id/btnSpotifyStreamer"
 
-        android:onClick="launchScoresApp"/>
+            style="@style/ButtonStyle"
+            android:onClick="launchScoresApp" />
 
-    <Button
-        android:id="@+id/button3"
-        android:text="@string/button3"
-        android:layout_below="@id/button2"
+        <Button
+            android:id="@+id/btnLibraryApp"
+            android:text="@string/button3"
+            android:layout_below="@id/btnScoresApp"
 
-        android:layout_width="110pt"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:padding="6dp"
-        android:layout_marginBottom="12dp"
-        android:textSize="8pt"
-        android:background="#F08C35"
-        android:textColor="#000000"
+            style="@style/ButtonStyle"
+            android:onClick="launchLibraryApp" />
 
-        android:onClick="launchLibraryApp"/>
+        <Button
+            android:id="@+id/btnBuildItBigger"
+            android:text="@string/button4"
+            android:layout_below="@id/btnLibraryApp"
 
-    <Button
-        android:id="@+id/button4"
-        android:text="@string/button4"
-        android:layout_below="@id/button3"
+            style="@style/ButtonStyle"
+            android:onClick="launchBuildItBigger" />
 
-        android:layout_width="110pt"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:padding="6dp"
-        android:layout_marginBottom="12dp"
-        android:textSize="8pt"
-        android:background="#F08C35"
-        android:textColor="#000000"
+        <Button
+            android:id="@+id/btnXYZReader"
+            android:text="@string/button5"
+            android:layout_below="@id/btnBuildItBigger"
 
-        android:onClick="launchBuildItBigger"/>
+            style="@style/ButtonStyle"
+            android:onClick="launchXYZReader" />
 
-    <Button
-        android:id="@+id/button5"
-        android:text="@string/button5"
-        android:layout_below="@id/button4"
+        <Button
+            android:id="@+id/btnCapstone"
+            android:text="@string/button6"
+            android:layout_below="@id/btnXYZReader"
 
-        android:layout_width="110pt"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:padding="6dp"
-        android:layout_marginBottom="12dp"
-        android:textSize="8pt"
-        android:background="#F08C35"
-        android:textColor="#000000"
+            style="@style/ButtonStyle"
+            android:background="@color/colorBtnCapstone"
+            android:textColor="@color/colorTextBright"
+            android:onClick="launchCapstone"/>
 
-        android:onClick="launchXYZReader"/>
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/button6"
-        android:text="@string/button6"
-        android:layout_below="@id/button5"
-
-        android:layout_width="110pt"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:padding="6dp"
-        android:layout_marginBottom="12dp"
-        android:textSize="8pt"
-        android:background="#cd0e3e"
-        android:textColor="#FFFFFF"
-
-        android:onClick="launchCapstone"/>
-
-
-</android.widget.RelativeLayout>
+</ScrollView>
