@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:textSize="18dp"
             android:textAlignment="center"
-            android:paddingTop="6dp"
+            android:paddingTop="12dp"
             android:paddingBottom="24dp"
             android:singleLine="true"
             android:id="@+id/title"
