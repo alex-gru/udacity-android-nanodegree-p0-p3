@@ -18,9 +18,9 @@ android {
     }
 }
 
-task appStart(type: Exec, dependsOn: 'installDebug') {
-    commandLine 'cmd', '/c adb shell am start -n nanodegree.p0/.MainActivity'
-}
+//task appStart(type: Exec, dependsOn: 'installDebug') {
+//    commandLine 'cmd', '/c adb shell am start -n nanodegree.p0/.MainActivity'
+//}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
