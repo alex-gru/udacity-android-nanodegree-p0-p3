@@ -74,9 +74,7 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
             for (int idx = 0; idx < movies.size(); idx++) {
                 JsonNode movieJson = movies.get(idx);
-
-                //TODO: fix this strange mapping here
-                Movie movie = mapper.readValue(mapper.writeValueAsString(movieJson), Movie.class);
+                Movie movie = mapper.treeToValue(movieJson, Movie.class);
 
                 Log.d(MainActivity.TAG, "Movie: " + movie.original_title);
                 //TODO: go on here and save list of Movie objects, which are loaded into gridview.
