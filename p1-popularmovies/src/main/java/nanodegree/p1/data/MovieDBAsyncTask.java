@@ -36,10 +36,10 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
     public MovieDBAsyncTask(GridView gridview) {
         this.gridView = gridview;
         try {
-            THE_MOVIE_DB_API_KEY =  new BufferedReader(new InputStreamReader(gridview.getResources().openRawResource(R.raw.apikey))).readLine();
+            THE_MOVIE_DB_API_KEY =  new BufferedReader(new InputStreamReader(gridview.getResources().openRawResource(R.raw.themoviedb))).readLine();
             MOST_POPULAR_URL =  "http://api.themoviedb.org/3/movie/popular?api_key=" + THE_MOVIE_DB_API_KEY;
         } catch (IOException e) {
-            Log.e(MainActivity.TAG, "Could not read API key. Check if 'apikey.txt' is present.", e);
+            Log.e(MainActivity.TAG, "Could not read API key. Check if 'themoviedb.txt' is present.", e);
         }
     }
 
