@@ -1,6 +1,5 @@
 package nanodegree.p1.data;
 
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
@@ -8,10 +7,7 @@ import android.widget.GridView;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -28,16 +24,19 @@ import nanodegree.p1.R;
  */
 public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
-    private static String THE_MOVIE_DB_API_KEY = null;
-    private static String MOST_POPULAR_URL = null;
+    private String THE_MOVIE_DB_API_KEY = null;
+    private String MOST_POPULAR_URL = "http://api.themoviedb.org/3/movie/popular/";
+    private String TOP_RATED_URL = "http://api.themoviedb.org/3/movie/top_rated/";
     private final GridView gridView;
-    String result = "";
+    String result_most_popular = "";
+    String result_top_rated = "";
 
     public MovieDBAsyncTask(GridView gridview) {
         this.gridView = gridview;
         try {
             THE_MOVIE_DB_API_KEY =  new BufferedReader(new InputStreamReader(gridview.getResources().openRawResource(R.raw.themoviedb))).readLine();
-            MOST_POPULAR_URL =  "http://api.themoviedb.org/3/movie/popular?api_key=" + THE_MOVIE_DB_API_KEY;
+            MOST_POPULAR_URL +=  "?api_key=" + THE_MOVIE_DB_API_KEY;
+            TOP_RATED_URL +=  "?api_key=" + THE_MOVIE_DB_API_KEY;
         } catch (IOException e) {
             Log.e(MainActivity.TAG, "Could not read API key. Check if 'themoviedb.txt' is present.", e);
         }
@@ -50,33 +49,37 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
             android.os.Debug.waitForDebugger();
         }
 
-        HttpURLConnection urlConnection = null;
-
-        StringBuilder sb = null;
         try {
-            URL url = new URL(MOST_POPULAR_URL);
+            result_most_popular = getMovieDataFromURL(MOST_POPULAR_URL);
+            result_top_rated = getMovieDataFromURL(TOP_RATED_URL);
+        } catch (IOException e) {
+            Log.e(MainActivity.TAG, "Exception occured while fetching movie information from The Movie DB.", e);
+            e.printStackTrace();
+            return -1;
+        }
 
-            urlConnection = (HttpURLConnection) url.openConnection();
+        return 0;
+    }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+    private String getMovieDataFromURL(String urlString) throws IOException {
+        HttpURLConnection urlConnection = null;
+        StringBuilder sb;
+        try {
             sb = new StringBuilder();
+            URL url = new URL(urlString);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
             String currLine;
 
             while ((currLine = in.readLine()) != null) {
                 sb.append(currLine).append("\n");
             }
-
             in.close();
-        } catch (IOException e) {
-            Log.e(MainActivity.TAG, "Exception occured while fetching movie information from The Movie DB.", e);
-            e.printStackTrace();
-            return -1;
         } finally {
-            urlConnection.disconnect();
+            if (urlConnection != null)
+                urlConnection.disconnect();
         }
-
-        result = sb.toString();
-        return 0;
+        return sb.toString();
     }
 
     @Override
@@ -85,8 +88,15 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
         try {
             ObjectMapper mapper = new ObjectMapper();
 
-            JsonNode json = mapper.readValue(result, JsonNode.class).get("results");
-            MoviePosterAdapter.movies = mapper.treeToValue(json, Movie[].class);
+            JsonNode json_most_popular = mapper.readValue(result_most_popular, JsonNode.class).get("results");
+            JsonNode json_top_rated = mapper.readValue(result_top_rated, JsonNode.class).get("results");
+            MoviePosterAdapter.movies_most_popular = mapper.treeToValue(json_most_popular, Movie[].class);
+            MoviePosterAdapter.movies_top_rated = mapper.treeToValue(json_top_rated, Movie[].class);
+
+            if (gridView.getCount() == -1)
+            {
+                MoviePosterAdapter.setSortModePopular(true);
+            }
             gridView.invalidateViews();
         } catch (Exception e) {
             Log.e(MainActivity.TAG, "Exception occured while parsing JSON data.", e);

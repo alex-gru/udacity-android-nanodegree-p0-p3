@@ -14,14 +14,17 @@ import nanodegree.p1.data.Movie;
 
 public class MoviePosterAdapter extends BaseAdapter {
     private Context mContext;
-    public static Movie[] movies;
+    public static Movie[] movies_top_rated;
+    public static Movie[] movies_most_popular;
+    private static boolean sortModePopular = true;
+    private static int count = -1;
 
     public MoviePosterAdapter(Context c) {
         mContext = c;
     }
 
     public int getCount() {
-        return movies == null ? 0 : movies.length;
+        return count;
     }
 
     public Object getItem(int position) {
@@ -44,11 +47,25 @@ public class MoviePosterAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        Movie movie = movies[position];
+        Movie movie;
+        if (sortModePopular) {
+            movie = movies_most_popular[position];
+        } else {
+            movie = movies_top_rated[position];
+        }
         Log.d(MainActivity.TAG, movie.getOriginal_title() + " full poster path: " + movie.getFullPosterPath());
         Picasso.with(mContext).load(movie.getFullPosterPath()).into(imageView);
-//        imageView.setImageResource(R.drawable.posterw342);
         return imageView;
+    }
+
+    public static void setSortModePopular(boolean popular) {
+        if (popular) {
+            count = movies_most_popular == null ? 0 : movies_most_popular.length;
+            sortModePopular = true;
+        } else {
+            count = movies_top_rated == null ? 0 : movies_top_rated.length;
+            sortModePopular = false;
+        }
     }
 
 
