@@ -24,7 +24,7 @@ import nanodegree.p1.MoviePosterAdapter;
 public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
     // fill in your API key here
-    final static String THE_MOVIE_DB_API_KEY = "0b524a273d08f26b1cc7ac226e2134e2";
+    final static String THE_MOVIE_DB_API_KEY = "";
     final static String MOST_POPULAR_URL = "http://api.themoviedb.org/3/movie/popular?api_key=" + THE_MOVIE_DB_API_KEY;
     private final GridView gridView;
     String result = "";
