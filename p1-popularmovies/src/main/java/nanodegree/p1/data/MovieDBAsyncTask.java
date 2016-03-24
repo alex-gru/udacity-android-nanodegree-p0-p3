@@ -1,5 +1,6 @@
 package nanodegree.p1.data;
 
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
@@ -7,7 +8,10 @@ import android.widget.GridView;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -15,6 +19,7 @@ import java.net.URL;
 
 import nanodegree.p1.MainActivity;
 import nanodegree.p1.MoviePosterAdapter;
+import nanodegree.p1.R;
 
 /**
  * Created by alexgru on 22-Mar-16.
@@ -23,14 +28,19 @@ import nanodegree.p1.MoviePosterAdapter;
  */
 public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
-    // fill in your API key here
-    final static String THE_MOVIE_DB_API_KEY = "";
-    final static String MOST_POPULAR_URL = "http://api.themoviedb.org/3/movie/popular?api_key=" + THE_MOVIE_DB_API_KEY;
+    private static String THE_MOVIE_DB_API_KEY = null;
+    private static String MOST_POPULAR_URL = null;
     private final GridView gridView;
     String result = "";
 
     public MovieDBAsyncTask(GridView gridview) {
         this.gridView = gridview;
+        try {
+            THE_MOVIE_DB_API_KEY =  new BufferedReader(new InputStreamReader(gridview.getResources().openRawResource(R.raw.apikey))).readLine();
+            MOST_POPULAR_URL =  "http://api.themoviedb.org/3/movie/popular?api_key=" + THE_MOVIE_DB_API_KEY;
+        } catch (IOException e) {
+            Log.e(MainActivity.TAG, "Could not read API key. Check if 'apikey.txt' is present.", e);
+        }
     }
 
     @Override
