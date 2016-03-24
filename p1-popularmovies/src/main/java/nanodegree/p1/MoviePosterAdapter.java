@@ -1,6 +1,7 @@
 package nanodegree.p1;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,15 +10,18 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import nanodegree.p1.data.Movie;
+
 public class MoviePosterAdapter extends BaseAdapter {
     private Context mContext;
+    public static Movie[] movies;
 
     public MoviePosterAdapter(Context c) {
         mContext = c;
     }
 
     public int getCount() {
-        return 20;
+        return movies == null ? 0 : movies.length;
     }
 
     public Object getItem(int position) {
@@ -40,8 +44,12 @@ public class MoviePosterAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        Picasso.with(mContext).load("http://i.imgur.com/DvpvklR.png").into(imageView);
+        Movie movie = movies[position];
+        Log.d(MainActivity.TAG, movie.getOriginal_title() + " full poster path: " + movie.getFullPosterPath());
+        Picasso.with(mContext).load(movie.getFullPosterPath()).into(imageView);
 //        imageView.setImageResource(R.drawable.posterw342);
         return imageView;
     }
+
+
 }
