@@ -16,7 +16,7 @@ public class MoviePosterAdapter extends BaseAdapter {
     private Context mContext;
     public static Movie[] movies_top_rated;
     public static Movie[] movies_most_popular;
-    private static boolean sortModePopular = true;
+    public static boolean sortModePopular = true;
     private static int count = -1;
 
     public MoviePosterAdapter(Context c) {
@@ -53,7 +53,6 @@ public class MoviePosterAdapter extends BaseAdapter {
         } else {
             movie = movies_top_rated[position];
         }
-        Log.d(MainActivity.TAG, movie.getOriginal_title() + " full poster path: " + movie.getFullPosterPath());
         Picasso.with(mContext).load(movie.getFullPosterPath()).into(imageView);
         return imageView;
     }

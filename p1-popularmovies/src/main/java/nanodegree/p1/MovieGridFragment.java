@@ -1,9 +1,8 @@
 package nanodegree.p1;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import nanodegree.p1.data.MovieDBAsyncTask;
 
@@ -35,26 +33,30 @@ public class MovieGridFragment extends Fragment implements AbsListView.OnScrollL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setHasOptionsMenu(true);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        setHasOptionsMenu(true);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_moviegrid));
 
         gridview =(GridView) getActivity().findViewById(R.id.gridview);
         gridview.setAdapter(new MoviePosterAdapter(getActivity()));
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "" + position,
-                        Toast.LENGTH_SHORT).show();
+                MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+                Bundle args = new Bundle();
+                args.putInt("gridPosition",position);
+                movieDetailFragment.setArguments(args);
 
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new MovieDetailFragment())
+                        .replace(R.id.fragment_container, movieDetailFragment)
+                        .addToBackStack(null)
+                        .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                         .commit();
             }
         });
@@ -75,9 +77,9 @@ public class MovieGridFragment extends Fragment implements AbsListView.OnScrollL
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.menu, menu);
         menu.findItem(R.id.action_sort_popular).setVisible(false);
+        menu.findItem(R.id.action_sort_rating).setVisible(true);
         this.menu = menu;
     }
 

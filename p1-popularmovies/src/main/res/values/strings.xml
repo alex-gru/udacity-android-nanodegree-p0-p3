@@ -2,4 +2,6 @@
     <string name="app_name">Popular Movies</string>
     <string name="sort_popular">Sort by popularity</string>
     <string name="sort_rating">Sort by rating</string>
+    <string name="toolbar_title_moviedetail">Movie Details</string>
+    <string name="toolbar_title_moviegrid">Popular Movies</string>
 </resources>

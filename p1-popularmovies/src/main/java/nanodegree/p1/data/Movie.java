@@ -1,9 +1,16 @@
 package nanodegree.p1.data;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+
+import nanodegree.p1.MainActivity;
 
 /**
  * Created by alexgru on 22-Mar-16.
@@ -13,8 +20,8 @@ import java.util.List;
 
 public class Movie {
 
-    final static String POSTER_WIDTH = "w342";
-    final static String BASE_URL_POSTER = "http://image.tmdb.org/t/p/" + POSTER_WIDTH;
+    public final static String POSTER_WIDTH = "342";
+    final static String BASE_URL_POSTER = "http://image.tmdb.org/t/p/w" + POSTER_WIDTH;
 
     @JsonProperty("poster_path")
     String poster_path;
@@ -66,6 +73,17 @@ public class Movie {
         return BASE_URL_POSTER + poster_path;
     }
 
+    public int getYear () {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dateFormat.parse(getRelease_date()));
+            return cal.get(Calendar.YEAR);
+        } catch (ParseException e) {
+            Log.e(MainActivity.TAG, "Could not parse year from date string.", e);
+        }
+        return -1;
+    }
     public String getAdult() {
         return adult;
     }
