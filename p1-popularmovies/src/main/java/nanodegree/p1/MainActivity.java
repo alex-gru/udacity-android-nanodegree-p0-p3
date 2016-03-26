@@ -25,20 +25,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             }
 
             MovieGridFragment movieGridFragment = new MovieGridFragment();
-
-
-            // source: http://stackoverflow.com/a/28932688/2472398
-//            getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-//                @Override
-//                public void onBackStackChanged() {
-//                    if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-//                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//                    } else {
-//                        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//                    }
-//                }
-//            });
-
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, movieGridFragment).commit();
         }

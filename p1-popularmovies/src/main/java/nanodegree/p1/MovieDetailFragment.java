@@ -3,6 +3,7 @@ package nanodegree.p1;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -53,13 +54,15 @@ public class MovieDetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         setHasOptionsMenu(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
-
+        ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
+        toolbar.setDisplayHomeAsUpEnabled(true);
+        
         int gridPosition = getArguments().getInt("gridPosition");
-        if (MoviePosterAdapter.sortModePopular) {
-            movie = MoviePosterAdapter.movies_most_popular[gridPosition];
+        if (MovieGridFragment.sortModePopular) {
+            movie = MovieGridFragment.movies_most_popular[gridPosition];
         } else {
-            movie = MoviePosterAdapter.movies_top_rated[gridPosition];
+            movie = MovieGridFragment.movies_top_rated[gridPosition];
         }
 
         ImageView posterImageView = (ImageView) getView().findViewById(R.id.posterImageView);

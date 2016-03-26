@@ -1,7 +1,6 @@
 package nanodegree.p1;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,9 +13,7 @@ import nanodegree.p1.data.Movie;
 
 public class MoviePosterAdapter extends BaseAdapter {
     private Context mContext;
-    public static Movie[] movies_top_rated;
-    public static Movie[] movies_most_popular;
-    public static boolean sortModePopular = true;
+
     private static int count = -1;
 
     public MoviePosterAdapter(Context c) {
@@ -48,10 +45,10 @@ public class MoviePosterAdapter extends BaseAdapter {
         }
 
         Movie movie;
-        if (sortModePopular) {
-            movie = movies_most_popular[position];
+        if (MovieGridFragment.sortModePopular) {
+            movie = MovieGridFragment.movies_most_popular[position];
         } else {
-            movie = movies_top_rated[position];
+            movie = MovieGridFragment.movies_top_rated[position];
         }
         Picasso.with(mContext).load(movie.getFullPosterPath()).into(imageView);
         return imageView;
@@ -59,11 +56,11 @@ public class MoviePosterAdapter extends BaseAdapter {
 
     public static void setSortModePopular(boolean popular) {
         if (popular) {
-            count = movies_most_popular == null ? 0 : movies_most_popular.length;
-            sortModePopular = true;
+            count = MovieGridFragment.movies_most_popular == null ? 0 : MovieGridFragment.movies_most_popular.length;
+            MovieGridFragment.sortModePopular = true;
         } else {
-            count = movies_top_rated == null ? 0 : movies_top_rated.length;
-            sortModePopular = false;
+            count = MovieGridFragment.movies_top_rated == null ? 0 : MovieGridFragment.movies_top_rated.length;
+            MovieGridFragment.sortModePopular = false;
         }
     }
 

@@ -2,6 +2,7 @@ package nanodegree.p1;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,12 +14,16 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import nanodegree.p1.data.Movie;
 import nanodegree.p1.data.MovieDBAsyncTask;
 
 
 public class MovieGridFragment extends Fragment implements AbsListView.OnScrollListener {
     public GridView gridview;
     private Menu menu;
+    public static Movie[] movies_top_rated;
+    public static Movie[] movies_most_popular;
+    public static boolean sortModePopular = true;
 
     public MovieGridFragment() {
     }
@@ -26,7 +31,6 @@ public class MovieGridFragment extends Fragment implements AbsListView.OnScrollL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_moviegrid, container, false);
     }
 
@@ -41,7 +45,9 @@ public class MovieGridFragment extends Fragment implements AbsListView.OnScrollL
 
         setHasOptionsMenu(true);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_moviegrid));
+        ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
+        toolbar.setDisplayHomeAsUpEnabled(false);
 
         gridview =(GridView) getActivity().findViewById(R.id.gridview);
         gridview.setAdapter(new MoviePosterAdapter(getActivity()));
@@ -50,7 +56,7 @@ public class MovieGridFragment extends Fragment implements AbsListView.OnScrollL
                                     int position, long id) {
                 MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
                 Bundle args = new Bundle();
-                args.putInt("gridPosition",position);
+                args.putInt("gridPosition", position);
                 movieDetailFragment.setArguments(args);
 
                 getFragmentManager().beginTransaction()
@@ -60,8 +66,10 @@ public class MovieGridFragment extends Fragment implements AbsListView.OnScrollL
                         .commit();
             }
         });
+        if (movies_most_popular == null || movies_top_rated == null) {
+            new MovieDBAsyncTask(gridview).execute();
+        }
 
-        new MovieDBAsyncTask(gridview).execute();
     }
 
     @Override

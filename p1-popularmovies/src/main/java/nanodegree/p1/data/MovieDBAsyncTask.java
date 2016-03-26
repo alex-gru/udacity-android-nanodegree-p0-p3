@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import nanodegree.p1.MainActivity;
+import nanodegree.p1.MovieGridFragment;
 import nanodegree.p1.MoviePosterAdapter;
 import nanodegree.p1.R;
 
@@ -90,8 +91,8 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
             JsonNode json_most_popular = mapper.readValue(result_most_popular, JsonNode.class).get("results");
             JsonNode json_top_rated = mapper.readValue(result_top_rated, JsonNode.class).get("results");
-            MoviePosterAdapter.movies_most_popular = mapper.treeToValue(json_most_popular, Movie[].class);
-            MoviePosterAdapter.movies_top_rated = mapper.treeToValue(json_top_rated, Movie[].class);
+            MovieGridFragment.movies_most_popular = mapper.treeToValue(json_most_popular, Movie[].class);
+            MovieGridFragment.movies_top_rated = mapper.treeToValue(json_top_rated, Movie[].class);
 
             if (gridView.getCount() == -1)
             {
