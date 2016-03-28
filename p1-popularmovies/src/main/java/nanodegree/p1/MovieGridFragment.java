@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,18 +15,28 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import nanodegree.p1.data.Movie;
 import nanodegree.p1.data.MovieDBAsyncTask;
 
 
-public class MovieGridFragment extends Fragment implements AbsListView.OnScrollListener {
+public class MovieGridFragment extends Fragment {
     public GridView gridview;
     private Menu menu;
-    public static Movie[] movies_top_rated;
-    public static Movie[] movies_most_popular;
+    public static List<Movie> movies_top_rated;
+    public static List<Movie> movies_most_popular;
     public static boolean sortModePopular = true;
+    public static int lastPositionInGrid = -1;
+    public static int page = 0;
 
     public MovieGridFragment() {
+
+        if (movies_most_popular == null || movies_top_rated == null) {
+            movies_most_popular = new LinkedList<Movie>();
+            movies_top_rated = new LinkedList<Movie>();
+        }
     }
 
     @Override
@@ -66,21 +77,29 @@ public class MovieGridFragment extends Fragment implements AbsListView.OnScrollL
                         .commit();
             }
         });
-        if (movies_most_popular == null || movies_top_rated == null) {
-            new MovieDBAsyncTask(gridview).execute();
-        }
+        gridview.setOnScrollListener(new AbsListView.OnScrollListener() {
 
-    }
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                // nop
+            }
 
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        //nop
-    }
+            // approach as found here:  http://stackoverflow.com/a/16982317
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                final int _lastItem = firstVisibleItem + visibleItemCount;
+                Log.d(MainActivity.TAG, "_lastItem: " + _lastItem + " - firstVisibleItem: " + firstVisibleItem + " - visibleItemCount: " + visibleItemCount);
+        if (_lastItem > 0 && totalItemCount > 0)
+            if (_lastItem == movies_most_popular.size() - 4 && lastPositionInGrid != _lastItem) {
+                lastPositionInGrid = _lastItem;
+                // Last item is fully visible.
+                Log.d(MainActivity.TAG, "Now fetch next page from theMovieDB.");
+                new MovieDBAsyncTask(gridview).execute();
+            }
+            }
+        });
+        new MovieDBAsyncTask(gridview).execute();
 
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-        //TODO: handle further movie fetch here, if user scrolls till end of list
     }
 
     @Override

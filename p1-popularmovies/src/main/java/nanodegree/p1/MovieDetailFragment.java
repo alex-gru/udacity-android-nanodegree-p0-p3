@@ -60,9 +60,9 @@ public class MovieDetailFragment extends Fragment {
         
         int gridPosition = getArguments().getInt("gridPosition");
         if (MovieGridFragment.sortModePopular) {
-            movie = MovieGridFragment.movies_most_popular[gridPosition];
+            movie = MovieGridFragment.movies_most_popular.get(gridPosition);
         } else {
-            movie = MovieGridFragment.movies_top_rated[gridPosition];
+            movie = MovieGridFragment.movies_top_rated.get(gridPosition);
         }
 
         ImageView posterImageView = (ImageView) getView().findViewById(R.id.posterImageView);

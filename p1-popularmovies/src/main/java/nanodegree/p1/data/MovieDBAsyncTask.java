@@ -6,12 +6,14 @@ import android.widget.GridView;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import nanodegree.p1.MainActivity;
 import nanodegree.p1.MovieGridFragment;
@@ -38,6 +40,7 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
             THE_MOVIE_DB_API_KEY =  new BufferedReader(new InputStreamReader(gridview.getResources().openRawResource(R.raw.themoviedb))).readLine();
             MOST_POPULAR_URL +=  "?api_key=" + THE_MOVIE_DB_API_KEY;
             TOP_RATED_URL +=  "?api_key=" + THE_MOVIE_DB_API_KEY;
+
         } catch (IOException e) {
             Log.e(MainActivity.TAG, "Could not read API key. Check if 'themoviedb.txt' is present.", e);
         }
@@ -51,8 +54,9 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         try {
-            result_most_popular = getMovieDataFromURL(MOST_POPULAR_URL);
-            result_top_rated = getMovieDataFromURL(TOP_RATED_URL);
+            MovieGridFragment.page++;
+            result_most_popular = getMovieDataFromURL(MOST_POPULAR_URL, MovieGridFragment.page);
+            result_top_rated = getMovieDataFromURL(TOP_RATED_URL, MovieGridFragment.page);
         } catch (IOException e) {
             Log.e(MainActivity.TAG, "Exception occured while fetching movie information from The Movie DB.", e);
             e.printStackTrace();
@@ -62,12 +66,12 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
         return 0;
     }
 
-    private String getMovieDataFromURL(String urlString) throws IOException {
+    private String getMovieDataFromURL(String urlString, int page) throws IOException {
         HttpURLConnection urlConnection = null;
         StringBuilder sb;
         try {
             sb = new StringBuilder();
-            URL url = new URL(urlString);
+            URL url = new URL(urlString + "&page=" + page);
             urlConnection = (HttpURLConnection) url.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
             String currLine;
@@ -89,14 +93,18 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
         try {
             ObjectMapper mapper = new ObjectMapper();
 
-            JsonNode json_most_popular = mapper.readValue(result_most_popular, JsonNode.class).get("results");
-            JsonNode json_top_rated = mapper.readValue(result_top_rated, JsonNode.class).get("results");
-            MovieGridFragment.movies_most_popular = mapper.treeToValue(json_most_popular, Movie[].class);
-            MovieGridFragment.movies_top_rated = mapper.treeToValue(json_top_rated, Movie[].class);
+            String json_most_popular = mapper.readValue(result_most_popular, JsonNode.class).get("results").toString();
+            String json_top_rated = mapper.readValue(result_top_rated, JsonNode.class).get("results").toString();
+            List<Movie> newMostPopularMovies = mapper.readValue(json_most_popular, TypeFactory.defaultInstance().constructCollectionType(List.class, Movie.class));
+            List<Movie> newTopRatedMovies = mapper.readValue(json_top_rated, TypeFactory.defaultInstance().constructCollectionType(List.class, Movie.class));
+            MovieGridFragment.movies_most_popular.addAll(newMostPopularMovies);
+            MovieGridFragment.movies_top_rated.addAll(newTopRatedMovies);
 
             if (gridView.getCount() == -1)
             {
                 MoviePosterAdapter.setSortModePopular(true);
+            } else {
+                MoviePosterAdapter.updateCount();
             }
             gridView.invalidateViews();
         } catch (Exception e) {

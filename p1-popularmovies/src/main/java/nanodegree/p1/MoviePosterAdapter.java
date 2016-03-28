@@ -14,7 +14,7 @@ import nanodegree.p1.data.Movie;
 public class MoviePosterAdapter extends BaseAdapter {
     private Context mContext;
 
-    private static int count = -1;
+    public static int count = -1;
 
     public MoviePosterAdapter(Context c) {
         mContext = c;
@@ -46,9 +46,9 @@ public class MoviePosterAdapter extends BaseAdapter {
 
         Movie movie;
         if (MovieGridFragment.sortModePopular) {
-            movie = MovieGridFragment.movies_most_popular[position];
+            movie = MovieGridFragment.movies_most_popular.get(position);
         } else {
-            movie = MovieGridFragment.movies_top_rated[position];
+            movie = MovieGridFragment.movies_top_rated.get(position);
         }
         Picasso.with(mContext).load(movie.getFullPosterPath()).into(imageView);
         return imageView;
@@ -56,13 +56,19 @@ public class MoviePosterAdapter extends BaseAdapter {
 
     public static void setSortModePopular(boolean popular) {
         if (popular) {
-            count = MovieGridFragment.movies_most_popular == null ? 0 : MovieGridFragment.movies_most_popular.length;
+            count = MovieGridFragment.movies_most_popular == null ? 0 : MovieGridFragment.movies_most_popular.size();
             MovieGridFragment.sortModePopular = true;
         } else {
-            count = MovieGridFragment.movies_top_rated == null ? 0 : MovieGridFragment.movies_top_rated.length;
+            count = MovieGridFragment.movies_top_rated == null ? 0 : MovieGridFragment.movies_top_rated.size();
             MovieGridFragment.sortModePopular = false;
         }
     }
 
 
+    public static void updateCount() {
+        count = MovieGridFragment.movies_most_popular.size();
+        // same as
+        //count = MovieGridFragment.movies_top_rated.size();
+
+    }
 }
