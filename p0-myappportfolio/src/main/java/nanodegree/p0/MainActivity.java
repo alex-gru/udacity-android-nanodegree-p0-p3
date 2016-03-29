@@ -1,5 +1,7 @@
 package nanodegree.p0;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -41,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void launchSpotifyStreamer(View view) throws Exception {
-        String text = "This button will launch " + ((Button) view).getText();
-        Toast.makeText(this.getApplicationContext(),text,Toast.LENGTH_SHORT).show();
-        //TODO: launch app
+    public void launchPopMovies(View view) throws Exception {
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName("nanodegree.p1", "nanodegree.p1.MainActivity"));
+        startActivity(intent);
     }
     public void launchScoresApp(View view) throws Exception {
         String text = "This button will launch " + ((Button) view).getText();

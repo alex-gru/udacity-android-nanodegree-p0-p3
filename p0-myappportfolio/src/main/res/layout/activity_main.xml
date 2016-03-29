@@ -26,17 +26,17 @@
             android:text="@string/title"/>
 
         <Button
-            android:id="@+id/btnSpotifyStreamer"
+            android:id="@+id/btnPopMovies"
             android:text="@string/button1"
             android:layout_below="@id/title"
 
             style="@style/ButtonStyle"
-            android:onClick="launchSpotifyStreamer" />
+            android:onClick="launchPopMovies" />
 
         <Button
             android:id="@+id/btnScoresApp"
             android:text="@string/button2"
-            android:layout_below="@id/btnSpotifyStreamer"
+            android:layout_below="@id/btnPopMovies"
 
             style="@style/ButtonStyle"
             android:onClick="launchScoresApp" />
