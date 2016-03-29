@@ -57,8 +57,7 @@ public class MovieGridFragment extends Fragment {
         setHasOptionsMenu(true);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
-        toolbar.setDisplayHomeAsUpEnabled(false);
+        toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviegrid));
 
         gridview =(GridView) getActivity().findViewById(R.id.gridview);
         gridview.setAdapter(new MoviePosterAdapter(getActivity()));

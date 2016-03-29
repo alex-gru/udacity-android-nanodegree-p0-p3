@@ -56,8 +56,7 @@ public class MovieDetailFragment extends Fragment {
         setHasOptionsMenu(true);
         ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
-        toolbar.setDisplayHomeAsUpEnabled(true);
-        
+
         int gridPosition = getArguments().getInt("gridPosition");
         if (MovieGridFragment.sortModePopular) {
             movie = MovieGridFragment.movies_most_popular.get(gridPosition);

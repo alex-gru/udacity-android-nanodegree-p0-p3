@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public void onBackStackChanged() {
 
         // source: http://stackoverflow.com/a/20314570/2472398
-        boolean canback = getSupportFragmentManager().getBackStackEntryCount()>0;
+        boolean canback = getSupportFragmentManager().getBackStackEntryCount() > 0;
         getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
     }
 
