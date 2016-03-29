@@ -88,9 +88,8 @@ public class MovieGridFragment extends Fragment {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 final int _lastItem = firstVisibleItem + visibleItemCount;
-                Log.d(MainActivity.TAG, "_lastItem: " + _lastItem + " < " + (movies_most_popular.size() - 4));
                 if (_lastItem > 0 && totalItemCount > 0)
-            if (_lastItem == movies_most_popular.size() && lastPositionInGrid < _lastItem) {
+            if (_lastItem == MoviePosterAdapter.count && lastPositionInGrid < _lastItem) {
                 lastPositionInGrid = _lastItem;
                 // Last item is fully visible.
                 Log.d(MainActivity.TAG, "Now fetch next page from theMovieDB.");

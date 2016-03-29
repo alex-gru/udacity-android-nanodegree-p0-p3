@@ -80,19 +80,16 @@ public class MoviePosterAdapter extends BaseAdapter {
 
     public static void setSortModePopular(boolean popular) {
         if (popular) {
-            count = MovieGridFragment.movies_most_popular == null ? 0 : MovieGridFragment.movies_most_popular.size();
             MovieGridFragment.sortModePopular = true;
         } else {
-            count = MovieGridFragment.movies_top_rated == null ? 0 : MovieGridFragment.movies_top_rated.size();
             MovieGridFragment.sortModePopular = false;
         }
+
+        updateCount();
     }
 
 
     public static void updateCount() {
         count = MovieGridFragment.movies_most_popular.size();
-        // same as
-        //count = MovieGridFragment.movies_top_rated.size();
-
     }
 }

@@ -95,13 +95,7 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
             List<Movie> newTopRatedMovies = mapper.readValue(json_top_rated, TypeFactory.defaultInstance().constructCollectionType(List.class, Movie.class));
             MovieGridFragment.movies_most_popular.addAll(newMostPopularMovies);
             MovieGridFragment.movies_top_rated.addAll(newTopRatedMovies);
-
-            if (gridView.getCount() == -1)
-            {
-                MoviePosterAdapter.setSortModePopular(true);
-            } else {
-                MoviePosterAdapter.updateCount();
-            }
+            MoviePosterAdapter.setSortModePopular(MovieGridFragment.sortModePopular);
             gridView.invalidateViews();
         } catch (Exception e) {
             Log.e(MainActivity.TAG, "Exception occured while parsing JSON data.", e);
