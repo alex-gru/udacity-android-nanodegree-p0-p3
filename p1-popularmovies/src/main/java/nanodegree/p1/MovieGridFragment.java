@@ -118,6 +118,7 @@ public class MovieGridFragment extends Fragment {
 
                 MoviePosterAdapter.setSortModePopular(true);
                 gridview.invalidateViews();
+                gridview.smoothScrollToPosition(0);
                 return true;
             case R.id.action_sort_rating:
                 menu.findItem(R.id.action_sort_popular).setVisible(true);
@@ -125,6 +126,7 @@ public class MovieGridFragment extends Fragment {
 
                 MoviePosterAdapter.setSortModePopular(false);
                 gridview.invalidateViews();
+                gridview.smoothScrollToPosition(0);
                 return true;
         }
         return super.onOptionsItemSelected(item);
