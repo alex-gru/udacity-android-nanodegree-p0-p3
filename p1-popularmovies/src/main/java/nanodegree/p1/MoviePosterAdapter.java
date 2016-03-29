@@ -6,7 +6,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import nanodegree.p1.data.Movie;
@@ -50,7 +53,28 @@ public class MoviePosterAdapter extends BaseAdapter {
         } else {
             movie = MovieGridFragment.movies_top_rated.get(position);
         }
-        Picasso.with(mContext).load(movie.getFullPosterPath()).into(imageView);
+
+        // set up progress bar, which is shown until poster is fetched and displayed.
+        // resulted from various sources:
+        // http://stackoverflow.com/a/22786818/2472398
+        // http://stackoverflow.com/questions/22143157/android-picasso-placeholder-and-error-image-styling
+        // http://stackoverflow.com/q/21333866/2472398
+
+        final ProgressBar progressBar = (ProgressBar) ((RelativeLayout)parent.getParent().getParent().getParent()).findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
+
+        Picasso.with(mContext).load(movie.getFullPosterPath())
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
         return imageView;
     }
 

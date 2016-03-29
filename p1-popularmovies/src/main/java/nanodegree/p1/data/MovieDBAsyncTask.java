@@ -49,10 +49,6 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
     @Override
     protected Integer doInBackground(Void... params) {
 
-        if (android.os.Debug.isDebuggerConnected()) {
-            android.os.Debug.waitForDebugger();
-        }
-
         try {
             MovieGridFragment.page++;
             result_most_popular = getMovieDataFromURL(MOST_POPULAR_URL, MovieGridFragment.page);

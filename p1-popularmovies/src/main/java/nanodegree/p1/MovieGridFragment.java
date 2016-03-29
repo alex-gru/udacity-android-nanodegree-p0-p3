@@ -58,6 +58,7 @@ public class MovieGridFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviegrid));
+        toolbar.setDisplayHomeAsUpEnabled(false);
 
         gridview =(GridView) getActivity().findViewById(R.id.gridview);
         gridview.setAdapter(new MoviePosterAdapter(getActivity()));
@@ -104,8 +105,8 @@ public class MovieGridFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
-        menu.findItem(R.id.action_sort_popular).setVisible(false);
-        menu.findItem(R.id.action_sort_rating).setVisible(true);
+        menu.findItem(R.id.action_sort_popular).setVisible(!sortModePopular);
+        menu.findItem(R.id.action_sort_rating).setVisible(sortModePopular);
         this.menu = menu;
     }
 
