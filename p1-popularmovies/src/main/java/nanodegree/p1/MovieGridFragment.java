@@ -70,9 +70,9 @@ public class MovieGridFragment extends Fragment {
                 movieDetailFragment.setArguments(args);
 
                 getFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                         .replace(R.id.fragment_container, movieDetailFragment)
                         .addToBackStack(null)
-                        .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                         .commit();
             }
         });
