@@ -1,4 +1,4 @@
-package nanodegree.p1;
+package nanodegree.p1p2;
 
 import android.content.Context;
 import android.view.View;
@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import nanodegree.p1.data.Movie;
+import nanodegree.p1p2.data.Movie;
 
 public class MoviePosterAdapter extends BaseAdapter {
     private Context mContext;

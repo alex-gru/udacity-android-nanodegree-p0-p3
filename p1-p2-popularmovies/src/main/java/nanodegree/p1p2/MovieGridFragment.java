@@ -1,4 +1,4 @@
-package nanodegree.p1;
+package nanodegree.p1p2;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,8 +18,8 @@ import android.widget.GridView;
 import java.util.LinkedList;
 import java.util.List;
 
-import nanodegree.p1.data.Movie;
-import nanodegree.p1.data.MovieDBAsyncTask;
+import nanodegree.p1p2.data.Movie;
+import nanodegree.p1p2.data.MovieDBAsyncTask;
 
 
 public class MovieGridFragment extends Fragment {

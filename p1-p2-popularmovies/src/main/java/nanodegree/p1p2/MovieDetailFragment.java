@@ -1,11 +1,9 @@
-package nanodegree.p1;
+package nanodegree.p1p2;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,16 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-
-import nanodegree.p1.data.Movie;
+import nanodegree.p1p2.data.Movie;
 
 /**
  * Created by alexgru on 24-Mar-16.

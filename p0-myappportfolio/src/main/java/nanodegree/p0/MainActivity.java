@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchPopMovies(View view) throws Exception {
         Intent intent = new Intent();
-        intent.setComponent(new ComponentName("nanodegree.p1", "nanodegree.p1.MainActivity"));
+        intent.setComponent(new ComponentName("nanodegree.p1p2", "nanodegree.p1p2.MainActivity"));
         startActivity(intent);
     }
     public void launchScoresApp(View view) throws Exception {

@@ -1,8 +1,7 @@
-package nanodegree.p1.data;
+package nanodegree.p1p2.data;
 
 import android.util.Log;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.text.ParseException;
@@ -10,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import nanodegree.p1.MainActivity;
+import nanodegree.p1p2.MainActivity;
 
 /**
  * Created by alexgru on 22-Mar-16.

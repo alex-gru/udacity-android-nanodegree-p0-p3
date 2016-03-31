@@ -10,7 +10,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "nanodegree.p1"
+        applicationId "nanodegree.p1p2"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -25,7 +25,7 @@ android {
 }
 
 task appStart(type: Exec, dependsOn: 'installDebug') {
-    commandLine 'cmd', '/c adb shell am start -n nanodegree.p1/.MainActivity'
+    commandLine 'cmd', '/c adb shell am start -n nanodegree.p1p2/.MainActivity'
 }
 
 repositories {

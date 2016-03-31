@@ -1,4 +1,4 @@
-package nanodegree.p1.data;
+package nanodegree.p1p2.data;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -15,10 +15,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import nanodegree.p1.MainActivity;
-import nanodegree.p1.MovieGridFragment;
-import nanodegree.p1.MoviePosterAdapter;
-import nanodegree.p1.R;
+import nanodegree.p1p2.MainActivity;
+import nanodegree.p1p2.MovieGridFragment;
+import nanodegree.p1p2.MoviePosterAdapter;
+import nanodegree.p1p2.R;
 
 /**
  * Created by alexgru on 22-Mar-16.

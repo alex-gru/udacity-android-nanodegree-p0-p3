@@ -1,4 +1,4 @@
-package nanodegree.p1;
+package nanodegree.p1p2;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
