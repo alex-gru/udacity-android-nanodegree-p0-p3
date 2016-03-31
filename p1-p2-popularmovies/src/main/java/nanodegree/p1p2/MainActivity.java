@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
-    public static final String TAG = "NANODEGREE.P1";
+    public static final String TAG = "NANODEGREE.P1P2";
+    public static boolean isTablet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +20,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
 
-        if (findViewById(R.id.fragment_container) != null) {
+        isTablet = getResources().getBoolean(R.bool.isTablet);
+
+        if (findViewById(R.id.gridfragment_container) != null) {
 
             if (savedInstanceState != null) {
                 return;
@@ -26,7 +30,21 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
             MovieGridFragment movieGridFragment = new MovieGridFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, movieGridFragment).commit();
+                    .add(R.id.gridfragment_container, movieGridFragment).commit();
+            boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+            Toast.makeText(getApplicationContext(),"isTablet: " + isTablet,Toast.LENGTH_SHORT).show();
+            if (isTablet)
+            {
+                Bundle args = new Bundle();
+                args.putInt("gridPosition", -1);
+                MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+                movieDetailFragment.setArguments(args);
+
+                if (findViewById(R.id.detailfragment_container) != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.detailfragment_container, movieDetailFragment).commit();
+                }
+            }
         }
     }
 

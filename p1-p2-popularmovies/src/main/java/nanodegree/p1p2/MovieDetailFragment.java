@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import javax.net.ssl.ManagerFactoryParameters;
+
 import nanodegree.p1p2.data.Movie;
 
 /**
@@ -50,10 +52,23 @@ public class MovieDetailFragment extends Fragment {
 
         setHasOptionsMenu(true);
         ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
-        toolbar.setDisplayHomeAsUpEnabled(true);
+
+        android.os.Debug.waitForDebugger();
+        if (!MainActivity.isTablet) {
+            toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
+            toolbar.setDisplayHomeAsUpEnabled(true);
+        }
+
+//        android.os.Debug.waitForDebugger();
 
         int gridPosition = getArguments().getInt("gridPosition");
+
+        if (gridPosition != -1) {
+            updateDetailUI(gridPosition);
+        }
+    }
+
+    private void updateDetailUI(int gridPosition) {
         if (MovieGridFragment.sortModePopular) {
             movie = MovieGridFragment.movies_most_popular.get(gridPosition);
         } else {
@@ -81,7 +96,6 @@ public class MovieDetailFragment extends Fragment {
                 Toast.makeText(getContext(),"Stage 2 :-)",Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override
@@ -92,9 +106,12 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.menu, menu);
-        menu.findItem(R.id.action_sort_popular).setVisible(false);
-        menu.findItem(R.id.action_sort_rating).setVisible(false);
+        if (!MainActivity.isTablet) {
+            inflater.inflate(R.menu.menu, menu);
+
+            menu.findItem(R.id.action_sort_popular).setVisible(false);
+            menu.findItem(R.id.action_sort_rating).setVisible(false);
+        }
         this.menu = menu;
     }
     @Override

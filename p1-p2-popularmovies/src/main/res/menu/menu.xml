@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.grusc.popularmovies.MainActivity">
+    tools:context="nanodegree.p1p2.MainActivity">
     <item
         android:id="@+id/action_sort_popular"
         android:orderInCategory="100"

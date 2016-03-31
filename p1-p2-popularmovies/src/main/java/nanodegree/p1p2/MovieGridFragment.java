@@ -72,7 +72,7 @@ public class MovieGridFragment extends Fragment {
 
                 getFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                        .replace(R.id.fragment_container, movieDetailFragment)
+                        .replace(R.id.gridfragment_container, movieDetailFragment)
                         .addToBackStack(null)
                         .commit();
             }
@@ -104,6 +104,7 @@ public class MovieGridFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
+        android.os.Debug.waitForDebugger();
         menu.findItem(R.id.action_sort_popular).setVisible(!sortModePopular);
         menu.findItem(R.id.action_sort_rating).setVisible(sortModePopular);
         this.menu = menu;
