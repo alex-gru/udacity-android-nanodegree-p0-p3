@@ -2,6 +2,7 @@ package nanodegree.p1p2;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -54,16 +55,26 @@ public class MovieGridFragment extends Fragment {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
-                Bundle args = new Bundle();
-                args.putInt("gridPosition", position);
-                movieDetailFragment.setArguments(args);
+                if (MainActivity.isTablet)
+                {
+//                    android.os.Debug.waitForDebugger();
+//                    FragmentManager fm = getActivity().getSupportFragmentManager();
+//                    List<Fragment> fragments = fm.getFragments();
+//                    Log.d(MainActivity.TAG,"TEST");
+                    MovieDetailFragment detailFragment = (MovieDetailFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
+                    detailFragment.updateMovieDetailUI(position);
+                } else {
+                    MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+                    Bundle args = new Bundle();
+                    args.putInt("gridPosition", position);
+                    movieDetailFragment.setArguments(args);
 
-                getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                        .replace(R.id.gridfragment_container, movieDetailFragment)
-                        .addToBackStack(null)
-                        .commit();
+                    getFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                            .replace(R.id.gridfragment_container, movieDetailFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
             }
         });
         gridview.setOnScrollListener(new AbsListView.OnScrollListener() {

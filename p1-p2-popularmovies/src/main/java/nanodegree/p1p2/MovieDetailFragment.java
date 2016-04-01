@@ -63,7 +63,7 @@ public class MovieDetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    private void updateMovieDetailUI(int gridPosition) {
+    public void updateMovieDetailUI(int gridPosition) {
         if (MovieGridFragment.sortModePopular) {
             movie = MovieGridFragment.movies_most_popular.get(gridPosition);
         } else {
