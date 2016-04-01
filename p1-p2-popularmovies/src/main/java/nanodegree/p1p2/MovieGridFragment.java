@@ -2,7 +2,6 @@ package nanodegree.p1p2;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,7 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import nanodegree.p1p2.data.Movie;
-import nanodegree.p1p2.data.MovieDBAsyncTask;
+import nanodegree.p1p2.data.MovieAsyncTask;
 
 
 public class MovieGridFragment extends Fragment {
@@ -89,11 +88,11 @@ public class MovieGridFragment extends Fragment {
                         lastPositionInGrid = _lastItem;
                         // Last item is fully visible.
                         Log.d(MainActivity.TAG, "Now fetch next page from theMovieDB.");
-                        new MovieDBAsyncTask((AppCompatActivity) getActivity(),gridview).execute();
+                        new MovieAsyncTask((AppCompatActivity) getActivity(),gridview).execute();
                     }
             }
         });
-        new MovieDBAsyncTask((AppCompatActivity) getActivity(),gridview).execute();
+        new MovieAsyncTask((AppCompatActivity) getActivity(),gridview).execute();
 
         return view;
     }

@@ -27,17 +27,17 @@ import nanodegree.p1p2.R;
  * Android Developer Nanodegree
  * UDACITY
  */
-public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
+public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
     private final AppCompatActivity activity;
     private String THE_MOVIE_DB_API_KEY = null;
-    private String MOST_POPULAR_URL = "http://api.themoviedb.org/3/movie/popular/";
-    private String TOP_RATED_URL = "http://api.themoviedb.org/3/movie/top_rated/";
+    private String MOST_POPULAR_URL = "http://api.themoviedb.org/3/movie/popular";
+    private String TOP_RATED_URL = "http://api.themoviedb.org/3/movie/top_rated";
     private final GridView gridView;
     String result_most_popular = "";
     String result_top_rated = "";
 
-    public MovieDBAsyncTask(AppCompatActivity activity, GridView gridview) {
+    public MovieAsyncTask(AppCompatActivity activity, GridView gridview) {
         this.gridView = gridview;
         this.activity = activity;
         try {

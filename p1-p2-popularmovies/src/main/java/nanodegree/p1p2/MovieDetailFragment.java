@@ -1,7 +1,7 @@
 package nanodegree.p1p2;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -10,14 +10,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import nanodegree.p1p2.data.Movie;
+import nanodegree.p1p2.data.TrailerAsyncTask;
 
 /**
  * Created by alexgru on 24-Mar-16.
@@ -26,7 +29,8 @@ import nanodegree.p1p2.data.Movie;
  */
 public class MovieDetailFragment extends Fragment {
 
-    public Movie movie;
+    public static Movie movie;
+    private ListView trailerListView;
     private Menu menu;
     private View view;
 
@@ -46,6 +50,9 @@ public class MovieDetailFragment extends Fragment {
             toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
             toolbar.setDisplayHomeAsUpEnabled(true);
         }
+
+        trailerListView = (ListView) view.findViewById(R.id.trailerListView);
+        trailerListView.setAdapter(new TrailerAdapter(getActivity(),inflater));
 
         int gridPosition = getArguments().getInt("gridPosition");
         updateMovieDetailUI(gridPosition);
@@ -71,6 +78,10 @@ public class MovieDetailFragment extends Fragment {
                 movie = MovieGridFragment.movies_top_rated.get(gridPosition);
             }
 
+//            android.os.Debug.waitForDebugger();
+            if (movie.getTrailers() == null) {
+                new TrailerAsyncTask(movie, (AppCompatActivity) getActivity(),trailerListView).execute();
+            }
             ImageView posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
             posterImageView.setMinimumWidth(Integer.parseInt(Movie.POSTER_WIDTH));
             posterImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -115,5 +126,4 @@ public class MovieDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
-
 }

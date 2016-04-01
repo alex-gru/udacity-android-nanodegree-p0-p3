@@ -2,6 +2,7 @@ package nanodegree.p1p2.data;
 
 import android.util.Log;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.text.ParseException;
@@ -20,7 +21,7 @@ import nanodegree.p1p2.MainActivity;
 public class Movie {
 
     public final static String POSTER_WIDTH = "342";
-    final static String BASE_URL_POSTER = "http://image.tmdb.org/t/p/w" + POSTER_WIDTH;
+    private final static String BASE_URL_POSTER = "http://image.tmdb.org/t/p/w" + POSTER_WIDTH;
 
     @JsonProperty("poster_path")
     String poster_path;
@@ -38,7 +39,7 @@ public class Movie {
     List genre_ids;
 
     @JsonProperty("id")
-    int id;
+    long id;
 
     @JsonProperty("original_title")
     String original_title;
@@ -63,6 +64,9 @@ public class Movie {
 
     @JsonProperty("vote_average")
     String vote_average;
+
+    @JsonIgnore
+    List<Trailer> trailers;
 
     public String getPoster_path() {
         return poster_path;
@@ -99,7 +103,7 @@ public class Movie {
         return genre_ids;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -133,5 +137,9 @@ public class Movie {
 
     public String getVote_average() {
         return vote_average;
+    }
+
+    public List<Trailer> getTrailers() {
+        return trailers;
     }
 }
