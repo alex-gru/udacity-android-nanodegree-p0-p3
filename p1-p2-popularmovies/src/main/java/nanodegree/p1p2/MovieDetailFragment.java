@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import javax.net.ssl.ManagerFactoryParameters;
-
 import nanodegree.p1p2.data.Movie;
 
 /**
@@ -37,38 +35,35 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        setHasOptionsMenu(true);
+        ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+
+        if (!MainActivity.isTablet) {
+            toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
+            toolbar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        int gridPosition = getArguments().getInt("gridPosition");
+
+        if (gridPosition != -1) {
+            updateMovieDetailUI(gridPosition);
+        }
+
         return inflater.inflate(R.layout.fragment_moviedetail, container, false);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        setHasOptionsMenu(true);
-        ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-
-        android.os.Debug.waitForDebugger();
-        if (!MainActivity.isTablet) {
-            toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
-            toolbar.setDisplayHomeAsUpEnabled(true);
-        }
-
-//        android.os.Debug.waitForDebugger();
-
-        int gridPosition = getArguments().getInt("gridPosition");
-
-        if (gridPosition != -1) {
-            updateDetailUI(gridPosition);
-        }
     }
 
-    private void updateDetailUI(int gridPosition) {
+    private void updateMovieDetailUI(int gridPosition) {
         if (MovieGridFragment.sortModePopular) {
             movie = MovieGridFragment.movies_most_popular.get(gridPosition);
         } else {

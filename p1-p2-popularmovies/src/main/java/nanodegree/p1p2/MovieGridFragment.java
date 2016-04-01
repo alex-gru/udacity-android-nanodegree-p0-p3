@@ -42,25 +42,14 @@ public class MovieGridFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_moviegrid, container, false);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
+        View view = inflater.inflate(R.layout.fragment_moviegrid, container, false);
         setHasOptionsMenu(true);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviegrid));
         toolbar.setDisplayHomeAsUpEnabled(false);
 
-        gridview =(GridView) getActivity().findViewById(R.id.gridview);
+        gridview =(GridView) view.findViewById(R.id.gridview);
         gridview.setAdapter(new MoviePosterAdapter(getActivity()));
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -89,22 +78,32 @@ public class MovieGridFragment extends Fragment {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 final int _lastItem = firstVisibleItem + visibleItemCount;
                 if (_lastItem > 0 && totalItemCount > 0)
-            if (_lastItem == MoviePosterAdapter.count && lastPositionInGrid < _lastItem) {
-                lastPositionInGrid = _lastItem;
-                // Last item is fully visible.
-                Log.d(MainActivity.TAG, "Now fetch next page from theMovieDB.");
-                new MovieDBAsyncTask(gridview).execute();
-            }
+                    if (_lastItem == MoviePosterAdapter.count && lastPositionInGrid < _lastItem) {
+                        lastPositionInGrid = _lastItem;
+                        // Last item is fully visible.
+                        Log.d(MainActivity.TAG, "Now fetch next page from theMovieDB.");
+                        new MovieDBAsyncTask(gridview).execute();
+                    }
             }
         });
         new MovieDBAsyncTask(gridview).execute();
 
+        return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
-        android.os.Debug.waitForDebugger();
         menu.findItem(R.id.action_sort_popular).setVisible(!sortModePopular);
         menu.findItem(R.id.action_sort_rating).setVisible(sortModePopular);
         this.menu = menu;
