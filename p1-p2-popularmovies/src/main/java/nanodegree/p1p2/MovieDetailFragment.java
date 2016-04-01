@@ -26,8 +26,9 @@ import nanodegree.p1p2.data.Movie;
  */
 public class MovieDetailFragment extends Fragment {
 
-    private Movie movie;
+    public Movie movie;
     private Menu menu;
+    private View view;
 
     public MovieDetailFragment() {
     }
@@ -35,6 +36,8 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        view = inflater.inflate(R.layout.fragment_moviedetail, container, false);
 
         setHasOptionsMenu(true);
         ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
@@ -45,12 +48,9 @@ public class MovieDetailFragment extends Fragment {
         }
 
         int gridPosition = getArguments().getInt("gridPosition");
+        updateMovieDetailUI(gridPosition);
 
-        if (gridPosition != -1) {
-            updateMovieDetailUI(gridPosition);
-        }
-
-        return inflater.inflate(R.layout.fragment_moviedetail, container, false);
+        return view;
     }
 
     @Override
@@ -64,33 +64,35 @@ public class MovieDetailFragment extends Fragment {
     }
 
     public void updateMovieDetailUI(int gridPosition) {
-        if (MovieGridFragment.sortModePopular) {
-            movie = MovieGridFragment.movies_most_popular.get(gridPosition);
-        } else {
-            movie = MovieGridFragment.movies_top_rated.get(gridPosition);
-        }
-
-        ImageView posterImageView = (ImageView) getView().findViewById(R.id.posterImageView);
-        posterImageView.setMinimumWidth(Integer.parseInt(Movie.POSTER_WIDTH));
-        posterImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        Picasso.with(getContext()).load(movie.getFullPosterPath()).into(posterImageView);
-
-        TextView titleTextView = (TextView) getView().findViewById(R.id.titleTextView);
-        titleTextView.setText(movie.getTitle());
-        TextView yearTextView = (TextView) getView().findViewById(R.id.yearTextView);
-        yearTextView.setText(Integer.toString(movie.getYear()));
-        TextView voteAverageTextView = (TextView) getView().findViewById(R.id.voteAverageTextView);
-        voteAverageTextView.setText(movie.getVote_average() + "/10");
-        TextView overviewTextView = (TextView) getView().findViewById(R.id.overviewTextView);
-        overviewTextView.setText(movie.getOverview());
-
-        Button favoriteButton= (Button) getView().findViewById(R.id.favoriteButton);
-        favoriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"Stage 2 :-)",Toast.LENGTH_SHORT).show();
+        if (MoviePosterAdapter.count > 0 ) {
+            if (MovieGridFragment.sortModePopular) {
+                movie = MovieGridFragment.movies_most_popular.get(gridPosition);
+            } else {
+                movie = MovieGridFragment.movies_top_rated.get(gridPosition);
             }
-        });
+
+            ImageView posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
+            posterImageView.setMinimumWidth(Integer.parseInt(Movie.POSTER_WIDTH));
+            posterImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            Picasso.with(getContext()).load(movie.getFullPosterPath()).into(posterImageView);
+
+            TextView titleTextView = (TextView) view.findViewById(R.id.titleTextView);
+            titleTextView.setText(movie.getTitle());
+            TextView yearTextView = (TextView) view.findViewById(R.id.yearTextView);
+            yearTextView.setText(Integer.toString(movie.getYear()));
+            TextView voteAverageTextView = (TextView) view.findViewById(R.id.voteAverageTextView);
+            voteAverageTextView.setText(movie.getVote_average() + "/10");
+            TextView overviewTextView = (TextView) view.findViewById(R.id.overviewTextView);
+            overviewTextView.setText(movie.getOverview());
+
+            Button favoriteButton= (Button) view.findViewById(R.id.favoriteButton);
+            favoriteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(),"Stage 2 :-)",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override

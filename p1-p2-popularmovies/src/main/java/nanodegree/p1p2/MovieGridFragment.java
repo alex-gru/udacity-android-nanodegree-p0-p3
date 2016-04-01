@@ -57,10 +57,6 @@ public class MovieGridFragment extends Fragment {
                                     int position, long id) {
                 if (MainActivity.isTablet)
                 {
-//                    android.os.Debug.waitForDebugger();
-//                    FragmentManager fm = getActivity().getSupportFragmentManager();
-//                    List<Fragment> fragments = fm.getFragments();
-//                    Log.d(MainActivity.TAG,"TEST");
                     MovieDetailFragment detailFragment = (MovieDetailFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
                     detailFragment.updateMovieDetailUI(position);
                 } else {
@@ -93,11 +89,11 @@ public class MovieGridFragment extends Fragment {
                         lastPositionInGrid = _lastItem;
                         // Last item is fully visible.
                         Log.d(MainActivity.TAG, "Now fetch next page from theMovieDB.");
-                        new MovieDBAsyncTask(gridview).execute();
+                        new MovieDBAsyncTask((AppCompatActivity) getActivity(),gridview).execute();
                     }
             }
         });
-        new MovieDBAsyncTask(gridview).execute();
+        new MovieDBAsyncTask((AppCompatActivity) getActivity(),gridview).execute();
 
         return view;
     }

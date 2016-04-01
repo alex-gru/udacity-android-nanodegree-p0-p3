@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 import nanodegree.p1p2.data.Movie;
 
 public class MoviePosterAdapter extends BaseAdapter {
+    private static final int POSTER_HEIGHT_TABLET = 500;
+    private static final int POSTER_HEIGHT_PHONE = 800;
     private Context mContext;
 
     public static int count = -1;
@@ -41,7 +43,12 @@ public class MoviePosterAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, 800));
+            if (MainActivity.isTablet)
+            {
+                imageView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, POSTER_HEIGHT_TABLET));
+            } else {
+                imageView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, POSTER_HEIGHT_PHONE));
+            }
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         } else {
             imageView = (ImageView) convertView;

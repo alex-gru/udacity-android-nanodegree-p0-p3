@@ -1,6 +1,7 @@
 package nanodegree.p1p2.data;
 
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.GridView;
 
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.util.List;
 
 import nanodegree.p1p2.MainActivity;
+import nanodegree.p1p2.MovieDetailFragment;
 import nanodegree.p1p2.MovieGridFragment;
 import nanodegree.p1p2.MoviePosterAdapter;
 import nanodegree.p1p2.R;
@@ -27,6 +29,7 @@ import nanodegree.p1p2.R;
  */
 public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
+    private final AppCompatActivity activity;
     private String THE_MOVIE_DB_API_KEY = null;
     private String MOST_POPULAR_URL = "http://api.themoviedb.org/3/movie/popular/";
     private String TOP_RATED_URL = "http://api.themoviedb.org/3/movie/top_rated/";
@@ -34,8 +37,9 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
     String result_most_popular = "";
     String result_top_rated = "";
 
-    public MovieDBAsyncTask(GridView gridview) {
+    public MovieDBAsyncTask(AppCompatActivity activity, GridView gridview) {
         this.gridView = gridview;
+        this.activity = activity;
         try {
             THE_MOVIE_DB_API_KEY =  new BufferedReader(new InputStreamReader(gridview.getResources().openRawResource(R.raw.themoviedb))).readLine();
             MOST_POPULAR_URL +=  "?api_key=" + THE_MOVIE_DB_API_KEY;
@@ -97,6 +101,11 @@ public class MovieDBAsyncTask extends AsyncTask<Void, Integer, Integer> {
             MovieGridFragment.movies_top_rated.addAll(newTopRatedMovies);
             MoviePosterAdapter.setSortModePopular(MovieGridFragment.sortModePopular);
             gridView.invalidateViews();
+
+            MovieDetailFragment detailFragment = (MovieDetailFragment)activity.getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
+            if (detailFragment != null && detailFragment.movie == null) {
+                detailFragment.updateMovieDetailUI(0);
+            }
         } catch (Exception e) {
             Log.e(MainActivity.TAG, "Exception occured while parsing JSON data.", e);
         }

@@ -31,12 +31,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             MovieGridFragment movieGridFragment = new MovieGridFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.gridfragment_container, movieGridFragment).commit();
-            boolean isTablet = getResources().getBoolean(R.bool.isTablet);
-            Toast.makeText(getApplicationContext(),"isTablet: " + isTablet,Toast.LENGTH_SHORT).show();
             if (isTablet)
             {
                 Bundle args = new Bundle();
-                args.putInt("gridPosition", -1);
+                args.putInt("gridPosition", 0);
                 MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
                 movieDetailFragment.setArguments(args);
 
