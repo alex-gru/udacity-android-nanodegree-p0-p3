@@ -52,7 +52,7 @@ public class MovieDetailFragment extends Fragment {
         }
 
         trailerListView = (ListView) view.findViewById(R.id.trailerListView);
-        trailerListView.setAdapter(new TrailerAdapter(getActivity(),inflater));
+        trailerListView.setAdapter(new TrailerAdapter(getActivity(), inflater));
 
         int gridPosition = getArguments().getInt("gridPosition");
         updateMovieDetailUI(gridPosition);
@@ -81,7 +81,12 @@ public class MovieDetailFragment extends Fragment {
 //            android.os.Debug.waitForDebugger();
             if (movie.getTrailers() == null) {
                 new TrailerAsyncTask(movie, (AppCompatActivity) getActivity(),trailerListView).execute();
+            } else {
+                TrailerAdapter.updateCount(movie);
+                trailerListView.invalidateViews();
+                TrailerAdapter.setListViewHeightBasedOnItems(trailerListView);
             }
+
             ImageView posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
             posterImageView.setMinimumWidth(Integer.parseInt(Movie.POSTER_WIDTH));
             posterImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
