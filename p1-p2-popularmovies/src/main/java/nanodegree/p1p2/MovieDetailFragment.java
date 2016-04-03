@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import nanodegree.p1p2.data.Movie;
+import nanodegree.p1p2.data.ReviewAsyncTask;
 import nanodegree.p1p2.data.TrailerAsyncTask;
 
 /**
@@ -33,9 +34,6 @@ public class MovieDetailFragment extends Fragment {
     private ListView trailerListView;
     private Menu menu;
     private View view;
-
-    public MovieDetailFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,6 +84,7 @@ public class MovieDetailFragment extends Fragment {
                 trailerListView.invalidateViews();
                 TrailerAdapter.setListViewHeightBasedOnItems(trailerListView);
             }
+            new ReviewAsyncTask((AppCompatActivity)getActivity(),movie).execute();
 
             ImageView posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
             posterImageView.setMinimumWidth(Integer.parseInt(Movie.POSTER_WIDTH));
