@@ -104,7 +104,22 @@ public class MovieDetailFragment extends Fragment {
             favoriteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(),"Stage 2 :-)",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Stage 2 :-)", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            Button showReviewButton= (Button) view.findViewById(R.id.showReviewsBtn);
+            showReviewButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(),"Show reviews...",Toast.LENGTH_SHORT).show();
+                    ReviewFragment reviewFragment = new ReviewFragment();
+
+                    getFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                            .add(R.id.gridfragment_container, reviewFragment)
+                            .addToBackStack(null)
+                            .commit();
                 }
             });
         }
