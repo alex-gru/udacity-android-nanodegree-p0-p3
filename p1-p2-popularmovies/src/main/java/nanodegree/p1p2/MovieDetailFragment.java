@@ -32,6 +32,7 @@ public class MovieDetailFragment extends Fragment {
 
     public static Movie movie;
     private ListView trailerListView;
+    public static TextView noTrailersTextView;
     private Menu menu;
     private View view;
 
@@ -51,6 +52,8 @@ public class MovieDetailFragment extends Fragment {
 
         trailerListView = (ListView) view.findViewById(R.id.trailerListView);
         trailerListView.setAdapter(new TrailerAdapter(getActivity(), inflater));
+
+        noTrailersTextView = (TextView) view.findViewById(R.id.noTrailersTextview);
 
         int gridPosition = getArguments().getInt("gridPosition");
         updateMovieDetailUI(gridPosition);
@@ -80,12 +83,16 @@ public class MovieDetailFragment extends Fragment {
             if (movie.getTrailers() == null) {
                 new TrailerAsyncTask(movie, (AppCompatActivity) getActivity(),trailerListView).execute();
             } else {
-                TrailerAdapter.updateCount(movie);
+                TrailerAdapter.updateCount(movie.getTrailers().size());
                 trailerListView.invalidateViews();
-                TrailerAdapter.setListViewHeightBasedOnItems(trailerListView);
-            }
-            new ReviewAsyncTask((AppCompatActivity)getActivity(),movie).execute();
+                MainActivity.setListViewHeightBasedOnItems(trailerListView);
 
+                if (movie.getTrailers().isEmpty()) {
+                    noTrailersTextView.setVisibility(View.VISIBLE);
+                } else {
+                    noTrailersTextView.setVisibility(View.GONE);
+                }
+            }
             ImageView posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
             posterImageView.setMinimumWidth(Integer.parseInt(Movie.POSTER_WIDTH));
             posterImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -112,12 +119,10 @@ public class MovieDetailFragment extends Fragment {
             showReviewButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(),"Show reviews...",Toast.LENGTH_SHORT).show();
                     ReviewFragment reviewFragment = new ReviewFragment();
-
+                    ReviewFragment.movie = movie;
                     getFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                            .add(R.id.gridfragment_container, reviewFragment)
+                            .replace(R.id.gridfragment_container, reviewFragment)
                             .addToBackStack(null)
                             .commit();
                 }

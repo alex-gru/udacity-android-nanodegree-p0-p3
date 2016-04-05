@@ -19,6 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/titleTextView"
+        android:fadeScrollbars="false"
+        android:scrollbarThumbVertical="@drawable/scrollbar"
+        android:scrollbarSize="4dp"
         xmlns:tools="http://schemas.android.com/tools"
         android:background="@android:color/background_light"
         tools:context=".MovieDetailFragment">
@@ -91,8 +94,8 @@
                 android:background="@color/colorMovieTitleBackground"
                 android:layout_alignLeft="@id/overviewTextView"
                 android:layout_alignRight="@id/overviewTextView"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
                 android:layout_below="@id/overviewTextView"/>
 
             <TextView
@@ -107,13 +110,26 @@
                 android:layout_alignRight="@id/overviewTextView"
                 android:layout_marginBottom="12dp"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextTranslucent"
+                android:layout_below="@id/trailerTitle"
+                android:layout_marginBottom="12dp"
+                android:layout_centerHorizontal="true"
+                android:text="@string/noTrailers"
+                android:id="@+id/noTrailersTextview"
+                android:visibility="gone"/>
+
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/trailerListView"
-                android:layout_below="@id/trailerTitle"
+                android:layout_below="@id/noTrailersTextview"
                 android:layout_alignLeft="@id/overviewTextView"
-                android:layout_marginBottom="12dp">
+                android:layout_alignRight="@id/overviewTextView"
+                android:layout_marginBottom="12dp"
+                android:divider="@drawable/list_divider">
             </ListView>
 
             <Button
@@ -121,7 +137,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/showReviewsBtn"
                 android:text="@string/showReviews"
-                android:background="@color/colorMovieTitleBackground"
+                android:textColor="@color/colorMovieTitleBackground"
+                android:background="@android:color/transparent"
                 android:layout_alignLeft="@id/overviewTextView"
                 android:layout_alignRight="@id/overviewTextView"
                 android:layout_below="@id/trailerListView"

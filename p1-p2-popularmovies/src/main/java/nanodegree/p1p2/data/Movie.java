@@ -68,6 +68,10 @@ public class Movie {
     @JsonIgnore
     List<Trailer> trailers;
 
+    @JsonIgnore
+    List<Review> reviews;
+
+
     public String getPoster_path() {
         return poster_path;
     }
@@ -141,5 +145,9 @@ public class Movie {
 
     public List<Trailer> getTrailers() {
         return trailers;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 }

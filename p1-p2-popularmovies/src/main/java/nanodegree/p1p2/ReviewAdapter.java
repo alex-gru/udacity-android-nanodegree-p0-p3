@@ -1,32 +1,22 @@
 package nanodegree.p1p2;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import nanodegree.p1p2.data.Movie;
 
-/**
- * Created by alexgru on 01-Apr-16.
- * Android Developer Nanodegree
- * UDACITY
- */
-public class TrailerAdapter extends BaseAdapter {
+public class ReviewAdapter extends BaseAdapter {
     private final LayoutInflater inflater;
     private final Context mContext;
     public static int count = -1;
     private ViewGroup parent;
 
-    public TrailerAdapter(Context c, LayoutInflater inflater) {
+    public ReviewAdapter(Context c, LayoutInflater inflater) {
         this.mContext = c;
         this.inflater = inflater;
     }
@@ -50,42 +40,44 @@ public class TrailerAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         this.parent = parent;
-        View row = inflater.inflate(R.layout.trailerrow, parent, false);
+        View row = inflater.inflate(R.layout.reviewrow, parent, false);
 
         Movie movie = MovieDetailFragment.movie;
-        if (movie.getTrailers() != null)
+        if (movie.getReviews() != null)
         {
-            TextView trailerTitle = (TextView) row.findViewById(R.id.trailerTitle);
-            trailerTitle.setText(movie.getTrailers().get(position).getName());
-
+            TextView reviewAuthor = (TextView) row.findViewById(R.id.reviewAuthor);
+            reviewAuthor.setText(movie.getReviews().get(position).getAuthor());
+            TextView reviewContent = (TextView) row.findViewById(R.id.reviewContent);
+            reviewContent.setText(movie.getReviews().get(position).getContent());
         }
 
-        row.setOnClickListener(new TrailerOnClickListener(position));
+        row.setOnClickListener(new ReviewOnClickListener(position));
         return row;
     }
 
     public static void updateCount(int count) {
-        TrailerAdapter.count = count;
-        TextView noTrailersTextView = MovieDetailFragment.noTrailersTextView;
+        ReviewAdapter.count = count;
+
+        TextView noReviewsTextView = ReviewFragment.noReviewsTextView;
 
         if (count == 0) {
-            noTrailersTextView.setVisibility(View.VISIBLE);
+            noReviewsTextView.setVisibility(View.VISIBLE);
         } else {
-            noTrailersTextView.setVisibility(View.GONE);
+            noReviewsTextView.setVisibility(View.GONE);
         }
     }
 
-    private class TrailerOnClickListener implements View.OnClickListener {
+    private class ReviewOnClickListener implements View.OnClickListener {
 
         private final int trailerIdx;
 
-        public TrailerOnClickListener(int trailerIdx) {
+        public ReviewOnClickListener(int trailerIdx) {
             this.trailerIdx = trailerIdx;
         }
 
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(MovieDetailFragment.movie.getTrailers().get(trailerIdx).getYoutubeURL())));
+                Toast.makeText(mContext,"Do something....",Toast.LENGTH_SHORT);
             }
     }
 }

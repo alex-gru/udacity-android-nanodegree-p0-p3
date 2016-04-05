@@ -6,4 +6,7 @@
     <string name="toolbar_title_moviegrid">Pop Movies</string>
     <string name="trailers">Trailers</string>
     <string name="showReviews">Show reviews</string>
+    <string name="toolbar_title_moviereviews">Reviews</string>
+    <string name="noReviews">No reviews found.</string>
+    <string name="noTrailers">No trailers found.</string>
 </resources>

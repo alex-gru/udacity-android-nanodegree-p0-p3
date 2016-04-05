@@ -95,9 +95,9 @@ public class TrailerAsyncTask extends AsyncTask<Void, Integer, Integer> {
             String jsonTrailers = mapper.readValue(result, JsonNode.class).get("results").toString();
             List<Trailer> trailers = mapper.readValue(jsonTrailers, TypeFactory.defaultInstance().constructCollectionType(List.class, Trailer.class));
             movie.trailers = trailers;
-            TrailerAdapter.updateCount(movie);
+            TrailerAdapter.updateCount(movie.getTrailers().size());
             trailerListView.invalidateViews();
-            TrailerAdapter.setListViewHeightBasedOnItems(trailerListView);
+            MainActivity.setListViewHeightBasedOnItems(trailerListView);
         } catch (Exception e) {
             Log.e(MainActivity.TAG, "Exception occured while parsing JSON data.", e);
         }

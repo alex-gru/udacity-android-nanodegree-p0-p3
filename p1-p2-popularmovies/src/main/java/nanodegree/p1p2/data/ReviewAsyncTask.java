@@ -3,6 +3,7 @@ package nanodegree.p1p2.data;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +21,9 @@ import nanodegree.p1p2.MovieDetailFragment;
 import nanodegree.p1p2.MovieGridFragment;
 import nanodegree.p1p2.MoviePosterAdapter;
 import nanodegree.p1p2.R;
+import nanodegree.p1p2.ReviewAdapter;
+import nanodegree.p1p2.ReviewFragment;
+import nanodegree.p1p2.TrailerAdapter;
 
 /**
  * Created by alexgru on 22-Mar-16.
@@ -29,14 +33,16 @@ import nanodegree.p1p2.R;
 public class ReviewAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
     private final AppCompatActivity activity;
+    private final ListView reviewListView;
     private Movie movie;
     private String THE_MOVIE_DB_API_KEY = null;
     private String REVIEW_URL = "http://api.themoviedb.org/3/movie/<id>/reviews";
     String result = "";
 
-    public ReviewAsyncTask(AppCompatActivity activity, Movie movie) {
-        this.activity = activity;
+    public ReviewAsyncTask(Movie movie, AppCompatActivity activity, ListView reviewListView) {
         this.movie = movie;
+        this.reviewListView = reviewListView;
+        this.activity = activity;
 
         try {
             THE_MOVIE_DB_API_KEY =  new BufferedReader(new InputStreamReader(activity.getResources().openRawResource(R.raw.themoviedb))).readLine();
@@ -90,9 +96,10 @@ public class ReviewAsyncTask extends AsyncTask<Void, Integer, Integer> {
             ObjectMapper mapper = new ObjectMapper();
 
             String json = mapper.readValue(result, JsonNode.class).get("results").toString();
-            List<Review> reviews = mapper.readValue(json, TypeFactory.defaultInstance().constructCollectionType(List.class, Review.class));
-
-            MovieDetailFragment detailFragment = (MovieDetailFragment)activity.getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
+            movie.reviews = mapper.readValue(json, TypeFactory.defaultInstance().constructCollectionType(List.class, Review.class));
+            ReviewAdapter.updateCount(movie.getReviews().size());
+            reviewListView.invalidateViews();
+            MainActivity.setListViewHeightBasedOnItems(reviewListView);
         } catch (Exception e) {
             Log.e(MainActivity.TAG, "Exception occured while parsing JSON data.", e);
         }
