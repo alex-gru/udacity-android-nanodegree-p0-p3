@@ -121,8 +121,16 @@ public class MovieDetailFragment extends Fragment {
                 public void onClick(View v) {
                     ReviewFragment reviewFragment = new ReviewFragment();
                     ReviewFragment.movie = movie;
+
+                    int container = -1;
+                    if (MainActivity.isTablet) {
+                        container = R.id.detailfragment_container;
+                    } else {
+                        container = R.id.gridfragment_container;
+                    }
+
                     getFragmentManager().beginTransaction()
-                            .replace(R.id.gridfragment_container, reviewFragment)
+                            .replace(container, reviewFragment)
                             .addToBackStack(null)
                             .commit();
                 }
