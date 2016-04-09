@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
                 if (findViewById(R.id.detailfragment_container) != null) {
                     getSupportFragmentManager().beginTransaction()
-                            .add(R.id.detailfragment_container, movieDetailFragment).commit();
+                            .add(R.id.detailfragment_container, movieDetailFragment,MovieDetailFragment.TAG)
+                            .commit();
                 }
             }
         }

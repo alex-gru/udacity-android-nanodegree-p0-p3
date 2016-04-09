@@ -31,6 +31,7 @@ import nanodegree.p1p2.data.TrailerAsyncTask;
 public class MovieDetailFragment extends Fragment {
 
     public static Movie movie;
+    public static String TAG = "MOVIEDETAILS";
     private ListView trailerListView;
     public static TextView noTrailersTextView;
     private Menu menu;
@@ -55,8 +56,7 @@ public class MovieDetailFragment extends Fragment {
 
         noTrailersTextView = (TextView) view.findViewById(R.id.noTrailersTextview);
 
-        int gridPosition = getArguments().getInt("gridPosition");
-        updateMovieDetailUI(gridPosition);
+        updateMovieDetailUI();
 
         return view;
     }
@@ -71,12 +71,12 @@ public class MovieDetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    public void updateMovieDetailUI(int gridPosition) {
+    public void updateMovieDetailUI() {
         if (MoviePosterAdapter.count > 0 ) {
             if (MovieGridFragment.sortModePopular) {
-                movie = MovieGridFragment.movies_most_popular.get(gridPosition);
+                movie = MovieGridFragment.movies_most_popular.get(MovieGridFragment.selectedPositionInGrid);
             } else {
-                movie = MovieGridFragment.movies_top_rated.get(gridPosition);
+                movie = MovieGridFragment.movies_top_rated.get(MovieGridFragment.selectedPositionInGrid);
             }
 
 //            android.os.Debug.waitForDebugger();

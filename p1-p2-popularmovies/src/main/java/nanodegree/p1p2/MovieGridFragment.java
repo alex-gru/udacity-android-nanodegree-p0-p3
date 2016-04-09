@@ -29,6 +29,7 @@ public class MovieGridFragment extends Fragment {
     public static List<Movie> movies_most_popular;
     public static boolean sortModePopular = true;
     public static int lastPositionInGrid = -1;
+    public static int selectedPositionInGrid = 0;
     public static int page = 0;
 
     public MovieGridFragment() {
@@ -54,19 +55,29 @@ public class MovieGridFragment extends Fragment {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
+
+                selectedPositionInGrid = position;
+
                 if (MainActivity.isTablet)
                 {
-                    MovieDetailFragment detailFragment = (MovieDetailFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
-                    detailFragment.updateMovieDetailUI(position);
+                    android.os.Debug.waitForDebugger();
+                    Fragment visibleFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
+                    MovieDetailFragment detailFragment = (MovieDetailFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MovieDetailFragment.TAG);
+
+                    if (visibleFragment instanceof ReviewFragment) {
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.detailfragment_container,detailFragment)
+                                .commit();
+                    }
+
+                    detailFragment.updateMovieDetailUI();
+
                 } else {
                     MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
-                    Bundle args = new Bundle();
-                    args.putInt("gridPosition", position);
-                    movieDetailFragment.setArguments(args);
-
-                    getFragmentManager().beginTransaction()
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
                             .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                            .replace(R.id.gridfragment_container, movieDetailFragment)
+                            .replace(R.id.gridfragment_container, movieDetailFragment, MovieDetailFragment.TAG)
                             .addToBackStack(null)
                             .commit();
                 }

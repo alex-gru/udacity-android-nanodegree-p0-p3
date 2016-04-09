@@ -104,7 +104,7 @@ public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
             MovieDetailFragment detailFragment = (MovieDetailFragment)activity.getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
             if (detailFragment != null && detailFragment.movie == null) {
-                detailFragment.updateMovieDetailUI(0);
+                detailFragment.updateMovieDetailUI();
             }
         } catch (Exception e) {
             Log.e(MainActivity.TAG, "Exception occured while parsing JSON data.", e);
