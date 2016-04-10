@@ -124,19 +124,16 @@ public class MovieDetailFragment extends Fragment {
                 }
             }
 
-            if (movie != null) {
-                if (movie.getReviews() == null) {
-                    new ReviewAsyncTask(movie, (AppCompatActivity) getActivity(),reviewListView).execute();
-                } else {
-                    ReviewAdapter.updateCount(movie.getReviews().size());
-                    reviewListView.invalidateViews();
-                    MainActivity.setListViewHeightBasedOnItems(reviewListView);
+            if (movie.getReviews() == null) {
+                new ReviewAsyncTask(movie, (AppCompatActivity) getActivity(),reviewListView).execute();
+            } else {
+                ReviewAdapter.updateCount(movie.getReviews().size());
+                reviewListView.invalidateViews();
 
-                    if (movie.getReviews().isEmpty()) {
-                        noReviewsTextView.setVisibility(View.VISIBLE);
-                    } else {
-                        noReviewsTextView.setVisibility(View.GONE);
-                    }
+                if (movie.getReviews().isEmpty()) {
+                    noReviewsTextView.setVisibility(View.VISIBLE);
+                } else {
+                    noReviewsTextView.setVisibility(View.GONE);
                 }
             }
 

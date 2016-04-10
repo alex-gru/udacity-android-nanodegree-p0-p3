@@ -94,7 +94,6 @@ public class ReviewAsyncTask extends AsyncTask<Void, Integer, Integer> {
             movie.reviews = mapper.readValue(json, TypeFactory.defaultInstance().constructCollectionType(List.class, Review.class));
             ReviewAdapter.updateCount(movie.getReviews().size());
             reviewListView.invalidateViews();
-            MainActivity.setListViewHeightBasedOnItems(reviewListView);
         } catch (Exception e) {
             Log.e(MainActivity.TAG, "Exception occured while parsing JSON data.", e);
         }

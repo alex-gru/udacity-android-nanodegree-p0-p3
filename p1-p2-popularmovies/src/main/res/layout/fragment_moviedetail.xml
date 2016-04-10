@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
     android:layout_width="match_parent"
@@ -17,7 +17,7 @@
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/titleTextView"
         android:fadeScrollbars="false"
         android:id="@+id/movieDetailScrollView"
@@ -130,6 +130,7 @@
                 android:layout_alignLeft="@id/overviewTextView"
                 android:layout_alignRight="@id/overviewTextView"
                 android:layout_marginBottom="12dp"
+                android:scrollbars="none"
                 android:divider="@drawable/list_divider">
             </ListView>
 
@@ -184,11 +185,9 @@
             <ListView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/reviewlistview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/noReviewsTextview"
-                android:fadeScrollbars="false"
-                android:scrollbarThumbVertical="@drawable/scrollbar"
-                android:scrollbarSize="4dp"
+                android:scrollbars="none"
                 android:divider="@drawable/list_divider"/>
 
         </RelativeLayout>
