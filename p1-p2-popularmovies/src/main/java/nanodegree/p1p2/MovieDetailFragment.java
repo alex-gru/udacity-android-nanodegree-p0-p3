@@ -50,7 +50,23 @@ public class MovieDetailFragment extends Fragment {
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_moviegrid));
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        setHasOptionsMenu(false);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (MainActivity.isHorizontalTablet) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_moviegrid));
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            setHasOptionsMenu(true);
+        } else {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            setHasOptionsMenu(false);
+        }
+
     }
 
     @Override
@@ -60,13 +76,6 @@ public class MovieDetailFragment extends Fragment {
 //        android.os.Debug.waitForDebugger();
         view = inflater.inflate(R.layout.fragment_moviedetail, container, false);
         scrollView = (ScrollView) view.findViewById(R.id.movieDetailScrollView);
-        ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-
-        if (!MainActivity.isHorizontalTablet) {
-            toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
-            toolbar.setDisplayHomeAsUpEnabled(true);
-            setHasOptionsMenu(true);
-        }
 
         trailerListView = (ListView) view.findViewById(R.id.trailerListView);
         trailerListView.setAdapter(new TrailerAdapter(getActivity(), inflater));

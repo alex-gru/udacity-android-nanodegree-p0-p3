@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         if (findViewById(R.id.gridfragment_container) != null) {
 
             if (savedInstanceState != null) {
-                Fragment movieGridFragment = getSupportFragmentManager().findFragmentByTag(MovieGridFragment.TAG);
-                if (movieGridFragment != null && !movieGridFragment.isAdded()) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.gridfragment_container, movieGridFragment,MovieGridFragment.TAG)
-                            .commit();
-                }
+//                Fragment movieGridFragment = getSupportFragmentManager().findFragmentByTag(MovieGridFragment.TAG);
+//                if (movieGridFragment != null && !movieGridFragment.isAdded()) {
+//                    getSupportFragmentManager().beginTransaction()
+//                            .replace(R.id.gridfragment_container, movieGridFragment,MovieGridFragment.TAG)
+//                            .commit();
+//                }
 
                 if (isHorizontalTablet) {
                     Fragment movieDetailFragment = getSupportFragmentManager().findFragmentByTag(MovieDetailFragment.TAG);
