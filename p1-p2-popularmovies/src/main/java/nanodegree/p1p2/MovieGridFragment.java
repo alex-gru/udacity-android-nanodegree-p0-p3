@@ -23,6 +23,7 @@ import nanodegree.p1p2.data.MovieAsyncTask;
 
 
 public class MovieGridFragment extends Fragment {
+    public static final String TAG = "MOVIEGRID";
     public GridView gridview;
     private Menu menu;
     public static List<Movie> movies_top_rated;
@@ -58,17 +59,12 @@ public class MovieGridFragment extends Fragment {
 
                 selectedPositionInGrid = position;
 
-                if (MainActivity.isTablet)
+                if (MainActivity.isHorizontalTablet)
                 {
-                    android.os.Debug.waitForDebugger();
+//                    android.os.Debug.waitForDebugger();
+                    MovieDetailFragment.scrollUp();
                     Fragment visibleFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
                     MovieDetailFragment detailFragment = (MovieDetailFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MovieDetailFragment.TAG);
-
-                    if (visibleFragment instanceof ReviewFragment) {
-                        getFragmentManager().beginTransaction()
-                                .replace(R.id.detailfragment_container,detailFragment)
-                                .commit();
-                    }
 
                     detailFragment.updateMovieDetailUI();
 
@@ -120,7 +116,9 @@ public class MovieGridFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu, menu);
+        if (!menu.hasVisibleItems()) {
+            inflater.inflate(R.menu.menu, menu);
+        }
         menu.findItem(R.id.action_sort_popular).setVisible(!sortModePopular);
         menu.findItem(R.id.action_sort_rating).setVisible(sortModePopular);
         this.menu = menu;

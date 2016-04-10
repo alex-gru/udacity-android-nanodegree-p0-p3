@@ -10,10 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,28 +32,49 @@ public class MovieDetailFragment extends Fragment {
 
     public static Movie movie;
     public static String TAG = "MOVIEDETAILS";
-    private ListView trailerListView;
+    public static ListView trailerListView;
+    public static ListView reviewListView;
+    public static TextView noReviewsTextView;
     public static TextView noTrailersTextView;
     private Menu menu;
-    private View view;
+    private static View view;
+    private static ScrollView scrollView;
+
+    public static void scrollUp () {
+        scrollView.setScrollY(0);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_moviegrid));
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        setHasOptionsMenu(false);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+//        android.os.Debug.waitForDebugger();
         view = inflater.inflate(R.layout.fragment_moviedetail, container, false);
-
-        setHasOptionsMenu(true);
+        scrollView = (ScrollView) view.findViewById(R.id.movieDetailScrollView);
         ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
-        if (!MainActivity.isTablet) {
+        if (!MainActivity.isHorizontalTablet) {
             toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
             toolbar.setDisplayHomeAsUpEnabled(true);
+            setHasOptionsMenu(true);
         }
 
         trailerListView = (ListView) view.findViewById(R.id.trailerListView);
         trailerListView.setAdapter(new TrailerAdapter(getActivity(), inflater));
 
+        reviewListView = (ListView) view.findViewById(R.id.reviewlistview);
+        reviewListView.setAdapter(new ReviewAdapter(getActivity(),inflater));
+
+        noReviewsTextView = (TextView) view.findViewById(R.id.noReviewsTextview);
         noTrailersTextView = (TextView) view.findViewById(R.id.noTrailersTextview);
 
         updateMovieDetailUI();
@@ -93,6 +114,23 @@ public class MovieDetailFragment extends Fragment {
                     noTrailersTextView.setVisibility(View.GONE);
                 }
             }
+
+            if (movie != null) {
+                if (movie.getReviews() == null) {
+                    new ReviewAsyncTask(movie, (AppCompatActivity) getActivity(),reviewListView).execute();
+                } else {
+                    ReviewAdapter.updateCount(movie.getReviews().size());
+                    reviewListView.invalidateViews();
+                    MainActivity.setListViewHeightBasedOnItems(reviewListView);
+
+                    if (movie.getReviews().isEmpty()) {
+                        noReviewsTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        noReviewsTextView.setVisibility(View.GONE);
+                    }
+                }
+            }
+
             ImageView posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
             posterImageView.setMinimumWidth(Integer.parseInt(Movie.POSTER_WIDTH));
             posterImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -114,27 +152,6 @@ public class MovieDetailFragment extends Fragment {
                     Toast.makeText(getContext(), "Stage 2 :-)", Toast.LENGTH_SHORT).show();
                 }
             });
-
-            Button showReviewButton= (Button) view.findViewById(R.id.showReviewsBtn);
-            showReviewButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ReviewFragment reviewFragment = new ReviewFragment();
-                    ReviewFragment.movie = movie;
-
-                    int container = -1;
-                    if (MainActivity.isTablet) {
-                        container = R.id.detailfragment_container;
-                    } else {
-                        container = R.id.gridfragment_container;
-                    }
-
-                    getFragmentManager().beginTransaction()
-                            .replace(container, reviewFragment)
-                            .addToBackStack(null)
-                            .commit();
-                }
-            });
         }
     }
 
@@ -146,8 +163,11 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        if (!MainActivity.isTablet) {
-            inflater.inflate(R.menu.menu, menu);
+        if (!MainActivity.isHorizontalTablet) {
+
+            if (!menu.hasVisibleItems()) {
+                inflater.inflate(R.menu.menu, menu);
+            }
 
             menu.findItem(R.id.action_sort_popular).setVisible(false);
             menu.findItem(R.id.action_sort_rating).setVisible(false);

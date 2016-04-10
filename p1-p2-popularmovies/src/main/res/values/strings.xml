@@ -9,4 +9,5 @@
     <string name="toolbar_title_moviereviews">Reviews</string>
     <string name="noReviews">No reviews found.</string>
     <string name="noTrailers">No trailers found.</string>
+    <string name="reviews">Reviews</string>
 </resources>

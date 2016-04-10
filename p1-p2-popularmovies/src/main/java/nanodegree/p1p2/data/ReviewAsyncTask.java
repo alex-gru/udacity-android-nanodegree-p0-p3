@@ -17,13 +17,8 @@ import java.net.URL;
 import java.util.List;
 
 import nanodegree.p1p2.MainActivity;
-import nanodegree.p1p2.MovieDetailFragment;
-import nanodegree.p1p2.MovieGridFragment;
-import nanodegree.p1p2.MoviePosterAdapter;
 import nanodegree.p1p2.R;
 import nanodegree.p1p2.ReviewAdapter;
-import nanodegree.p1p2.ReviewFragment;
-import nanodegree.p1p2.TrailerAdapter;
 
 /**
  * Created by alexgru on 22-Mar-16.

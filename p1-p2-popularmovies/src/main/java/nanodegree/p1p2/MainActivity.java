@@ -1,6 +1,8 @@
 package nanodegree.p1p2;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,10 +13,11 @@ import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
     public static final String TAG = "NANODEGREE.P1P2";
-    public static boolean isTablet;
+    public static boolean isHorizontalTablet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        android.os.Debug.waitForDebugger();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
 
@@ -23,28 +26,50 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
 
-        isTablet = getResources().getBoolean(R.bool.isTablet);
+        isHorizontalTablet = getResources().getBoolean(R.bool.isTablet);
 
         if (findViewById(R.id.gridfragment_container) != null) {
 
             if (savedInstanceState != null) {
+                Fragment movieGridFragment = getSupportFragmentManager().findFragmentByTag(MovieGridFragment.TAG);
+                if (movieGridFragment != null && !movieGridFragment.isAdded()) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.gridfragment_container, movieGridFragment,MovieGridFragment.TAG)
+                            .commit();
+                }
+
+                if (isHorizontalTablet) {
+                    Fragment movieDetailFragment = getSupportFragmentManager().findFragmentByTag(MovieDetailFragment.TAG);
+                    if (!movieDetailFragment.isAdded()) {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.detailfragment_container, movieDetailFragment, MovieDetailFragment.TAG)
+                                .commit();
+                    }
+                }
                 return;
             }
 
             MovieGridFragment movieGridFragment = new MovieGridFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.gridfragment_container, movieGridFragment).commit();
-            if (isTablet)
+                    .add(R.id.gridfragment_container, movieGridFragment,MovieGridFragment.TAG).commit();
+            if (isHorizontalTablet)
             {
                 Bundle args = new Bundle();
                 args.putInt("gridPosition", 0);
-                MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+                MovieDetailFragment movieDetailFragment = (MovieDetailFragment) getSupportFragmentManager().findFragmentByTag(MovieDetailFragment.TAG);
+                if (movieDetailFragment == null) {
+                    movieDetailFragment = new MovieDetailFragment();
+                }
                 movieDetailFragment.setArguments(args);
 
                 if (findViewById(R.id.detailfragment_container) != null) {
-                    getSupportFragmentManager().beginTransaction()
-                            .add(R.id.detailfragment_container, movieDetailFragment,MovieDetailFragment.TAG)
-                            .commit();
+
+                    Fragment fragmentInDetailContainer = getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
+                    if (fragmentInDetailContainer == null || ! (fragmentInDetailContainer instanceof MovieDetailFragment)) {
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.detailfragment_container, movieDetailFragment,MovieDetailFragment.TAG)
+                                .commit();
+                    }
                 }
             }
         }

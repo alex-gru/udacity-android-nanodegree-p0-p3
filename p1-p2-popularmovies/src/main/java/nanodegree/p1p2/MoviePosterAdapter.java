@@ -43,7 +43,7 @@ public class MoviePosterAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            if (MainActivity.isTablet)
+            if (MainActivity.isHorizontalTablet)
             {
                 imageView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, POSTER_HEIGHT_TABLET));
             } else {

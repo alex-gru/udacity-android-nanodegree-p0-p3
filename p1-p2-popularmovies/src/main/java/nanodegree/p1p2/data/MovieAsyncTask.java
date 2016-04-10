@@ -102,7 +102,7 @@ public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
             MoviePosterAdapter.setSortModePopular(MovieGridFragment.sortModePopular);
             gridView.invalidateViews();
 
-            MovieDetailFragment detailFragment = (MovieDetailFragment)activity.getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
+            MovieDetailFragment detailFragment = (MovieDetailFragment)activity.getSupportFragmentManager().findFragmentByTag(MovieDetailFragment.TAG);
             if (detailFragment != null && detailFragment.movie == null) {
                 detailFragment.updateMovieDetailUI();
             }

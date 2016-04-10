@@ -58,7 +58,7 @@ public class ReviewAdapter extends BaseAdapter {
     public static void updateCount(int count) {
         ReviewAdapter.count = count;
 
-        TextView noReviewsTextView = ReviewFragment.noReviewsTextView;
+        TextView noReviewsTextView = MovieDetailFragment.noReviewsTextView;
 
         if (count == 0) {
             noReviewsTextView.setVisibility(View.VISIBLE);

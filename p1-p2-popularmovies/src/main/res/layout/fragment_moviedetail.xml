@@ -20,6 +20,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/titleTextView"
         android:fadeScrollbars="false"
+        android:id="@+id/movieDetailScrollView"
         android:scrollbarThumbVertical="@drawable/scrollbar"
         android:scrollbarSize="4dp"
         xmlns:tools="http://schemas.android.com/tools"
@@ -132,18 +133,63 @@
                 android:divider="@drawable/list_divider">
             </ListView>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/showReviewsBtn"
-                android:text="@string/showReviews"
-                android:textColor="@color/colorMovieTitleBackground"
-                android:background="@android:color/transparent"
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/showReviewsBtn"-->
+                <!--android:text="@string/showReviews"-->
+                <!--android:textColor="@color/colorMovieTitleBackground"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--android:layout_alignLeft="@id/overviewTextView"-->
+                <!--android:layout_alignRight="@id/overviewTextView"-->
+                <!--android:layout_below="@id/trailerListView"-->
+                <!--android:elevation="2dp"-->
+                <!--android:visibility="visible"-->
+                <!--android:layout_marginBottom="12dp"/>-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/reviewDivider"
+                android:background="@color/colorMovieTitleBackground"
                 android:layout_alignLeft="@id/overviewTextView"
                 android:layout_alignRight="@id/overviewTextView"
-                android:layout_below="@id/trailerListView"
-                android:elevation="2dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_below="@id/trailerListView"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:id="@+id/reviewTitle"
+                android:text="@string/reviews"
+                android:textColor="@color/colorTextTranslucent"
+                android:layout_below="@id/reviewDivider"
+                android:layout_alignLeft="@id/overviewTextView"
+                android:layout_alignRight="@id/overviewTextView"
                 android:layout_marginBottom="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:textColor="@color/colorTextTranslucent"
+                android:text="@string/noReviews"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/reviewTitle"
+                android:visibility="gone"
+                android:id="@+id/noReviewsTextview"/>
+
+            <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/reviewlistview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/noReviewsTextview"
+                android:fadeScrollbars="false"
+                android:scrollbarThumbVertical="@drawable/scrollbar"
+                android:scrollbarSize="4dp"
+                android:divider="@drawable/list_divider"/>
 
         </RelativeLayout>
     </ScrollView>
