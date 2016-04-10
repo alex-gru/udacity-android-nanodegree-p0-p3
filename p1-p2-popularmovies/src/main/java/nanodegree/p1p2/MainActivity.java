@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                     .commit();
         }
 
+        // found here: http://stackoverflow.com/a/28850280
         FragmentManager fm = getSupportFragmentManager();
         int count = fm.getBackStackEntryCount();
         for(int i = 0; i < count; ++i) {
