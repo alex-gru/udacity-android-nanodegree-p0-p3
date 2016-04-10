@@ -2,8 +2,6 @@ package nanodegree.p1p2;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,7 +27,7 @@ import nanodegree.p1p2.data.TrailerAsyncTask;
  * Android Developer Nanodegree
  * UDACITY
  */
-public class MovieDetailFragment extends Fragment implements FragmentManager.OnBackStackChangedListener {
+public class MovieDetailFragment extends Fragment {
 
     public static boolean active = false;
     public static Movie movie;
@@ -89,7 +87,6 @@ public class MovieDetailFragment extends Fragment implements FragmentManager.OnB
         noTrailersTextView = (TextView) view.findViewById(R.id.noTrailersTextview);
 
         updateMovieDetailUI();
-        active = true;
         return view;
     }
 
@@ -185,12 +182,5 @@ public class MovieDetailFragment extends Fragment implements FragmentManager.OnB
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onBackStackChanged() {
-        active = false;
-        ((MainActivity)getActivity()).onBackStackChanged();
     }
 }

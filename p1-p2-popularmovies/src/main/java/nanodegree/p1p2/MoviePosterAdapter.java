@@ -67,19 +67,18 @@ public class MoviePosterAdapter extends BaseAdapter {
         // http://stackoverflow.com/questions/22143157/android-picasso-placeholder-and-error-image-styling
         // http://stackoverflow.com/q/21333866/2472398
 
-        final ProgressBar progressBar = (ProgressBar) ((RelativeLayout)parent.getParent().getParent().getParent().getParent()).findViewById(R.id.progress);
-        progressBar.setVisibility(View.VISIBLE);
+        MainActivity.progressBar.setVisibility(View.VISIBLE);
 
         Picasso.with(mContext).load(movie.getFullPosterPath())
                 .into(imageView, new Callback() {
                     @Override
                     public void onSuccess() {
-                        progressBar.setVisibility(View.GONE);
+                        MainActivity.progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError() {
-                        progressBar.setVisibility(View.GONE);
+                        MainActivity.progressBar.setVisibility(View.GONE);
                     }
                 });
         return imageView;

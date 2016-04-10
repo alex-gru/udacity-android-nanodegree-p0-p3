@@ -9,10 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
     public static final String TAG = "NANODEGREE.P1P2";
     public static boolean isHorizontalTablet;
+    public static ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        progressBar = (ProgressBar)findViewById(R.id.progress);
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
 
@@ -52,10 +57,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             MovieDetailFragment detailFragment = new MovieDetailFragment();
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.gridfragment_container, gridFragment,MovieGridFragment.TAG)
+                    .replace(R.id.gridfragment_container, gridFragment,MovieGridFragment.TAG)
                     .commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.detailfragment_container, detailFragment,MovieDetailFragment.TAG)
+                    .replace(R.id.detailfragment_container, detailFragment,MovieDetailFragment.TAG)
                     .commit();
         } else {
             MovieGridFragment gridFragment  = new MovieGridFragment();
@@ -63,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                     .replace(R.id.gridfragment_container, gridFragment,MovieGridFragment.TAG)
                     .commit();
 
-            if (MovieDetailFragment.active) {
+            if (fragmentInGridContainer instanceof MovieDetailFragment) {
+                MainActivity.progressBar.setVisibility(View.GONE);
                 MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
                 getSupportFragmentManager()
                         .beginTransaction()
