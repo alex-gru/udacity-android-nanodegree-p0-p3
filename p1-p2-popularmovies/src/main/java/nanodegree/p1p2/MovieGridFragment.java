@@ -32,6 +32,7 @@ public class MovieGridFragment extends Fragment {
     public static int lastPositionInGrid = -1;
     public static int selectedPositionInGrid = 0;
     public static int page = 0;
+    private static int scrollPositionInGrid = 0;
 
     public MovieGridFragment() {
 
@@ -61,11 +62,8 @@ public class MovieGridFragment extends Fragment {
 
                 if (MainActivity.isHorizontalTablet)
                 {
-//                    android.os.Debug.waitForDebugger();
                     MovieDetailFragment.scrollUp();
-                    Fragment visibleFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
                     MovieDetailFragment detailFragment = (MovieDetailFragment) getActivity().getSupportFragmentManager().findFragmentByTag(MovieDetailFragment.TAG);
-
                     detailFragment.updateMovieDetailUI();
 
                 } else {
@@ -79,6 +77,7 @@ public class MovieGridFragment extends Fragment {
                 }
             }
         });
+        gridview.setSelection(scrollPositionInGrid);
         gridview.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
@@ -99,7 +98,9 @@ public class MovieGridFragment extends Fragment {
                     }
             }
         });
-        new MovieAsyncTask((AppCompatActivity) getActivity(),gridview).execute();
+
+        if (movies_most_popular.isEmpty())
+            new MovieAsyncTask((AppCompatActivity) getActivity(),gridview).execute();
 
         return view;
     }
@@ -145,5 +146,11 @@ public class MovieGridFragment extends Fragment {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        scrollPositionInGrid = gridview.getFirstVisiblePosition();
     }
 }

@@ -1,6 +1,5 @@
 package nanodegree.p1p2;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +16,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        android.os.Debug.waitForDebugger();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
 
@@ -28,51 +26,52 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         isHorizontalTablet = getResources().getBoolean(R.bool.isTablet);
 
-        if (findViewById(R.id.gridfragment_container) != null) {
+        Fragment fragmentInDetailContainer = getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
+        Fragment fragmentInGridContainer = getSupportFragmentManager().findFragmentById(R.id.gridfragment_container);
 
-            if (savedInstanceState != null) {
-//                Fragment movieGridFragment = getSupportFragmentManager().findFragmentByTag(MovieGridFragment.TAG);
-//                if (movieGridFragment != null && !movieGridFragment.isAdded()) {
-//                    getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.gridfragment_container, movieGridFragment,MovieGridFragment.TAG)
-//                            .commit();
-//                }
-
-                if (isHorizontalTablet) {
-                    Fragment movieDetailFragment = getSupportFragmentManager().findFragmentByTag(MovieDetailFragment.TAG);
-                    if (!movieDetailFragment.isAdded()) {
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.detailfragment_container, movieDetailFragment, MovieDetailFragment.TAG)
-                                .commit();
-                    }
-                }
-                return;
-            }
-
-            MovieGridFragment movieGridFragment = new MovieGridFragment();
+        if (fragmentInDetailContainer != null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.gridfragment_container, movieGridFragment,MovieGridFragment.TAG).commit();
-            if (isHorizontalTablet)
-            {
-                Bundle args = new Bundle();
-                args.putInt("gridPosition", 0);
-                MovieDetailFragment movieDetailFragment = (MovieDetailFragment) getSupportFragmentManager().findFragmentByTag(MovieDetailFragment.TAG);
-                if (movieDetailFragment == null) {
-                    movieDetailFragment = new MovieDetailFragment();
-                }
-                movieDetailFragment.setArguments(args);
+                    .remove(fragmentInDetailContainer)
+                    .commit();
+        }
+        if (fragmentInGridContainer != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .remove(fragmentInGridContainer)
+                    .commit();
+        }
 
-                if (findViewById(R.id.detailfragment_container) != null) {
+        FragmentManager fm = getSupportFragmentManager();
+        int count = fm.getBackStackEntryCount();
+        for(int i = 0; i < count; ++i) {
+            fm.popBackStack();
+        }
 
-                    Fragment fragmentInDetailContainer = getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
-                    if (fragmentInDetailContainer == null || ! (fragmentInDetailContainer instanceof MovieDetailFragment)) {
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.detailfragment_container, movieDetailFragment,MovieDetailFragment.TAG)
-                                .commit();
-                    }
-                }
+        if (isHorizontalTablet) {
+            MovieGridFragment gridFragment  = new MovieGridFragment();
+            MovieDetailFragment detailFragment = new MovieDetailFragment();
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.gridfragment_container, gridFragment,MovieGridFragment.TAG)
+                    .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.detailfragment_container, detailFragment,MovieDetailFragment.TAG)
+                    .commit();
+        } else {
+            MovieGridFragment gridFragment  = new MovieGridFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.gridfragment_container, gridFragment,MovieGridFragment.TAG)
+                    .commit();
+
+            if (MovieDetailFragment.active) {
+                MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.gridfragment_container, movieDetailFragment, MovieDetailFragment.TAG)
+                        .addToBackStack(null)
+                        .commit();
             }
         }
+        return;
     }
 
     @Override

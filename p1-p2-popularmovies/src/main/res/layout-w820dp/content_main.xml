@@ -38,7 +38,8 @@
             android:id="@+id/detailfragment_container"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5"
+            android:background="@android:color/background_light"/>
     </LinearLayout>
 
 </RelativeLayout>
