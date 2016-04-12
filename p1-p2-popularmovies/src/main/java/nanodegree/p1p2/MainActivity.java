@@ -31,6 +31,14 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         isHorizontalTablet = getResources().getBoolean(R.bool.isTablet);
 
+        checkFragments();
+    }
+
+    /**
+     * This helper method is used for handling all different cases for orientation changes, like
+     * tablet horizontal mode to vertical mode (different layouts)
+     */
+    private void checkFragments() {
         Fragment fragmentInDetailContainer = getSupportFragmentManager().findFragmentById(R.id.detailfragment_container);
         Fragment fragmentInGridContainer = getSupportFragmentManager().findFragmentById(R.id.gridfragment_container);
 
@@ -78,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                         .commit();
             }
         }
-        return;
     }
 
     @Override
