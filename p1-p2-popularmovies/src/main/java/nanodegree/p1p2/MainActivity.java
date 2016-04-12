@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 MovieDetailFragment movieDetailFragment = new MovieDetailFragment();
                 getSupportFragmentManager()
                         .beginTransaction()
+                        .setCustomAnimations(android.R.anim.fade_in, R.anim.slide_out_left, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                         .replace(R.id.gridfragment_container, movieDetailFragment, MovieDetailFragment.TAG)
                         .addToBackStack(null)
                         .commit();
