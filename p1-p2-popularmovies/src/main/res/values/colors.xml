@@ -6,5 +6,6 @@
     <color name="colorTextTranslucent">#8d000000</color>
     <color name="colorDividerDark">#28000000</color>
     <color name="colorFavoriteButton">#80CBC4</color>
-    <color name="colorMovieTitleBackground">#009688</color>
+    <color name="materialGreen">#009688</color>
+    <color name="materialGreenTranslucent">#c8009688</color>
 </resources>
