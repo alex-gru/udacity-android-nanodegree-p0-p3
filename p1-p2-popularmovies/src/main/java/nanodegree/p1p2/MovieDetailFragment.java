@@ -1,5 +1,8 @@
 package nanodegree.p1p2;
 
+import android.content.ContentValues;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +21,10 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+
 import nanodegree.p1p2.data.Movie;
+import nanodegree.p1p2.data.MovieContract;
 import nanodegree.p1p2.data.ReviewAsyncTask;
 import nanodegree.p1p2.data.TrailerAsyncTask;
 
@@ -154,10 +160,46 @@ public class MovieDetailFragment extends Fragment {
             favoriteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(), "Stage 2 :-)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Saving in local DB...", Toast.LENGTH_SHORT).show();
+
+                    /**
+                     * store in database
+                     */
+
+                    ImageView moviePosterImageView = (ImageView) MovieGridFragment.gridview.getChildAt(MovieGridFragment.selectedPositionInGrid);
+                    Bitmap moviePosterBitmap = ((BitmapDrawable)moviePosterImageView.getDrawable()).getBitmap();
+                    byte[] moviePosterByteArray = getBitmapAsByteArray(moviePosterBitmap);
+
+                    ContentValues values = new ContentValues();
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_ID,movie.getId());
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_POSTER_BYTES,moviePosterByteArray);
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH,movie.getPoster_path());
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_ADULT,movie.getAdult());
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_OVERVIEW,movie.getOverview());
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE,movie.getRelease_date());
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_GENRE_IDS,movie.getGenre_ids().toString()); //TODO
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_TITLE,movie.getOriginal_title());
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_LANGUAGE,movie.getOriginal_language());
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_TITLE,movie.getTitle());
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_BACKDROP_PATH,movie.getBackdrop_path());
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_POPULARITY,movie.getPopularity());
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_VOTE_COUNT,movie.getVote_count());
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_VIDEO,movie.getVideo());
+                    values.put(MovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE,movie.getVote_average());
+
+                    long rowId = MainActivity.movieDB.insert(MovieContract.MovieEntry.TABLE_NAME, null, values);
                 }
             });
         }
+    }
+
+    /**
+     * source: http://stackoverflow.com/a/9357943/2472398
+     */
+    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+        return outputStream.toByteArray();
     }
 
     @Override

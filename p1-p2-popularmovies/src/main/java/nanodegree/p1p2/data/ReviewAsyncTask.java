@@ -42,8 +42,6 @@ public class ReviewAsyncTask extends AsyncTask<Void, Integer, Integer> {
         try {
             THE_MOVIE_DB_API_KEY =  new BufferedReader(new InputStreamReader(activity.getResources().openRawResource(R.raw.themoviedb))).readLine();
             REVIEW_URL =  REVIEW_URL.replace("<id>",String.valueOf(movie.getId())) + "?api_key=" + THE_MOVIE_DB_API_KEY;
-
-            Log.d(MainActivity.TAG,"test");
         } catch (IOException e) {
             Log.e(MainActivity.TAG, "Could not read API key. Check if 'themoviedb.txt' is present.", e);
         }

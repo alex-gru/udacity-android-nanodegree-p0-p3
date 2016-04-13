@@ -1,5 +1,7 @@
 package nanodegree.p1p2.data;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -106,6 +108,53 @@ public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
             if (detailFragment != null && detailFragment.movie == null) {
                 detailFragment.updateMovieDetailUI();
             }
+
+            /**
+             * DEBUG - output DB contents
+             */
+             SQLiteDatabase database = MainActivity.movieDBHelper.getReadableDatabase();
+
+            String[] projection = {
+                    MovieContract.MovieEntry._ID,
+                    MovieContract.MovieEntry. COLUMN_NAME_ID,
+                    MovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH ,
+                    MovieContract.MovieEntry.COLUMN_NAME_ADULT,
+                    MovieContract.MovieEntry.COLUMN_NAME_OVERVIEW ,
+                    MovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE ,
+                    MovieContract.MovieEntry. COLUMN_NAME_GENRE_IDS ,
+                    MovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_TITLE ,
+                    MovieContract.MovieEntry. COLUMN_NAME_ORIGINAL_LANGUAGE,
+                    MovieContract.MovieEntry. COLUMN_NAME_TITLE,
+                    MovieContract.MovieEntry. COLUMN_NAME_BACKDROP_PATH,
+                    MovieContract.MovieEntry. COLUMN_NAME_POPULARITY ,
+                    MovieContract.MovieEntry. COLUMN_NAME_VOTE_COUNT ,
+                    MovieContract.MovieEntry.COLUMN_NAME_VIDEO,
+                    MovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE
+            };
+
+            String sortOrder = MovieContract.MovieEntry._ID + " DESC";
+
+            Cursor cursor = database.query(
+                    MovieContract.MovieEntry.TABLE_NAME,
+                    projection,
+                    null,
+                    null,
+                    null,
+                    null,
+                    sortOrder
+            );
+
+            cursor.moveToFirst();
+
+            while (!cursor.isAfterLast()) {
+                Log.d(MainActivity.TAG,cursor.getString(0));
+                Log.d(MainActivity.TAG,cursor.getString(1));
+                Log.d(MainActivity.TAG,cursor.getString(2));
+                Log.d(MainActivity.TAG,cursor.getString(3));
+                Log.d(MainActivity.TAG,cursor.getString(4));
+                cursor.moveToNext();
+            }
+
         } catch (Exception e) {
             Log.e(MainActivity.TAG, "Exception occured while parsing JSON data.", e);
         }

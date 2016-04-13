@@ -1,5 +1,6 @@
 package nanodegree.p1p2;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,12 +11,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
+
+import nanodegree.p1p2.data.MovieDBHelper;
+
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
     public static final String TAG = "NANODEGREE.P1P2";
     public static boolean isHorizontalTablet;
     public static ProgressBar progressBar;
+    public static MovieDBHelper movieDBHelper;
+    public static SQLiteDatabase movieDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,15 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         isHorizontalTablet = getResources().getBoolean(R.bool.isTablet);
 
         checkFragments();
+
+        setupDB();
+    }
+
+    private void setupDB() {
+        movieDBHelper = new MovieDBHelper(this);
+        movieDB = movieDBHelper.getWritableDatabase();
+
+//        movieDBHelper.onDowngrade(movieDB,0,0);
     }
 
     /**

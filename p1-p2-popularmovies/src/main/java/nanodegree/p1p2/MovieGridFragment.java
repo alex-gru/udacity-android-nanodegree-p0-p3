@@ -26,7 +26,7 @@ import nanodegree.p1p2.data.MovieAsyncTask;
 
 public class MovieGridFragment extends Fragment {
     public static final String TAG = "MOVIEGRID";
-    public GridView gridview;
+    public static GridView gridview;
     private Menu menu;
     public static List<Movie> movies_top_rated;
     public static List<Movie> movies_most_popular;
