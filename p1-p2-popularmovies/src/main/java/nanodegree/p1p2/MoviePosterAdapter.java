@@ -1,6 +1,8 @@
 package nanodegree.p1p2;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -56,37 +58,32 @@ public class MoviePosterAdapter extends BaseAdapter {
 
         Movie movie = null;
 
-        switch (MovieGridFragment.grid_category) {
-            case MOST_POPULAR:
-                movie = MovieGridFragment.movies_most_popular.get(position);
-                break;
-            case TOP_RATED:
-                movie = MovieGridFragment.movies_top_rated.get(position);
-                break;
-            case FAVORITES:
-                //TODO now show locally stored movies
-        }
-
-        // set up progress bar, which is shown until poster is fetched and displayed.
+        // progress bar handling - shown until poster is fetched and displayed.
         // resulted from various sources:
         // http://stackoverflow.com/a/22786818/2472398
         // http://stackoverflow.com/questions/22143157/android-picasso-placeholder-and-error-image-styling
         // http://stackoverflow.com/q/21333866/2472398
-
         MainActivity.progressBar.setVisibility(View.VISIBLE);
 
-        Picasso.with(mContext).load(movie.getFullPosterPath())
-                .into(imageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        MainActivity.progressBar.setVisibility(View.GONE);
-                    }
+        switch (MovieGridFragment.grid_category) {
+            case MOST_POPULAR:
+                movie = MovieGridFragment.movies_most_popular.get(position);
+                Picasso.with(mContext).load(movie.getFullPosterPath())
+                        .into(imageView, new PicassoLoadCallback());
+                break;
+            case TOP_RATED:
+                movie = MovieGridFragment.movies_top_rated.get(position);
+                Picasso.with(mContext).load(movie.getFullPosterPath())
+                        .into(imageView, new PicassoLoadCallback());
+                break;
+            case FAVORITES:
+                movie = MovieGridFragment.movies_favorites.get(position);
+                Bitmap poster = BitmapFactory.decodeByteArray(movie.getMoviePosterByteArray(), 0, movie.getMoviePosterByteArray().length);
+                imageView.setImageBitmap(poster);
+                MainActivity.progressBar.setVisibility(View.GONE);
+                break;
+        }
 
-                    @Override
-                    public void onError() {
-                        MainActivity.progressBar.setVisibility(View.GONE);
-                    }
-                });
         return imageView;
     }
 
@@ -100,7 +97,20 @@ public class MoviePosterAdapter extends BaseAdapter {
                 count = MovieGridFragment.movies_top_rated.size();
                 break;
             case FAVORITES:
-                //TODO size of local movies collection
+                count = MovieGridFragment.movies_favorites.size();
+                break;
         }
+    }
+
+    private class PicassoLoadCallback implements Callback {
+            @Override
+            public void onSuccess() {
+                MainActivity.progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError() {
+                MainActivity.progressBar.setVisibility(View.GONE);
+            }
     }
 }

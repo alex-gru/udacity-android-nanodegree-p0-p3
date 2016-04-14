@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,6 +46,7 @@ public class MovieDetailFragment extends Fragment {
     private Menu menu;
     private static View view;
     private static ScrollView scrollView;
+    public static ImageView posterImageView;
 
     public static void scrollUp () {
         scrollView.setScrollY(0);
@@ -108,12 +110,18 @@ public class MovieDetailFragment extends Fragment {
 
     public void updateMovieDetailUI() {
         if (MoviePosterAdapter.count > 0 ) {
-            if (MovieGridFragment.grid_category.equals(MovieGridFragment.GRID_CATEGORY.MOST_POPULAR)) {
-                movie = MovieGridFragment.movies_most_popular.get(MovieGridFragment.selectedPositionInGrid);
-            } else if (MovieGridFragment.grid_category.equals(MovieGridFragment.GRID_CATEGORY.TOP_RATED)) {
-                movie = MovieGridFragment.movies_top_rated.get(MovieGridFragment.selectedPositionInGrid);
-            } else {
-                //TODO now show locally stored movies
+
+            switch (MovieGridFragment.grid_category) {
+
+                case MOST_POPULAR:
+                    movie = MovieGridFragment.movies_most_popular.get(MovieGridFragment.selectedPositionInGrid);
+                    break;
+                case TOP_RATED:
+                    movie = MovieGridFragment.movies_top_rated.get(MovieGridFragment.selectedPositionInGrid);
+                    break;
+                case FAVORITES:
+                    movie = MovieGridFragment.movies_favorites.get(MovieGridFragment.selectedPositionInGrid);
+                    break;
             }
 
 //            android.os.Debug.waitForDebugger();
@@ -144,7 +152,7 @@ public class MovieDetailFragment extends Fragment {
                 }
             }
 
-            ImageView posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
+            posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
             posterImageView.setMinimumWidth(Integer.parseInt(Movie.POSTER_WIDTH));
             posterImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Picasso.with(getContext()).load(movie.getFullPosterPath()).into(posterImageView);
@@ -162,24 +170,22 @@ public class MovieDetailFragment extends Fragment {
             favoriteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(), "Saving in local DB...", Toast.LENGTH_SHORT).show();
+                    Log.d(MainActivity.TAG, "Saving in local DB...");
 
-                    /**
-                     * store in database
-                     */
-
-                    ImageView moviePosterImageView = (ImageView) MovieGridFragment.gridview.getChildAt(MovieGridFragment.selectedPositionInGrid);
-                    Bitmap moviePosterBitmap = ((BitmapDrawable)moviePosterImageView.getDrawable()).getBitmap();
+                    Bitmap moviePosterBitmap = ((BitmapDrawable)posterImageView.getDrawable()).getBitmap();
                     byte[] moviePosterByteArray = getBitmapAsByteArray(moviePosterBitmap);
 
                     ContentValues values = new ContentValues();
                     values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_ID,movie.getId());
                     values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_BYTES,moviePosterByteArray);
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH,movie.getPoster_path());
                     values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_OVERVIEW,movie.getOverview());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE,movie.getRelease_date());
                     values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_TITLE,movie.getTitle());
                     values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE,movie.getVote_average());
 
                     long rowId = MainActivity.movieDB.insert(LocalMovieContract.MovieEntry.TABLE_NAME, null, values);
+//                    android.os.Debug.waitForDebugger();
                 }
             });
         }

@@ -1,11 +1,8 @@
 package nanodegree.p1p2.data;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.GridView;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,6 +44,12 @@ public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
         } catch (IOException e) {
             Log.e(MainActivity.TAG, "Could not read API key. Check if 'themoviedb.txt' is present.", e);
+        }
+
+        if (!((MainActivity)activity).isNetworkAvailable()) {
+            cancel(true);
+        } else {
+            ((MainActivity)activity).offline = false;
         }
     }
 

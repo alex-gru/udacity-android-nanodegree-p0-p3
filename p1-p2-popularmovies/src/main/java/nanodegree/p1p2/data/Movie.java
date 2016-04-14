@@ -71,9 +71,15 @@ public class Movie {
     @JsonIgnore
     List<Review> reviews;
 
+    @JsonIgnore
+    byte[] moviePosterByteArray;
 
     public String getFullPosterPath() {
         return BASE_URL_POSTER + poster_path;
+    }
+
+    public String getPoster_path() {
+        return poster_path;
     }
 
     public int getYear () {
@@ -90,6 +96,10 @@ public class Movie {
 
     public String getOverview() {
         return overview;
+    }
+
+    public String getRelease_date() {
+        return release_date;
     }
 
     public long getId() {
@@ -112,6 +122,9 @@ public class Movie {
         return reviews;
     }
 
+    public byte[] getMoviePosterByteArray() {
+        return moviePosterByteArray;
+    }
 
     public void setPoster_path(String poster_path) {
         this.poster_path = poster_path;
@@ -135,5 +148,9 @@ public class Movie {
 
     public void setVote_average(String vote_average) {
         this.vote_average = vote_average;
+    }
+
+    public void setMoviePosterByteArray(byte[] moviePosterByteArray) {
+        this.moviePosterByteArray = moviePosterByteArray;
     }
 }

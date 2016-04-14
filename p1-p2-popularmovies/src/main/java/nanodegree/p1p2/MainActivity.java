@@ -1,6 +1,9 @@
 package nanodegree.p1p2;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +18,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import nanodegree.p1p2.data.LocalMovieHelper;
+import nanodegree.p1p2.data.LocalMovieLoaderAsyncTask;
 
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public static LocalMovieHelper localMovieHelper;
     public static SQLiteDatabase movieDB;
     public static Menu menu;
+    public boolean offline = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,11 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+//        android.os.Debug.waitForDebugger();
+        if (!isNetworkAvailable()) {
+            MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.FAVORITES;
+        }
 
         progressBar = (ProgressBar)findViewById(R.id.progress);
 
@@ -47,8 +57,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private void setupDB() {
         localMovieHelper = new LocalMovieHelper(this);
         movieDB = localMovieHelper.getWritableDatabase();
+        localMovieHelper.onUpgrade(movieDB,0,0);
 
-//        localMovieHelper.onDowngrade(movieDB,0,0);
+        new LocalMovieLoaderAsyncTask(this).execute();
     }
 
     /**
@@ -159,28 +170,50 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.action_show_most_popular:
+                menu.findItem(R.id.action_show_favorites).setVisible(true);
                 menu.findItem(R.id.action_show_top_rated).setVisible(true);
                 menu.findItem(R.id.action_show_most_popular).setVisible(false);
+                getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_most_popular));
 
                 MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.MOST_POPULAR;
+                MoviePosterAdapter.updateCount();
                 MovieGridFragment.gridview.invalidateViews();
                 MovieGridFragment.gridview.smoothScrollToPosition(0);
                 return true;
             case R.id.action_show_top_rated:
+                menu.findItem(R.id.action_show_favorites).setVisible(true);
                 menu.findItem(R.id.action_show_most_popular).setVisible(true);
                 menu.findItem(R.id.action_show_top_rated).setVisible(false);
+                getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_top_rated));
 
                 MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.TOP_RATED;
+                MoviePosterAdapter.updateCount();
                 MovieGridFragment.gridview.invalidateViews();
                 MovieGridFragment.gridview.smoothScrollToPosition(0);
                 return true;
 
             case R.id.action_show_favorites:
+                menu.findItem(R.id.action_show_favorites).setVisible(false);
+                menu.findItem(R.id.action_show_top_rated).setVisible(true);
+                menu.findItem(R.id.action_show_most_popular).setVisible(true);
+
+                getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_favorites));
+
                 MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.FAVORITES;
+                new LocalMovieLoaderAsyncTask(this).execute();
+                MoviePosterAdapter.updateCount();
                 MovieGridFragment.gridview.invalidateViews();
                 MovieGridFragment.gridview.smoothScrollToPosition(0);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        offline = true;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

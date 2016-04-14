@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Pop Movies</string>
-    <string name="menu_show_most_popular">Popular</string>
-    <string name="menu_show_top_rating">Top rated</string>
+    <string name="menu_show_most_popular">Most Popular</string>
+    <string name="menu_show_top_rating">Top Rated</string>
     <string name="menu_show_favorites">Favorites</string>
     <string name="toolbar_title_moviedetail">Movie Details</string>
     <string name="toolbar_title_moviegrid">Pop Movies</string>
@@ -11,4 +11,7 @@
     <string name="noReviews">No reviews found.</string>
     <string name="noTrailers">No trailers found.</string>
     <string name="reviews">Reviews</string>
+    <string name="toolbar_title_most_popular">Most Popular</string>
+    <string name="toolbar_title_top_rated">Top Rated</string>
+    <string name="toolbar_title_favorites">Favorites</string>
 </resources>
