@@ -6,12 +6,12 @@
         android:id="@+id/action_show_most_popular"
         android:orderInCategory="1"
         android:title="@string/menu_show_most_popular"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_show_top_rated"
         android:orderInCategory="2"
         android:title="@string/menu_show_top_rating"
-        app:showAsAction="never"
+        app:showAsAction="always"
         />
     <item
         android:id="@+id/action_show_favorites"

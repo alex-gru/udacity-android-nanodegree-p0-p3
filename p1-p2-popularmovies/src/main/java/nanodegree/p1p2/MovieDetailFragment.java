@@ -24,7 +24,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 
 import nanodegree.p1p2.data.Movie;
-import nanodegree.p1p2.data.MovieContract;
+import nanodegree.p1p2.data.LocalMovieContract;
 import nanodegree.p1p2.data.ReviewAsyncTask;
 import nanodegree.p1p2.data.TrailerAsyncTask;
 
@@ -108,10 +108,12 @@ public class MovieDetailFragment extends Fragment {
 
     public void updateMovieDetailUI() {
         if (MoviePosterAdapter.count > 0 ) {
-            if (MovieGridFragment.sortModePopular) {
+            if (MovieGridFragment.grid_category.equals(MovieGridFragment.GRID_CATEGORY.MOST_POPULAR)) {
                 movie = MovieGridFragment.movies_most_popular.get(MovieGridFragment.selectedPositionInGrid);
-            } else {
+            } else if (MovieGridFragment.grid_category.equals(MovieGridFragment.GRID_CATEGORY.TOP_RATED)) {
                 movie = MovieGridFragment.movies_top_rated.get(MovieGridFragment.selectedPositionInGrid);
+            } else {
+                //TODO now show locally stored movies
             }
 
 //            android.os.Debug.waitForDebugger();
@@ -171,23 +173,23 @@ public class MovieDetailFragment extends Fragment {
                     byte[] moviePosterByteArray = getBitmapAsByteArray(moviePosterBitmap);
 
                     ContentValues values = new ContentValues();
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_ID,movie.getId());
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_POSTER_BYTES,moviePosterByteArray);
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH,movie.getPoster_path());
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_ADULT,movie.getAdult());
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_OVERVIEW,movie.getOverview());
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE,movie.getRelease_date());
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_GENRE_IDS,movie.getGenre_ids().toString()); //TODO
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_TITLE,movie.getOriginal_title());
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_LANGUAGE,movie.getOriginal_language());
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_TITLE,movie.getTitle());
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_BACKDROP_PATH,movie.getBackdrop_path());
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_POPULARITY,movie.getPopularity());
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_VOTE_COUNT,movie.getVote_count());
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_VIDEO,movie.getVideo());
-                    values.put(MovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE,movie.getVote_average());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_ID,movie.getId());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_BYTES,moviePosterByteArray);
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH,movie.getPoster_path());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_ADULT,movie.getAdult());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_OVERVIEW,movie.getOverview());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE,movie.getRelease_date());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_GENRE_IDS,movie.getGenre_ids().toString()); //TODO
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_TITLE,movie.getOriginal_title());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_LANGUAGE,movie.getOriginal_language());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_TITLE,movie.getTitle());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_BACKDROP_PATH,movie.getBackdrop_path());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_POPULARITY,movie.getPopularity());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_VOTE_COUNT,movie.getVote_count());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_VIDEO,movie.getVideo());
+                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE,movie.getVote_average());
 
-                    long rowId = MainActivity.movieDB.insert(MovieContract.MovieEntry.TABLE_NAME, null, values);
+                    long rowId = MainActivity.movieDB.insert(LocalMovieContract.MovieEntry.TABLE_NAME, null, values);
                 }
             });
         }
@@ -216,8 +218,8 @@ public class MovieDetailFragment extends Fragment {
                 inflater.inflate(R.menu.menu, menu);
             }
 
-            menu.findItem(R.id.action_sort_popular).setVisible(false);
-            menu.findItem(R.id.action_sort_rating).setVisible(false);
+            menu.findItem(R.id.action_show_most_popular).setVisible(false);
+            menu.findItem(R.id.action_show_top_rated).setVisible(false);
         }
         this.menu = menu;
     }

@@ -54,11 +54,17 @@ public class MoviePosterAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        Movie movie;
-        if (MovieGridFragment.sortModePopular) {
-            movie = MovieGridFragment.movies_most_popular.get(position);
-        } else {
-            movie = MovieGridFragment.movies_top_rated.get(position);
+        Movie movie = null;
+
+        switch (MovieGridFragment.grid_category) {
+            case MOST_POPULAR:
+                movie = MovieGridFragment.movies_most_popular.get(position);
+                break;
+            case TOP_RATED:
+                movie = MovieGridFragment.movies_top_rated.get(position);
+                break;
+            case FAVORITES:
+                //TODO now show locally stored movies
         }
 
         // set up progress bar, which is shown until poster is fetched and displayed.
@@ -84,18 +90,17 @@ public class MoviePosterAdapter extends BaseAdapter {
         return imageView;
     }
 
-    public static void setSortModePopular(boolean popular) {
-        if (popular) {
-            MovieGridFragment.sortModePopular = true;
-        } else {
-            MovieGridFragment.sortModePopular = false;
-        }
-
-        updateCount();
-    }
-
 
     public static void updateCount() {
-        count = MovieGridFragment.movies_most_popular.size();
+        switch (MovieGridFragment.grid_category) {
+            case MOST_POPULAR:
+                count = MovieGridFragment.movies_most_popular.size();
+                break;
+            case TOP_RATED:
+                count = MovieGridFragment.movies_top_rated.size();
+                break;
+            case FAVORITES:
+                //TODO size of local movies collection
+        }
     }
 }

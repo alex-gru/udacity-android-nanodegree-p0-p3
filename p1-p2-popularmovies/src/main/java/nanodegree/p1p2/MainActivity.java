@@ -6,21 +6,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import nanodegree.p1p2.data.MovieDBHelper;
+import nanodegree.p1p2.data.LocalMovieHelper;
 
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
     public static final String TAG = "NANODEGREE.P1P2";
     public static boolean isHorizontalTablet;
     public static ProgressBar progressBar;
-    public static MovieDBHelper movieDBHelper;
+    public static LocalMovieHelper localMovieHelper;
     public static SQLiteDatabase movieDB;
+    public static Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +45,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     }
 
     private void setupDB() {
-        movieDBHelper = new MovieDBHelper(this);
-        movieDB = movieDBHelper.getWritableDatabase();
+        localMovieHelper = new LocalMovieHelper(this);
+        movieDB = localMovieHelper.getWritableDatabase();
 
-//        movieDBHelper.onDowngrade(movieDB,0,0);
+//        localMovieHelper.onDowngrade(movieDB,0,0);
     }
 
     /**
@@ -150,5 +153,34 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         } else {
             return false;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_show_most_popular:
+                menu.findItem(R.id.action_show_top_rated).setVisible(true);
+                menu.findItem(R.id.action_show_most_popular).setVisible(false);
+
+                MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.MOST_POPULAR;
+                MovieGridFragment.gridview.invalidateViews();
+                MovieGridFragment.gridview.smoothScrollToPosition(0);
+                return true;
+            case R.id.action_show_top_rated:
+                menu.findItem(R.id.action_show_most_popular).setVisible(true);
+                menu.findItem(R.id.action_show_top_rated).setVisible(false);
+
+                MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.TOP_RATED;
+                MovieGridFragment.gridview.invalidateViews();
+                MovieGridFragment.gridview.smoothScrollToPosition(0);
+                return true;
+
+            case R.id.action_show_favorites:
+                MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.FAVORITES;
+                MovieGridFragment.gridview.invalidateViews();
+                MovieGridFragment.gridview.smoothScrollToPosition(0);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

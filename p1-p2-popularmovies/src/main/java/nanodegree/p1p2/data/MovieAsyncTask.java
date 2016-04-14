@@ -101,7 +101,9 @@ public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
             List<Movie> newTopRatedMovies = mapper.readValue(json_top_rated, TypeFactory.defaultInstance().constructCollectionType(List.class, Movie.class));
             MovieGridFragment.movies_most_popular.addAll(newMostPopularMovies);
             MovieGridFragment.movies_top_rated.addAll(newTopRatedMovies);
-            MoviePosterAdapter.setSortModePopular(MovieGridFragment.sortModePopular);
+
+            MoviePosterAdapter.updateCount();
+
             gridView.invalidateViews();
 
             MovieDetailFragment detailFragment = (MovieDetailFragment)activity.getSupportFragmentManager().findFragmentByTag(MovieDetailFragment.TAG);
@@ -112,30 +114,30 @@ public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
             /**
              * DEBUG - output DB contents
              */
-             SQLiteDatabase database = MainActivity.movieDBHelper.getReadableDatabase();
+             SQLiteDatabase database = MainActivity.localMovieHelper.getReadableDatabase();
 
             String[] projection = {
-                    MovieContract.MovieEntry._ID,
-                    MovieContract.MovieEntry. COLUMN_NAME_ID,
-                    MovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH ,
-                    MovieContract.MovieEntry.COLUMN_NAME_ADULT,
-                    MovieContract.MovieEntry.COLUMN_NAME_OVERVIEW ,
-                    MovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE ,
-                    MovieContract.MovieEntry. COLUMN_NAME_GENRE_IDS ,
-                    MovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_TITLE ,
-                    MovieContract.MovieEntry. COLUMN_NAME_ORIGINAL_LANGUAGE,
-                    MovieContract.MovieEntry. COLUMN_NAME_TITLE,
-                    MovieContract.MovieEntry. COLUMN_NAME_BACKDROP_PATH,
-                    MovieContract.MovieEntry. COLUMN_NAME_POPULARITY ,
-                    MovieContract.MovieEntry. COLUMN_NAME_VOTE_COUNT ,
-                    MovieContract.MovieEntry.COLUMN_NAME_VIDEO,
-                    MovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE
+                    LocalMovieContract.MovieEntry._ID,
+                    LocalMovieContract.MovieEntry. COLUMN_NAME_ID,
+                    LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH ,
+                    LocalMovieContract.MovieEntry.COLUMN_NAME_ADULT,
+                    LocalMovieContract.MovieEntry.COLUMN_NAME_OVERVIEW ,
+                    LocalMovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE ,
+                    LocalMovieContract.MovieEntry. COLUMN_NAME_GENRE_IDS ,
+                    LocalMovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_TITLE ,
+                    LocalMovieContract.MovieEntry. COLUMN_NAME_ORIGINAL_LANGUAGE,
+                    LocalMovieContract.MovieEntry. COLUMN_NAME_TITLE,
+                    LocalMovieContract.MovieEntry. COLUMN_NAME_BACKDROP_PATH,
+                    LocalMovieContract.MovieEntry. COLUMN_NAME_POPULARITY ,
+                    LocalMovieContract.MovieEntry. COLUMN_NAME_VOTE_COUNT ,
+                    LocalMovieContract.MovieEntry.COLUMN_NAME_VIDEO,
+                    LocalMovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE
             };
 
-            String sortOrder = MovieContract.MovieEntry._ID + " DESC";
+            String sortOrder = LocalMovieContract.MovieEntry._ID + " DESC";
 
             Cursor cursor = database.query(
-                    MovieContract.MovieEntry.TABLE_NAME,
+                    LocalMovieContract.MovieEntry.TABLE_NAME,
                     projection,
                     null,
                     null,

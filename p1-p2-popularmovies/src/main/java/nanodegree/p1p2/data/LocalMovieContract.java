@@ -7,8 +7,8 @@ import android.provider.BaseColumns;
  * Android Developer Nanodegree
  * UDACITY
  */
-public final class MovieContract {
-    public MovieContract() {}
+public final class LocalMovieContract {
+    public LocalMovieContract() {}
 
     public static abstract class MovieEntry implements BaseColumns {
         public static final String TABLE_NAME = "movie";

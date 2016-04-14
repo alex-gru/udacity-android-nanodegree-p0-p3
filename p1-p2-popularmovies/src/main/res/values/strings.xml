@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Pop Movies</string>
-    <string name="sort_popular">Sort by popularity</string>
-    <string name="sort_rating">Sort by rating</string>
+    <string name="menu_show_most_popular">Popular</string>
+    <string name="menu_show_top_rating">Top rated</string>
+    <string name="menu_show_favorites">Favorites</string>
     <string name="toolbar_title_moviedetail">Movie Details</string>
     <string name="toolbar_title_moviegrid">Pop Movies</string>
     <string name="trailers">Trailers</string>

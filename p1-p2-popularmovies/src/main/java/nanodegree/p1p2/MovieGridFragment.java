@@ -1,9 +1,7 @@
 package nanodegree.p1p2;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,10 +25,15 @@ import nanodegree.p1p2.data.MovieAsyncTask;
 public class MovieGridFragment extends Fragment {
     public static final String TAG = "MOVIEGRID";
     public static GridView gridview;
-    private Menu menu;
     public static List<Movie> movies_top_rated;
     public static List<Movie> movies_most_popular;
-    public static boolean sortModePopular = true;
+//    public static boolean sortModePopular = true;
+    public static GRID_CATEGORY grid_category = GRID_CATEGORY.MOST_POPULAR;
+    public enum GRID_CATEGORY {
+        MOST_POPULAR,
+        TOP_RATED,
+        FAVORITES
+    };
     public static int lastPositionInGrid = -1;
     public static int selectedPositionInGrid = 0;
     public static int page = 0;
@@ -122,32 +125,9 @@ public class MovieGridFragment extends Fragment {
         if (!menu.hasVisibleItems()) {
             inflater.inflate(R.menu.menu, menu);
         }
-        menu.findItem(R.id.action_sort_popular).setVisible(!sortModePopular);
-        menu.findItem(R.id.action_sort_rating).setVisible(sortModePopular);
-        this.menu = menu;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.action_sort_popular:
-                menu.findItem(R.id.action_sort_rating).setVisible(true);
-                menu.findItem(R.id.action_sort_popular).setVisible(false);
-
-                MoviePosterAdapter.setSortModePopular(true);
-                gridview.invalidateViews();
-                gridview.smoothScrollToPosition(0);
-                return true;
-            case R.id.action_sort_rating:
-                menu.findItem(R.id.action_sort_popular).setVisible(true);
-                menu.findItem(R.id.action_sort_rating).setVisible(false);
-
-                MoviePosterAdapter.setSortModePopular(false);
-                gridview.invalidateViews();
-                gridview.smoothScrollToPosition(0);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+        menu.findItem(R.id.action_show_most_popular).setVisible(!grid_category.equals(GRID_CATEGORY.MOST_POPULAR));
+        menu.findItem(R.id.action_show_top_rated).setVisible(!grid_category.equals(GRID_CATEGORY.TOP_RATED));
+        MainActivity.menu = menu;
     }
 
     @Override
