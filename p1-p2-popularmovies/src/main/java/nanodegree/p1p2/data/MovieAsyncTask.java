@@ -35,15 +35,13 @@ public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
     private String THE_MOVIE_DB_API_KEY = null;
     private String MOST_POPULAR_URL = "http://api.themoviedb.org/3/movie/popular";
     private String TOP_RATED_URL = "http://api.themoviedb.org/3/movie/top_rated";
-    private final GridView gridView;
     String result_most_popular = "";
     String result_top_rated = "";
 
-    public MovieAsyncTask(AppCompatActivity activity, GridView gridview) {
-        this.gridView = gridview;
+    public MovieAsyncTask(AppCompatActivity activity) {
         this.activity = activity;
         try {
-            THE_MOVIE_DB_API_KEY =  new BufferedReader(new InputStreamReader(gridview.getResources().openRawResource(R.raw.themoviedb))).readLine();
+            THE_MOVIE_DB_API_KEY =  new BufferedReader(new InputStreamReader(MovieGridFragment.gridview.getResources().openRawResource(R.raw.themoviedb))).readLine();
             MOST_POPULAR_URL +=  "?api_key=" + THE_MOVIE_DB_API_KEY;
             TOP_RATED_URL +=  "?api_key=" + THE_MOVIE_DB_API_KEY;
 
@@ -104,7 +102,7 @@ public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
             MoviePosterAdapter.updateCount();
 
-            gridView.invalidateViews();
+            MovieGridFragment.gridview.invalidateViews();
 
             MovieDetailFragment detailFragment = (MovieDetailFragment)activity.getSupportFragmentManager().findFragmentByTag(MovieDetailFragment.TAG);
             if (detailFragment != null && detailFragment.movie == null) {

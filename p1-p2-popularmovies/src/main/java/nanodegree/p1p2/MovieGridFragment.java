@@ -99,13 +99,13 @@ public class MovieGridFragment extends Fragment {
                         lastPositionInGrid = _lastItem;
                         // Last item is fully visible.
                         Log.d(MainActivity.TAG, "Now fetch next page from theMovieDB.");
-                        new MovieAsyncTask((AppCompatActivity) getActivity(),gridview).execute();
+                        new MovieAsyncTask((AppCompatActivity) getActivity()).execute();
                     }
             }
         });
 
         if (movies_most_popular.isEmpty())
-            new MovieAsyncTask((AppCompatActivity) getActivity(),gridview).execute();
+            new MovieAsyncTask((AppCompatActivity) getActivity()).execute();
 
         return view;
     }
