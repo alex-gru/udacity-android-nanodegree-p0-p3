@@ -147,6 +147,9 @@ public class MovieGridFragment extends Fragment {
         menu.findItem(R.id.action_show_most_popular).setVisible(!grid_category.equals(GRID_CATEGORY.MOST_POPULAR));
         menu.findItem(R.id.action_show_top_rated).setVisible(!grid_category.equals(GRID_CATEGORY.TOP_RATED));
         MainActivity.menu = menu;
+
+        MainActivity.favoriteButton.setVisibility(View.GONE);
+        MainActivity.unfavoriteButton.setVisibility(View.GONE);
     }
 
     @Override

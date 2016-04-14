@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public static final String TAG = "NANODEGREE.P1P2";
     public static boolean isHorizontalTablet;
     public static ProgressBar progressBar;
+    public static ImageButton favoriteButton;
+    public static ImageButton unfavoriteButton;
     public static LocalMovieHelper localMovieHelper;
     public static SQLiteDatabase movieDB;
     public static Menu menu;
@@ -38,12 +41,17 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
 //        android.os.Debug.waitForDebugger();
         if (!isNetworkAvailable()) {
             MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.FAVORITES;
         }
 
         progressBar = (ProgressBar)findViewById(R.id.progress);
+        progressBar = (ProgressBar)findViewById(R.id.progress);
+
+        favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
+        unfavoriteButton = (ImageButton) findViewById(R.id.unfavoriteButton);
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
 

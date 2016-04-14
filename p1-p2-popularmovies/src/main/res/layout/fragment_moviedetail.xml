@@ -64,20 +64,6 @@
                 android:layout_alignLeft="@id/yearTextView"
                 android:layout_alignStart="@id/yearTextView" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mark As Favorite"
-                android:id="@+id/favoriteButton"
-                android:background="@color/colorFavoriteButton"
-                android:textColor="@color/colorTextTranslucent"
-                android:layout_marginBottom="12dp"
-                android:layout_marginTop="6dp"
-                android:padding="6dp"
-                android:layout_alignLeft="@id/voteAverageTextView"
-                android:layout_below="@id/voteAverageTextView"
-                />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

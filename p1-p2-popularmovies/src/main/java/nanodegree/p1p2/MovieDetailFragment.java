@@ -5,7 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,18 +16,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
-import nanodegree.p1p2.data.Movie;
 import nanodegree.p1p2.data.LocalMovieContract;
+import nanodegree.p1p2.data.Movie;
 import nanodegree.p1p2.data.ReviewAsyncTask;
 import nanodegree.p1p2.data.TrailerAsyncTask;
 
@@ -58,6 +60,7 @@ public class MovieDetailFragment extends Fragment {
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_moviegrid));
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         setHasOptionsMenu(true);
     }
 
@@ -65,13 +68,14 @@ public class MovieDetailFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        ActionBar toolbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (MainActivity.isHorizontalTablet) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_moviegrid));
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviegrid));
+            toolbar.setDisplayHomeAsUpEnabled(false);
             setHasOptionsMenu(true);
         } else {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
+            toolbar.setDisplayHomeAsUpEnabled(true);
             setHasOptionsMenu(false);
         }
 
@@ -93,6 +97,40 @@ public class MovieDetailFragment extends Fragment {
 
         noReviewsTextView = (TextView) view.findViewById(R.id.noReviewsTextview);
         noTrailersTextView = (TextView) view.findViewById(R.id.noTrailersTextview);
+
+        MainActivity.favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(MainActivity.TAG, "Saving in local DB...");
+
+                Bitmap moviePosterBitmap = ((BitmapDrawable)posterImageView.getDrawable()).getBitmap();
+                byte[] moviePosterByteArray = getBitmapAsByteArray(moviePosterBitmap);
+
+                ContentValues values = new ContentValues();
+                values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_ID,movie.getId());
+                values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_BYTES,moviePosterByteArray);
+                values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH,movie.getPoster_path());
+                values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_OVERVIEW,movie.getOverview());
+                values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE,movie.getRelease_date());
+                values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_TITLE,movie.getTitle());
+                values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE,movie.getVote_average());
+
+                long rowId = MainActivity.movieDB.insert(LocalMovieContract.MovieEntry.TABLE_NAME, null, values);
+//                    android.os.Debug.waitForDebugger();
+                MainActivity.favoriteButton.setVisibility(View.GONE);
+                MainActivity.unfavoriteButton.setVisibility(View.VISIBLE);
+            }
+        });
+
+        MainActivity.unfavoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(MainActivity.TAG, "Todo: unfavorite...");
+
+                MainActivity.unfavoriteButton.setVisibility(View.GONE);
+                MainActivity.favoriteButton.setVisibility(View.VISIBLE);
+            }
+        });
 
         updateMovieDetailUI();
         return view;
@@ -152,6 +190,10 @@ public class MovieDetailFragment extends Fragment {
                 }
             }
 
+            if (!MainActivity.isHorizontalTablet && !MovieGridFragment.grid_category.equals(MovieGridFragment.GRID_CATEGORY.FAVORITES)) {
+                MainActivity.favoriteButton.setVisibility(View.VISIBLE);
+            }
+
             posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
             posterImageView.setMinimumWidth(Integer.parseInt(Movie.POSTER_WIDTH));
             posterImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -165,29 +207,6 @@ public class MovieDetailFragment extends Fragment {
             voteAverageTextView.setText(movie.getVote_average() + "/10");
             TextView overviewTextView = (TextView) view.findViewById(R.id.overviewTextView);
             overviewTextView.setText(movie.getOverview());
-
-            Button favoriteButton= (Button) view.findViewById(R.id.favoriteButton);
-            favoriteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(MainActivity.TAG, "Saving in local DB...");
-
-                    Bitmap moviePosterBitmap = ((BitmapDrawable)posterImageView.getDrawable()).getBitmap();
-                    byte[] moviePosterByteArray = getBitmapAsByteArray(moviePosterBitmap);
-
-                    ContentValues values = new ContentValues();
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_ID,movie.getId());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_BYTES,moviePosterByteArray);
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH,movie.getPoster_path());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_OVERVIEW,movie.getOverview());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE,movie.getRelease_date());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_TITLE,movie.getTitle());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE,movie.getVote_average());
-
-                    long rowId = MainActivity.movieDB.insert(LocalMovieContract.MovieEntry.TABLE_NAME, null, values);
-//                    android.os.Debug.waitForDebugger();
-                }
-            });
         }
     }
 
