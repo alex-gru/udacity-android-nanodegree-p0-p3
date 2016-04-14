@@ -3,8 +3,6 @@ package nanodegree.p1p2.data;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.AbsListView;
-import android.widget.GridView;
 import android.widget.ListView;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -19,9 +17,6 @@ import java.net.URL;
 import java.util.List;
 
 import nanodegree.p1p2.MainActivity;
-import nanodegree.p1p2.MovieDetailFragment;
-import nanodegree.p1p2.MovieGridFragment;
-import nanodegree.p1p2.MoviePosterAdapter;
 import nanodegree.p1p2.R;
 import nanodegree.p1p2.TrailerAdapter;
 
