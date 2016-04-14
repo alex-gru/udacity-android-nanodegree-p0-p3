@@ -46,6 +46,7 @@ public class MovieDetailFragment extends Fragment {
     private static View view;
     private static ScrollView scrollView;
     public static ImageView posterImageView;
+    public static ImageView posterFullScreenImageView;
 
     public static void scrollUp () {
         scrollView.setScrollY(0);
@@ -191,9 +192,25 @@ public class MovieDetailFragment extends Fragment {
                 MainActivity.favoriteButton.setVisibility(View.VISIBLE);
             }
 
+            posterFullScreenImageView = (ImageView) view.findViewById(R.id.posterFullScreenImageView);
+            posterFullScreenImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            posterFullScreenImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    posterFullScreenImageView.setVisibility(View.GONE);
+                }
+            });
             posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
             posterImageView.setMinimumWidth(Integer.parseInt(Movie.POSTER_WIDTH));
             posterImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            posterImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    posterFullScreenImageView.setVisibility(View.VISIBLE);
+                    Picasso.with(getContext()).load(movie.getFullPosterPathHighRes()).into(posterFullScreenImageView);
+                }
+            });
+
             Picasso.with(getContext()).load(movie.getFullPosterPath()).into(posterImageView);
 
             TextView titleTextView = (TextView) view.findViewById(R.id.titleTextView);

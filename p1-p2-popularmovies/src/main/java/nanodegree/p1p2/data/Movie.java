@@ -21,7 +21,8 @@ import nanodegree.p1p2.MainActivity;
 public class Movie {
 
     public final static String POSTER_WIDTH = "342";
-    private final static String BASE_URL_POSTER = "http://image.tmdb.org/t/p/w" + POSTER_WIDTH;
+    public final static String POSTER_WIDTH_HIGH_RES = "780";
+    private final static String BASE_URL_POSTER = "http://image.tmdb.org/t/p/w";
 
     @JsonProperty("poster_path")
     String poster_path;
@@ -75,7 +76,11 @@ public class Movie {
     byte[] moviePosterByteArray;
 
     public String getFullPosterPath() {
-        return BASE_URL_POSTER + poster_path;
+        return BASE_URL_POSTER + POSTER_WIDTH + poster_path;
+    }
+
+    public String getFullPosterPathHighRes() {
+        return BASE_URL_POSTER + POSTER_WIDTH_HIGH_RES + poster_path;
     }
 
     public String getPoster_path() {
