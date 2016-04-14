@@ -109,52 +109,6 @@ public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
                 detailFragment.updateMovieDetailUI();
             }
 
-            /**
-             * DEBUG - output DB contents
-             */
-             SQLiteDatabase database = MainActivity.localMovieHelper.getReadableDatabase();
-
-            String[] projection = {
-                    LocalMovieContract.MovieEntry._ID,
-                    LocalMovieContract.MovieEntry. COLUMN_NAME_ID,
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH ,
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_ADULT,
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_OVERVIEW ,
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE ,
-                    LocalMovieContract.MovieEntry. COLUMN_NAME_GENRE_IDS ,
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_TITLE ,
-                    LocalMovieContract.MovieEntry. COLUMN_NAME_ORIGINAL_LANGUAGE,
-                    LocalMovieContract.MovieEntry. COLUMN_NAME_TITLE,
-                    LocalMovieContract.MovieEntry. COLUMN_NAME_BACKDROP_PATH,
-                    LocalMovieContract.MovieEntry. COLUMN_NAME_POPULARITY ,
-                    LocalMovieContract.MovieEntry. COLUMN_NAME_VOTE_COUNT ,
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_VIDEO,
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE
-            };
-
-            String sortOrder = LocalMovieContract.MovieEntry._ID + " DESC";
-
-            Cursor cursor = database.query(
-                    LocalMovieContract.MovieEntry.TABLE_NAME,
-                    projection,
-                    null,
-                    null,
-                    null,
-                    null,
-                    sortOrder
-            );
-
-            cursor.moveToFirst();
-
-            while (!cursor.isAfterLast()) {
-                Log.d(MainActivity.TAG,cursor.getString(0));
-                Log.d(MainActivity.TAG,cursor.getString(1));
-                Log.d(MainActivity.TAG,cursor.getString(2));
-                Log.d(MainActivity.TAG,cursor.getString(3));
-                Log.d(MainActivity.TAG,cursor.getString(4));
-                cursor.moveToNext();
-            }
-
         } catch (Exception e) {
             Log.e(MainActivity.TAG, "Exception occured while parsing JSON data.", e);
         }

@@ -22,17 +22,9 @@ public class LocalMovieHelper extends SQLiteOpenHelper{
                     LocalMovieContract.MovieEntry.COLUMN_NAME_ID + TEXT_TYPE + COMMA_SEP +
                     LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_BYTES + BLOB_TYPE + COMMA_SEP +
                     LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH + TEXT_TYPE + COMMA_SEP +
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_ADULT + TEXT_TYPE + COMMA_SEP +
                     LocalMovieContract.MovieEntry.COLUMN_NAME_OVERVIEW + TEXT_TYPE + COMMA_SEP +
                     LocalMovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE + TEXT_TYPE + COMMA_SEP +
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_GENRE_IDS + TEXT_TYPE + COMMA_SEP +
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_TITLE + TEXT_TYPE + COMMA_SEP +
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_LANGUAGE + TEXT_TYPE + COMMA_SEP +
                     LocalMovieContract.MovieEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_BACKDROP_PATH + TEXT_TYPE + COMMA_SEP +
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_POPULARITY + TEXT_TYPE + COMMA_SEP +
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_VOTE_COUNT + TEXT_TYPE + COMMA_SEP +
-                    LocalMovieContract.MovieEntry.COLUMN_NAME_VIDEO + TEXT_TYPE + COMMA_SEP +
                     LocalMovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE + TEXT_TYPE +
             " )";
 

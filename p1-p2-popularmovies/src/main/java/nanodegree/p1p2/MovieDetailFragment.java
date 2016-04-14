@@ -175,18 +175,8 @@ public class MovieDetailFragment extends Fragment {
                     ContentValues values = new ContentValues();
                     values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_ID,movie.getId());
                     values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_BYTES,moviePosterByteArray);
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH,movie.getPoster_path());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_ADULT,movie.getAdult());
                     values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_OVERVIEW,movie.getOverview());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_RELEASE_DATE,movie.getRelease_date());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_GENRE_IDS,movie.getGenre_ids().toString()); //TODO
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_TITLE,movie.getOriginal_title());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_ORIGINAL_LANGUAGE,movie.getOriginal_language());
                     values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_TITLE,movie.getTitle());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_BACKDROP_PATH,movie.getBackdrop_path());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_POPULARITY,movie.getPopularity());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_VOTE_COUNT,movie.getVote_count());
-                    values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_VIDEO,movie.getVideo());
                     values.put(LocalMovieContract.MovieEntry.COLUMN_NAME_VOTE_AVERAGE,movie.getVote_average());
 
                     long rowId = MainActivity.movieDB.insert(LocalMovieContract.MovieEntry.TABLE_NAME, null, values);

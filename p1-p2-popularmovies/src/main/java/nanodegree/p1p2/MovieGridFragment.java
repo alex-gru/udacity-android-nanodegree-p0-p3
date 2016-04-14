@@ -27,7 +27,6 @@ public class MovieGridFragment extends Fragment {
     public static GridView gridview;
     public static List<Movie> movies_top_rated;
     public static List<Movie> movies_most_popular;
-//    public static boolean sortModePopular = true;
     public static GRID_CATEGORY grid_category = GRID_CATEGORY.MOST_POPULAR;
     public enum GRID_CATEGORY {
         MOST_POPULAR,

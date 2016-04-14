@@ -72,10 +72,6 @@ public class Movie {
     List<Review> reviews;
 
 
-    public String getPoster_path() {
-        return poster_path;
-    }
-
     public String getFullPosterPath() {
         return BASE_URL_POSTER + poster_path;
     }
@@ -84,59 +80,24 @@ public class Movie {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
             Calendar cal = Calendar.getInstance();
-            cal.setTime(dateFormat.parse(getRelease_date()));
+            cal.setTime(dateFormat.parse(release_date));
             return cal.get(Calendar.YEAR);
         } catch (ParseException e) {
             Log.e(MainActivity.TAG, "Could not parse year from date string.", e);
         }
         return -1;
     }
-    public String getAdult() {
-        return adult;
-    }
 
     public String getOverview() {
         return overview;
-    }
-
-    public String getRelease_date() {
-        return release_date;
-    }
-
-    public List getGenre_ids() {
-        return genre_ids;
     }
 
     public long getId() {
         return id;
     }
 
-    public String getOriginal_title() {
-        return original_title;
-    }
-
-    public String getOriginal_language() {
-        return original_language;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public String getBackdrop_path() {
-        return backdrop_path;
-    }
-
-    public String getPopularity() {
-        return popularity;
-    }
-
-    public String getVote_count() {
-        return vote_count;
-    }
-
-    public String getVideo() {
-        return video;
     }
 
     public String getVote_average() {
@@ -149,5 +110,30 @@ public class Movie {
 
     public List<Review> getReviews() {
         return reviews;
+    }
+
+
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public void setRelease_date(String release_date) {
+        this.release_date = release_date;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setVote_average(String vote_average) {
+        this.vote_average = vote_average;
     }
 }
