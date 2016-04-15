@@ -47,7 +47,7 @@ public class ReviewAsyncTask extends AsyncTask<Void, Integer, Integer> {
             Log.e(MainActivity.TAG, "Could not read API key. Check if 'themoviedb.txt' is present.", e);
         }
 
-        if (!((MainActivity)activity).isNetworkAvailable()) {
+        if (!((MainActivity)activity).checkIfNetworkAvailable()) {
             reviewListView.setVisibility(View.GONE);
             cancel(false);
         }

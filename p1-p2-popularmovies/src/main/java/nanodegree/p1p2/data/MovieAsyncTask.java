@@ -3,6 +3,7 @@ package nanodegree.p1p2.data;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,9 +47,10 @@ public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
             Log.e(MainActivity.TAG, "Could not read API key. Check if 'themoviedb.txt' is present.", e);
         }
 
-        if (!((MainActivity)activity).isNetworkAvailable()) {
+        if (!((MainActivity)activity).checkIfNetworkAvailable()) {
             cancel(false);
         } else {
+            MainActivity.progressBar.setVisibility(View.VISIBLE);
             ((MainActivity)activity).offline = false;
         }
     }

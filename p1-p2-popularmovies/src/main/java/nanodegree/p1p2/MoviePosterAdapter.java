@@ -15,6 +15,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import nanodegree.p1p2.data.Movie;
+import nanodegree.p1p2.data.MovieAsyncTask;
 
 public class MoviePosterAdapter extends BaseAdapter {
     private static final int POSTER_HEIGHT_TABLET = 500;
@@ -45,16 +46,16 @@ public class MoviePosterAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            if (MainActivity.isHorizontalTablet)
-            {
-                imageView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, POSTER_HEIGHT_TABLET));
-            } else {
-                imageView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, POSTER_HEIGHT_PHONE));
-            }
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         } else {
             imageView = (ImageView) convertView;
         }
+        if (MainActivity.isHorizontalTablet)
+        {
+            imageView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, POSTER_HEIGHT_TABLET));
+        } else {
+            imageView.setLayoutParams(new GridView.LayoutParams(GridView.AUTO_FIT, POSTER_HEIGHT_PHONE));
+        }
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         Movie movie = null;
 
@@ -63,10 +64,14 @@ public class MoviePosterAdapter extends BaseAdapter {
         // http://stackoverflow.com/a/22786818/2472398
         // http://stackoverflow.com/questions/22143157/android-picasso-placeholder-and-error-image-styling
         // http://stackoverflow.com/q/21333866/2472398
-        MainActivity.progressBar.setVisibility(View.VISIBLE);
+
+        if (MainActivity.progressBar.getVisibility() != View.VISIBLE)
+            MainActivity.progressBar.setVisibility(View.VISIBLE);
 
         switch (MovieGridFragment.grid_category) {
             case MOST_POPULAR:
+                if (position >= MovieGridFragment.movies_most_popular.size())
+                    return imageView;
                 movie = MovieGridFragment.movies_most_popular.get(position);
                 Picasso.with(mContext).load(movie.getFullPosterPath())
                         .placeholder(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.posterplaceholder, null))
@@ -74,6 +79,8 @@ public class MoviePosterAdapter extends BaseAdapter {
                         .into(imageView, new MainActivity.ProgressBarCallBack((MainActivity) mContext));
                 break;
             case TOP_RATED:
+                if (position >= MovieGridFragment.movies_top_rated.size())
+                    return imageView;
                 movie = MovieGridFragment.movies_top_rated.get(position);
                 Picasso.with(mContext).load(movie.getFullPosterPath())
                         .placeholder(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.posterplaceholder, null))
@@ -81,6 +88,8 @@ public class MoviePosterAdapter extends BaseAdapter {
                         .into(imageView, new MainActivity.ProgressBarCallBack((MainActivity) mContext));
                 break;
             case FAVORITES:
+                if (position >= MovieGridFragment.movies_favorites.size())
+                    return imageView;
                 movie = MovieGridFragment.movies_favorites.get(position);
                 Bitmap poster = BitmapFactory.decodeByteArray(movie.getMoviePosterByteArray(), 0, movie.getMoviePosterByteArray().length);
                 imageView.setImageBitmap(poster);

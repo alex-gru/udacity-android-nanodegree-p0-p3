@@ -109,16 +109,20 @@ public class MovieGridFragment extends Fragment {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 final int _lastItem = firstVisibleItem + visibleItemCount;
-                if (_lastItem > 0 && totalItemCount > 0)
-                    if (_lastItem == MoviePosterAdapter.count) {
-                        if (lastPositionInGrid < _lastItem || ((MainActivity)getActivity()).offline) {
-                            lastPositionInGrid = _lastItem;
-                            // Last item is fully visible.
-                            Log.d(MainActivity.TAG, "Now fetch next page from theMovieDB.");
-                            new MovieAsyncTask((AppCompatActivity) getActivity()).execute();
-                        }
 
+                if (grid_category.equals(GRID_CATEGORY.TOP_RATED)
+                        || grid_category.equals(GRID_CATEGORY.MOST_POPULAR)) {
+                    if (_lastItem > 0 && totalItemCount > 0) {
+                        if (_lastItem == MoviePosterAdapter.count) {
+                            if (lastPositionInGrid < _lastItem || ((MainActivity) getActivity()).offline) {
+                                lastPositionInGrid = _lastItem;
+                                // Last item is fully visible.
+                                Log.d(MainActivity.TAG, "Now fetch next page from theMovieDB.");
+                                new MovieAsyncTask((AppCompatActivity) getActivity()).execute();
+                            }
+                        }
                     }
+                }
             }
         });
 

@@ -3,7 +3,6 @@ package nanodegree.p1p2;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +83,7 @@ public class TrailerAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View v) {
-                if (!activity.isNetworkAvailable()) {
+                if (!activity.checkIfNetworkAvailable()) {
 
                 } else {
                     mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(MovieDetailFragment.movie.getTrailers().get(trailerIdx).getYoutubeURL())));

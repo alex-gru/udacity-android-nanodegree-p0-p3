@@ -46,7 +46,7 @@ public class TrailerAsyncTask extends AsyncTask<Void, Integer, Integer> {
             Log.e(MainActivity.TAG, "Could not read API key. Check if 'themoviedb.txt' is present.", e);
         }
 
-        if (!((MainActivity)activity).isNetworkAvailable()) {
+        if (!((MainActivity)activity).checkIfNetworkAvailable()) {
             trailerListView.setVisibility(View.GONE);
             cancel(false);
         }

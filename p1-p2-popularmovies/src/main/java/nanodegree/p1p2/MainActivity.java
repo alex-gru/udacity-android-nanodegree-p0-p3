@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,12 +19,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 
 import nanodegree.p1p2.data.LocalMovieHelper;
 import nanodegree.p1p2.data.LocalMovieLoaderAsyncTask;
+import nanodegree.p1p2.data.MovieAsyncTask;
 
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
@@ -35,15 +36,20 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public static LocalMovieHelper localMovieHelper;
     public static SQLiteDatabase movieDB;
     public static Menu menu;
+    private static Snackbar snackbar;
     public boolean offline = false;
     public static CountDownTimer networkAlertTimer;
     public static boolean showNetworkAlert = true;
+    private View activityContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
 
+        activityContainer = findViewById(R.id.activityContainer);
+        snackbar = Snackbar.make(this.activityContainer, "No connection", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("REFRESH",new SnackBarClickListener(this));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -58,10 +64,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 showNetworkAlert = true;
             }
         };
-        if (!isNetworkAvailable()) {
+        if (!checkIfNetworkAvailable()) {
             MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.FAVORITES;
-            alertNetworkIssue(this, false);
         }
+
 
         progressBar = (ProgressBar)findViewById(R.id.progress);
         progressBar = (ProgressBar)findViewById(R.id.progress);
@@ -192,12 +198,12 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (MovieGridFragment.movies_most_popular.isEmpty()
+                || MovieGridFragment.movies_top_rated.isEmpty())
+            new MovieAsyncTask(this).execute();
         switch(item.getItemId()){
             case R.id.action_show_most_popular:
-                if (!isNetworkAvailable()) {
-                    alertNetworkIssue(this, true);
-                    return true;
-                }
                 menu.findItem(R.id.action_show_favorites).setVisible(true);
                 menu.findItem(R.id.action_show_top_rated).setVisible(true);
                 menu.findItem(R.id.action_show_most_popular).setVisible(false);
@@ -209,10 +215,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 MovieGridFragment.gridview.smoothScrollToPosition(0);
                 return true;
             case R.id.action_show_top_rated:
-                if (!isNetworkAvailable()) {
-                    alertNetworkIssue(this, true);
-                    return true;
-                }
                 menu.findItem(R.id.action_show_favorites).setVisible(true);
                 menu.findItem(R.id.action_show_most_popular).setVisible(true);
                 menu.findItem(R.id.action_show_top_rated).setVisible(false);
@@ -241,13 +243,22 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean isNetworkAvailable() {
+    public boolean checkIfNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        offline = true;
+        offline =  ! (activeNetworkInfo != null && activeNetworkInfo.isConnected());
 
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        if (!offline) {
+            if (snackbar.isShown()) {
+                snackbar.dismiss();
+            }
+        } else {
+            if (!snackbar.isShown()) {
+                snackbar.show();
+            }
+        }
+        return !offline;
     }
 
     public static class ProgressBarCallBack implements Callback {
@@ -271,18 +282,21 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 MovieDetailFragment.posterFullScreenImageView.setVisibility(View.GONE);
             if (MovieDetailFragment.posterFullScreenExitIcon != null)
                 MovieDetailFragment.posterFullScreenExitIcon.setVisibility(View.GONE);
-            if (!activity.isNetworkAvailable()) {
-                MainActivity.alertNetworkIssue(activity, false);
-            }
+
+            activity.checkIfNetworkAvailable();
         }
     }
 
-    private static void alertNetworkIssue(AppCompatActivity activity, boolean force) {
+    private class SnackBarClickListener implements View.OnClickListener {
 
-       if (force || showNetworkAlert) {
-           showNetworkAlert = false;
-           networkAlertTimer.start();
-           Toast.makeText(activity,"No network available",Toast.LENGTH_SHORT).show();
-       }
+        private final MainActivity activity;
+
+        public SnackBarClickListener(MainActivity activity) {
+            this.activity = activity;
+        }
+        @Override
+        public void onClick(View v) {
+            MovieGridFragment.gridview.invalidateViews();
+        }
     }
 }

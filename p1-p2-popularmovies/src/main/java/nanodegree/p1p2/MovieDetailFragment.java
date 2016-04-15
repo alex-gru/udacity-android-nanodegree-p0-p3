@@ -209,8 +209,8 @@ public class MovieDetailFragment extends Fragment {
                 }
             });
             posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
-            posterImageView.setMinimumWidth(Integer.parseInt(Movie.POSTER_WIDTH));
-            posterImageView.setMinimumHeight(Integer.parseInt(Movie.POSTER_HEIGHT));
+            posterImageView.setMinimumWidth(Movie.POSTER_WIDTH);
+            posterImageView.setMinimumHeight(Movie.POSTER_HEIGHT);
             posterImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             posterImageView.setOnClickListener(new View.OnClickListener() {
                 @Override

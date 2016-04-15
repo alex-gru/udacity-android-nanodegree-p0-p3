@@ -2,6 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/activityContainer"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -37,8 +38,8 @@
         <ProgressBar
             android:id="@+id/progress"
             style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:visibility="visible"
             android:layout_marginRight="4dp"
             android:layout_gravity="right" />

@@ -20,9 +20,9 @@ import nanodegree.p1p2.MainActivity;
 
 public class Movie {
 
-    public final static String POSTER_WIDTH = "342";
-    public final static String POSTER_HEIGHT = "513";
-    public final static String POSTER_WIDTH_HIGH_RES = "780";
+    public final static int POSTER_WIDTH = 342;
+    public final static int POSTER_HEIGHT = 513;
+    public final static int POSTER_WIDTH_HIGH_RES = 780;
     private final static String BASE_URL_POSTER = "http://image.tmdb.org/t/p/w";
 
     @JsonProperty("poster_path")
