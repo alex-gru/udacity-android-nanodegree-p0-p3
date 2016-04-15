@@ -1,14 +1,13 @@
 package nanodegree.p1p2;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 
@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public static SQLiteDatabase movieDB;
     public static Menu menu;
     public boolean offline = false;
+    public static CountDownTimer networkAlertTimer;
+    public static boolean showNetworkAlert = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +48,19 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         setSupportActionBar(toolbar);
 
 
-        android.os.Debug.waitForDebugger();
+//        android.os.Debug.waitForDebugger();
+        networkAlertTimer = new CountDownTimer(10000, 10000) {
+
+            public void onTick(long millisUntilFinished) {
+            }
+
+            public void onFinish() {
+                showNetworkAlert = true;
+            }
+        };
         if (!isNetworkAvailable()) {
             MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.FAVORITES;
-            //TODO: show popup network connection
+            alertNetworkIssue(this, false);
         }
 
         progressBar = (ProgressBar)findViewById(R.id.progress);
@@ -183,6 +194,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.action_show_most_popular:
+                if (!isNetworkAvailable()) {
+                    alertNetworkIssue(this, true);
+                    return true;
+                }
                 menu.findItem(R.id.action_show_favorites).setVisible(true);
                 menu.findItem(R.id.action_show_top_rated).setVisible(true);
                 menu.findItem(R.id.action_show_most_popular).setVisible(false);
@@ -194,6 +209,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 MovieGridFragment.gridview.smoothScrollToPosition(0);
                 return true;
             case R.id.action_show_top_rated:
+                if (!isNetworkAvailable()) {
+                    alertNetworkIssue(this, true);
+                    return true;
+                }
                 menu.findItem(R.id.action_show_favorites).setVisible(true);
                 menu.findItem(R.id.action_show_most_popular).setVisible(true);
                 menu.findItem(R.id.action_show_top_rated).setVisible(false);
@@ -228,34 +247,16 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         offline = true;
 
-        boolean helper = !(activeNetworkInfo != null && activeNetworkInfo.isConnected());
-
-        if (helper) {
-            buildDialog(this).show();
-        }
-        return helper;
-    }
-
-    public AlertDialog.Builder buildDialog(Context c) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(c);
-        builder.setTitle("No Internet connection.");
-        builder.setMessage("You have no internet connection");
-
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.dismiss();
-            }
-        });
-
-        return builder;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public static class ProgressBarCallBack implements Callback {
 
+        private final MainActivity activity;
+
+        ProgressBarCallBack(MainActivity activity) {
+            this.activity = activity;
+        }
         @Override
         public void onSuccess() {
             MainActivity.progressBar.setVisibility(View.GONE);
@@ -263,7 +264,25 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         @Override
         public void onError() {
+
             MainActivity.progressBar.setVisibility(View.GONE);
+
+            if (MovieDetailFragment.posterFullScreenImageView != null)
+                MovieDetailFragment.posterFullScreenImageView.setVisibility(View.GONE);
+            if (MovieDetailFragment.posterFullScreenExitIcon != null)
+                MovieDetailFragment.posterFullScreenExitIcon.setVisibility(View.GONE);
+            if (!activity.isNetworkAvailable()) {
+                MainActivity.alertNetworkIssue(activity, false);
+            }
         }
+    }
+
+    private static void alertNetworkIssue(AppCompatActivity activity, boolean force) {
+
+       if (force || showNetworkAlert) {
+           showNetworkAlert = false;
+           networkAlertTimer.start();
+           Toast.makeText(activity,"No network available",Toast.LENGTH_SHORT).show();
+       }
     }
 }

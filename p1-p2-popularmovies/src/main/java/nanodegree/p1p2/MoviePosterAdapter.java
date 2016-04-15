@@ -3,6 +3,8 @@ package nanodegree.p1p2;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -67,12 +69,16 @@ public class MoviePosterAdapter extends BaseAdapter {
             case MOST_POPULAR:
                 movie = MovieGridFragment.movies_most_popular.get(position);
                 Picasso.with(mContext).load(movie.getFullPosterPath())
-                        .into(imageView, new MainActivity.ProgressBarCallBack());
+                        .placeholder(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.posterplaceholder, null))
+                        .error(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.posterplaceholder, null))
+                        .into(imageView, new MainActivity.ProgressBarCallBack((MainActivity) mContext));
                 break;
             case TOP_RATED:
                 movie = MovieGridFragment.movies_top_rated.get(position);
                 Picasso.with(mContext).load(movie.getFullPosterPath())
-                        .into(imageView, new MainActivity.ProgressBarCallBack());
+                        .placeholder(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.posterplaceholder, null))
+                        .error(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.posterplaceholder, null))
+                        .into(imageView, new MainActivity.ProgressBarCallBack((MainActivity) mContext));
                 break;
             case FAVORITES:
                 movie = MovieGridFragment.movies_favorites.get(position);

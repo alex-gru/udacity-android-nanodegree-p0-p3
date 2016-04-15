@@ -143,8 +143,19 @@ public class MovieGridFragment extends Fragment {
         if (!menu.hasVisibleItems()) {
             inflater.inflate(R.menu.menu, menu);
         }
-        menu.findItem(R.id.action_show_most_popular).setVisible(!grid_category.equals(GRID_CATEGORY.MOST_POPULAR));
-        menu.findItem(R.id.action_show_top_rated).setVisible(!grid_category.equals(GRID_CATEGORY.TOP_RATED));
+
+        switch (grid_category) {
+
+            case MOST_POPULAR:
+                menu.findItem(R.id.action_show_most_popular).setVisible(false);
+                break;
+            case TOP_RATED:
+                menu.findItem(R.id.action_show_top_rated).setVisible(false);
+                break;
+            case FAVORITES:
+                menu.findItem(R.id.action_show_favorites).setVisible(false);
+                break;
+        }
         MainActivity.menu = menu;
 
         MainActivity.favoriteButton.setVisibility(View.GONE);

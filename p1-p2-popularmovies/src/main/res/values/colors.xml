@@ -9,4 +9,5 @@
     <color name="materialGreen">#009688</color>
     <color name="materialGreenTranslucent">#c8009688</color>
     <color name="posterPlaceholderColor">#ff303030</color>
+    <color name="gridBorderColor">#80FFFFFF</color>
 </resources>

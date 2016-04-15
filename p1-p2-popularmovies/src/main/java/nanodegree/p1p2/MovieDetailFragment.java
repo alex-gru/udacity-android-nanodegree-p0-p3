@@ -218,12 +218,12 @@ public class MovieDetailFragment extends Fragment {
                     posterFullScreenImageView.setVisibility(View.VISIBLE);
                     posterFullScreenExitIcon.setVisibility(View.VISIBLE);
                     MainActivity.progressBar.setVisibility(View.VISIBLE);
-                    Picasso.with(getContext()).load(movie.getFullPosterPathHighRes()).placeholder(R.color.posterPlaceholderColor).into(posterFullScreenImageView, new MainActivity.ProgressBarCallBack());
+                    Picasso.with(getContext()).load(movie.getFullPosterPathHighRes()).placeholder(R.color.posterPlaceholderColor).into(posterFullScreenImageView, new MainActivity.ProgressBarCallBack((MainActivity) getActivity()));
                 }
             });
 
             MainActivity.progressBar.setVisibility(View.VISIBLE);
-            Picasso.with(getContext()).load(movie.getFullPosterPath()).placeholder(R.color.posterPlaceholderColor).into(posterImageView, new MainActivity.ProgressBarCallBack());
+            Picasso.with(getContext()).load(movie.getFullPosterPath()).placeholder(R.color.posterPlaceholderColor).into(posterImageView, new MainActivity.ProgressBarCallBack((MainActivity) getActivity()));
 
             posterFullScreenIcon = (ImageView) view.findViewById(R.id.posterIcon);
             posterFullScreenIcon.setVisibility(View.VISIBLE);
