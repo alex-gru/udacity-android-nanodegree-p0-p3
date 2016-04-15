@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -211,11 +213,13 @@ public class MovieDetailFragment extends Fragment {
                 public void onClick(View v) {
                     posterFullScreenImageView.setVisibility(View.VISIBLE);
                     posterFullScreenExitIcon.setVisibility(View.VISIBLE);
-                    Picasso.with(getContext()).load(movie.getFullPosterPathHighRes()).into(posterFullScreenImageView);
+                    MainActivity.progressBar.setVisibility(View.VISIBLE);
+                    Picasso.with(getContext()).load(movie.getFullPosterPathHighRes()).placeholder(R.color.posterPlaceholderColor).into(posterFullScreenImageView, new ProgressBarCallBack());
                 }
             });
 
-            Picasso.with(getContext()).load(movie.getFullPosterPath()).into(posterImageView);
+            MainActivity.progressBar.setVisibility(View.VISIBLE);
+            Picasso.with(getContext()).load(movie.getFullPosterPath()).placeholder(R.color.posterPlaceholderColor).into(posterImageView, new ProgressBarCallBack());
 
             posterFullScreenIcon = (ImageView) view.findViewById(R.id.posterIcon);
             posterFullScreenIcon.setVisibility(View.VISIBLE);
@@ -264,5 +268,18 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    private class ProgressBarCallBack implements Callback {
+
+            @Override
+            public void onSuccess() {
+                MainActivity.progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError() {
+                MainActivity.progressBar.setVisibility(View.GONE);
+            }
     }
 }

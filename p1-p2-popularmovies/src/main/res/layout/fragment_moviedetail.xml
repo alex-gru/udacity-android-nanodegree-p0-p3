@@ -203,8 +203,8 @@
         android:layout_height="48dp"
         android:elevation="4dp"
         android:visibility="gone"
-        android:layout_alignRight="@id/posterFullScreenImageView"
-        android:layout_alignBottom="@id/posterFullScreenImageView"
+        android:layout_alignLeft="@id/posterFullScreenImageView"
+        android:layout_alignTop="@id/posterFullScreenImageView"
         android:layout_margin="16dp"
         android:background="@drawable/ic_fullscreen_exit_white_48dp"
         android:id="@+id/posterFullScreenIcon"/>
