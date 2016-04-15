@@ -214,12 +214,12 @@ public class MovieDetailFragment extends Fragment {
                     posterFullScreenImageView.setVisibility(View.VISIBLE);
                     posterFullScreenExitIcon.setVisibility(View.VISIBLE);
                     MainActivity.progressBar.setVisibility(View.VISIBLE);
-                    Picasso.with(getContext()).load(movie.getFullPosterPathHighRes()).placeholder(R.color.posterPlaceholderColor).into(posterFullScreenImageView, new ProgressBarCallBack());
+                    Picasso.with(getContext()).load(movie.getFullPosterPathHighRes()).placeholder(R.color.posterPlaceholderColor).into(posterFullScreenImageView, new MainActivity.ProgressBarCallBack());
                 }
             });
 
             MainActivity.progressBar.setVisibility(View.VISIBLE);
-            Picasso.with(getContext()).load(movie.getFullPosterPath()).placeholder(R.color.posterPlaceholderColor).into(posterImageView, new ProgressBarCallBack());
+            Picasso.with(getContext()).load(movie.getFullPosterPath()).placeholder(R.color.posterPlaceholderColor).into(posterImageView, new MainActivity.ProgressBarCallBack());
 
             posterFullScreenIcon = (ImageView) view.findViewById(R.id.posterIcon);
             posterFullScreenIcon.setVisibility(View.VISIBLE);
@@ -270,16 +270,4 @@ public class MovieDetailFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private class ProgressBarCallBack implements Callback {
-
-            @Override
-            public void onSuccess() {
-                MainActivity.progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onError() {
-                MainActivity.progressBar.setVisibility(View.GONE);
-            }
-    }
 }

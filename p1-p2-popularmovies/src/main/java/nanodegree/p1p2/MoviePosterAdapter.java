@@ -67,12 +67,12 @@ public class MoviePosterAdapter extends BaseAdapter {
             case MOST_POPULAR:
                 movie = MovieGridFragment.movies_most_popular.get(position);
                 Picasso.with(mContext).load(movie.getFullPosterPath())
-                        .into(imageView, new PicassoLoadCallback());
+                        .into(imageView, new MainActivity.ProgressBarCallBack());
                 break;
             case TOP_RATED:
                 movie = MovieGridFragment.movies_top_rated.get(position);
                 Picasso.with(mContext).load(movie.getFullPosterPath())
-                        .into(imageView, new PicassoLoadCallback());
+                        .into(imageView, new MainActivity.ProgressBarCallBack());
                 break;
             case FAVORITES:
                 movie = MovieGridFragment.movies_favorites.get(position);
@@ -98,17 +98,5 @@ public class MoviePosterAdapter extends BaseAdapter {
                 count = MovieGridFragment.movies_favorites.size();
                 break;
         }
-    }
-
-    private class PicassoLoadCallback implements Callback {
-            @Override
-            public void onSuccess() {
-                MainActivity.progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onError() {
-                MainActivity.progressBar.setVisibility(View.GONE);
-            }
     }
 }

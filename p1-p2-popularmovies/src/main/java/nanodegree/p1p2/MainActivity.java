@@ -18,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.squareup.picasso.Callback;
+
 import nanodegree.p1p2.data.LocalMovieHelper;
 import nanodegree.p1p2.data.LocalMovieLoaderAsyncTask;
 
@@ -223,5 +225,18 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         offline = true;
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public static class ProgressBarCallBack implements Callback {
+
+        @Override
+        public void onSuccess() {
+            MainActivity.progressBar.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onError() {
+            MainActivity.progressBar.setVisibility(View.GONE);
+        }
     }
 }
