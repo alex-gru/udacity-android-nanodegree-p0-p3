@@ -3,6 +3,7 @@ package nanodegree.p1p2.data;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -44,6 +45,11 @@ public class ReviewAsyncTask extends AsyncTask<Void, Integer, Integer> {
             REVIEW_URL =  REVIEW_URL.replace("<id>",String.valueOf(movie.getId())) + "?api_key=" + THE_MOVIE_DB_API_KEY;
         } catch (IOException e) {
             Log.e(MainActivity.TAG, "Could not read API key. Check if 'themoviedb.txt' is present.", e);
+        }
+
+        if (!((MainActivity)activity).isNetworkAvailable()) {
+            reviewListView.setVisibility(View.GONE);
+            cancel(false);
         }
     }
 
@@ -92,6 +98,7 @@ public class ReviewAsyncTask extends AsyncTask<Void, Integer, Integer> {
             movie.reviews = mapper.readValue(json, TypeFactory.defaultInstance().constructCollectionType(List.class, Review.class));
             ReviewAdapter.updateCount(movie.getReviews().size());
             reviewListView.invalidateViews();
+            reviewListView.setVisibility(View.VISIBLE);
         } catch (Exception e) {
             Log.e(MainActivity.TAG, "Exception occured while parsing JSON data.", e);
         }

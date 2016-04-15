@@ -63,6 +63,9 @@ public class MovieDetailFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_moviegrid));
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
+        trailerListView.setVisibility(View.GONE);
+        reviewListView.setVisibility(View.GONE);
+
         setHasOptionsMenu(true);
     }
 
@@ -207,6 +210,7 @@ public class MovieDetailFragment extends Fragment {
             });
             posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
             posterImageView.setMinimumWidth(Integer.parseInt(Movie.POSTER_WIDTH));
+            posterImageView.setMinimumHeight(Integer.parseInt(Movie.POSTER_HEIGHT));
             posterImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             posterImageView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -47,7 +47,7 @@ public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         if (!((MainActivity)activity).isNetworkAvailable()) {
-            cancel(true);
+            cancel(false);
         } else {
             ((MainActivity)activity).offline = false;
         }

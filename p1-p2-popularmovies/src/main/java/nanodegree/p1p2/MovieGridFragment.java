@@ -122,7 +122,7 @@ public class MovieGridFragment extends Fragment {
             }
         });
 
-        if (movies_most_popular.isEmpty())
+        if (movies_most_popular.isEmpty() || movies_top_rated.isEmpty())
             new MovieAsyncTask((AppCompatActivity) getActivity()).execute();
 
         return view;

@@ -3,6 +3,7 @@ package nanodegree.p1p2;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ public class TrailerAdapter extends BaseAdapter {
 
         }
 
-        row.setOnClickListener(new TrailerOnClickListener(position));
+        row.setOnClickListener(new TrailerOnClickListener((MainActivity) mContext, position));
         return row;
     }
 
@@ -74,14 +75,20 @@ public class TrailerAdapter extends BaseAdapter {
     private class TrailerOnClickListener implements View.OnClickListener {
 
         private final int trailerIdx;
+        private final MainActivity activity;
 
-        public TrailerOnClickListener(int trailerIdx) {
+        public TrailerOnClickListener(MainActivity activity, int trailerIdx) {
             this.trailerIdx = trailerIdx;
+            this.activity = activity;
         }
 
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(MovieDetailFragment.movie.getTrailers().get(trailerIdx).getYoutubeURL())));
+                if (!activity.isNetworkAvailable()) {
+
+                } else {
+                    mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(MovieDetailFragment.movie.getTrailers().get(trailerIdx).getYoutubeURL())));
+                }
             }
     }
 }
