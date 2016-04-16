@@ -297,6 +297,12 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         @Override
         public void onClick(View v) {
             MovieGridFragment.gridview.invalidateViews();
+
+            Fragment detailFragment = getSupportFragmentManager().findFragmentByTag(MovieDetailFragment.TAG);
+            if (detailFragment != null && detailFragment.isAdded()) {
+                ((MovieDetailFragment)detailFragment).updateMovieDetailUI();
+            }
+
         }
     }
 }
