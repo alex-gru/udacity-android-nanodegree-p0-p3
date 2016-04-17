@@ -14,27 +14,6 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
 
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/favoriteButton"
-            android:background="@drawable/ic_favorite_border_white_48dp"
-            android:padding="12dp"
-            android:elevation="4dp"
-            android:layout_marginRight="24dp"
-            android:layout_gravity="right" />
-
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/unfavoriteButton"
-            android:background="@drawable/ic_favorite_white_48dp"
-            android:padding="12dp"
-            android:elevation="4dp"
-            android:layout_marginRight="24dp"
-            android:visibility="gone"
-            android:layout_gravity="right"/>
-
         <ProgressBar
             android:id="@+id/progress"
             style="?android:attr/progressBarStyle"

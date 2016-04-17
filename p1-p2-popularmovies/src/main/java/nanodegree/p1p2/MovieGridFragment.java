@@ -161,9 +161,6 @@ public class MovieGridFragment extends Fragment {
                 break;
         }
         MainActivity.menu = menu;
-
-        MainActivity.favoriteButton.setVisibility(View.GONE);
-        MainActivity.unfavoriteButton.setVisibility(View.GONE);
     }
 
     @Override

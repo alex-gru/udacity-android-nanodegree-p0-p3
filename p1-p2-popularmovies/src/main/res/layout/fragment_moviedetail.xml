@@ -74,6 +74,31 @@
                 android:layout_alignLeft="@id/yearTextView"
                 android:layout_alignStart="@id/yearTextView" />
 
+
+            <ImageButton
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:id="@+id/favoriteButton"
+                android:background="@drawable/ic_favorite_border_white_48dp"
+                android:backgroundTint="@color/materialGreen"
+                android:layout_marginTop="6dp"
+                android:elevation="4dp"
+                android:layout_below="@id/voteAverageTextView"
+                android:layout_alignLeft="@id/voteAverageTextView" />
+
+            <ImageButton
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:id="@+id/unfavoriteButton"
+                android:background="@drawable/ic_favorite_white_48dp"
+                android:backgroundTint="@color/materialGreen"
+                android:layout_marginTop="6dp"
+                android:elevation="4dp"
+                android:visibility="gone"
+                android:layout_below="@id/voteAverageTextView"
+                android:layout_alignLeft="@id/voteAverageTextView"/>
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -15,10 +15,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -26,6 +28,7 @@ import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 
 import nanodegree.p1p2.data.LocalMovieContract;
+import nanodegree.p1p2.data.LocalMovieLoaderAsyncTask;
 import nanodegree.p1p2.data.Movie;
 import nanodegree.p1p2.data.ReviewAsyncTask;
 import nanodegree.p1p2.data.TrailerAsyncTask;
@@ -51,6 +54,9 @@ public class MovieDetailFragment extends Fragment {
     public static ImageView posterFullScreenImageView;
     public static ImageView posterFullScreenIcon;
     public static ImageView posterFullScreenExitIcon;
+
+    public static ImageButton favoriteButton;
+    public static ImageButton unfavoriteButton;
 
     public static void scrollUp () {
         scrollView.setScrollY(0);
@@ -103,10 +109,20 @@ public class MovieDetailFragment extends Fragment {
         noReviewsTextView = (TextView) view.findViewById(R.id.noReviewsTextview);
         noTrailersTextView = (TextView) view.findViewById(R.id.noTrailersTextview);
 
-        MainActivity.favoriteButton.setOnClickListener(new View.OnClickListener() {
+        favoriteButton = (ImageButton) view.findViewById(R.id.favoriteButton);
+        unfavoriteButton = (ImageButton) view.findViewById(R.id.unfavoriteButton);
+
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(MainActivity.TAG, "Saving in local DB...");
+
+                boolean isAlreadyFavorite = checkIfFavorite(movie);
+
+                if (isAlreadyFavorite) {
+                    Toast.makeText(getContext(),"Already saved to Favorites",Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 Bitmap moviePosterBitmap = ((BitmapDrawable)posterImageView.getDrawable()).getBitmap();
                 byte[] moviePosterByteArray = getBitmapAsByteArray(moviePosterBitmap);
@@ -122,18 +138,25 @@ public class MovieDetailFragment extends Fragment {
 
                 long rowId = MainActivity.movieDB.insert(LocalMovieContract.MovieEntry.TABLE_NAME, null, values);
 //                    android.os.Debug.waitForDebugger();
-                MainActivity.favoriteButton.setVisibility(View.GONE);
-                MainActivity.unfavoriteButton.setVisibility(View.VISIBLE);
+                favoriteButton.setVisibility(View.GONE);
+                unfavoriteButton.setVisibility(View.VISIBLE);
+
+                Toast.makeText(getContext(),"Saved to Favorites",Toast.LENGTH_SHORT).show();
+
+                new LocalMovieLoaderAsyncTask((AppCompatActivity) getActivity()).execute();
             }
         });
 
-        MainActivity.unfavoriteButton.setOnClickListener(new View.OnClickListener() {
+        unfavoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(MainActivity.TAG, "Todo: unfavorite...");
 
-                MainActivity.unfavoriteButton.setVisibility(View.GONE);
-                MainActivity.favoriteButton.setVisibility(View.VISIBLE);
+                unfavoriteButton.setVisibility(View.GONE);
+                favoriteButton.setVisibility(View.VISIBLE);
+
+                //TODO remove from database
+                // call DB-Asynctask
             }
         });
 
@@ -154,16 +177,20 @@ public class MovieDetailFragment extends Fragment {
     public void updateMovieDetailUI() {
         if (MoviePosterAdapter.count > 0 ) {
 
+            boolean isFavorite = false;
             switch (MovieGridFragment.grid_category) {
 
                 case MOST_POPULAR:
                     movie = MovieGridFragment.movies_most_popular.get(MovieGridFragment.selectedPositionInGrid);
+                    isFavorite = checkIfFavorite(movie);
                     break;
                 case TOP_RATED:
                     movie = MovieGridFragment.movies_top_rated.get(MovieGridFragment.selectedPositionInGrid);
+                    isFavorite = checkIfFavorite(movie);
                     break;
                 case FAVORITES:
                     movie = MovieGridFragment.movies_favorites.get(MovieGridFragment.selectedPositionInGrid);
+                    isFavorite = true;
                     break;
             }
 
@@ -195,8 +222,12 @@ public class MovieDetailFragment extends Fragment {
                 }
             }
 
-            if (!MainActivity.isHorizontalTablet && !MovieGridFragment.grid_category.equals(MovieGridFragment.GRID_CATEGORY.FAVORITES)) {
-                MainActivity.favoriteButton.setVisibility(View.VISIBLE);
+            if (isFavorite) {
+                favoriteButton.setVisibility(View.GONE);
+                unfavoriteButton.setVisibility(View.VISIBLE);
+            } else {
+                favoriteButton.setVisibility(View.VISIBLE);
+                unfavoriteButton.setVisibility(View.GONE);
             }
 
             posterFullScreenImageView = (ImageView) view.findViewById(R.id.posterFullScreenImageView);
@@ -239,6 +270,14 @@ public class MovieDetailFragment extends Fragment {
             TextView overviewTextView = (TextView) view.findViewById(R.id.overviewTextView);
             overviewTextView.setText(movie.getOverview());
         }
+    }
+
+    private boolean checkIfFavorite(Movie movie) {
+        for (int i = 0; i < MovieGridFragment.movies_favorites.size(); i++) {
+            if (movie.getId() == MovieGridFragment.movies_favorites.get(i).getId())
+                return true;
+        }
+        return false;
     }
 
     /**

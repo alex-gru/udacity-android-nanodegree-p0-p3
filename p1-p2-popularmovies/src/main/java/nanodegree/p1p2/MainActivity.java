@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public static final String TAG = "NANODEGREE.P1P2";
     public static boolean isHorizontalTablet;
     public static ProgressBar progressBar;
-    public static ImageButton favoriteButton;
-    public static ImageButton unfavoriteButton;
+
     public static LocalMovieHelper localMovieHelper;
     public static SQLiteDatabase movieDB;
     public static Menu menu;
@@ -71,9 +70,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         progressBar = (ProgressBar)findViewById(R.id.progress);
         progressBar = (ProgressBar)findViewById(R.id.progress);
-
-        favoriteButton = (ImageButton) findViewById(R.id.favoriteButton);
-        unfavoriteButton = (ImageButton) findViewById(R.id.unfavoriteButton);
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
 
