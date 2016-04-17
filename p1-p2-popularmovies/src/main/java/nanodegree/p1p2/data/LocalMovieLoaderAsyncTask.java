@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,6 @@ public class LocalMovieLoaderAsyncTask extends AsyncTask<Void, Integer, Integer>
         SQLiteDatabase database = MainActivity.localMovieHelper.getReadableDatabase();
 
         String[] projection = {
-                LocalMovieContract.MovieEntry._ID,
                 LocalMovieContract.MovieEntry.COLUMN_NAME_ID,
                 LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_BYTES,
                 LocalMovieContract.MovieEntry.COLUMN_NAME_POSTER_PATH ,
@@ -58,13 +58,13 @@ public class LocalMovieLoaderAsyncTask extends AsyncTask<Void, Integer, Integer>
 
         while (!cursor.isAfterLast()) {
             Movie movie = new Movie();
-            movie.setId(Long.parseLong(cursor.getString(1)));
-            movie.setMoviePosterByteArray(cursor.getBlob(2));
-            movie.setPoster_path(cursor.getString(3));
-            movie.setOverview(cursor.getString(4));
-            movie.setRelease_date(cursor.getString(5));
-            movie.setTitle(cursor.getString(6));
-            movie.setVote_average(cursor.getString(7));
+            movie.setId(Long.parseLong(cursor.getString(0)));
+            movie.setMoviePosterByteArray(cursor.getBlob(1));
+            movie.setPoster_path(cursor.getString(2));
+            movie.setOverview(cursor.getString(3));
+            movie.setRelease_date(cursor.getString(4));
+            movie.setTitle(cursor.getString(5));
+            movie.setVote_average(cursor.getString(6));
 
             movies_favorites.add(movie);
             cursor.moveToNext();
@@ -80,5 +80,11 @@ public class LocalMovieLoaderAsyncTask extends AsyncTask<Void, Integer, Integer>
         MovieGridFragment.movies_favorites = movies_favorites;
         MoviePosterAdapter.updateCount();
         MovieGridFragment.gridview.invalidateViews();
+
+        if (MoviePosterAdapter.count == 0) {
+            MovieGridFragment.noFavoritesHint.setVisibility(View.VISIBLE);
+        } else {
+            MovieGridFragment.noFavoritesHint.setVisibility(View.GONE);
+        }
     }
 }

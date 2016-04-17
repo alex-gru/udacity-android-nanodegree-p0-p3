@@ -150,13 +150,16 @@ public class MovieDetailFragment extends Fragment {
         unfavoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(MainActivity.TAG, "Todo: unfavorite...");
-
                 unfavoriteButton.setVisibility(View.GONE);
                 favoriteButton.setVisibility(View.VISIBLE);
 
-                //TODO remove from database
-                // call DB-Asynctask
+                String whereClause = LocalMovieContract.MovieEntry.COLUMN_NAME_ID + " = ?";
+                String[] whereArgs = { String.valueOf(movie.getId()) };
+                MainActivity.movieDB.delete(LocalMovieContract.MovieEntry.TABLE_NAME, whereClause, whereArgs);
+
+                Toast.makeText(getContext(),"Removed from Favorites",Toast.LENGTH_SHORT).show();
+
+                new LocalMovieLoaderAsyncTask((AppCompatActivity) getActivity()).execute();
             }
         });
 

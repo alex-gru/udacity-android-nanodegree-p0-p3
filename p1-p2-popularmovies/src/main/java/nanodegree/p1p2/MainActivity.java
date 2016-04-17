@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -78,6 +77,12 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         checkFragments();
 
         setupDB();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        movieDB.close();
     }
 
     private void setupDB() {
@@ -206,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_most_popular));
 
                 MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.MOST_POPULAR;
+                MovieGridFragment.noFavoritesHint.setVisibility(View.GONE);
                 MoviePosterAdapter.updateCount();
                 MovieGridFragment.gridview.invalidateViews();
                 MovieGridFragment.gridview.smoothScrollToPosition(0);
@@ -217,6 +223,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_top_rated));
 
                 MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.TOP_RATED;
+                MovieGridFragment.noFavoritesHint.setVisibility(View.GONE);
                 MoviePosterAdapter.updateCount();
                 MovieGridFragment.gridview.invalidateViews();
                 MovieGridFragment.gridview.smoothScrollToPosition(0);

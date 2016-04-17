@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +33,8 @@ public class MovieGridFragment extends Fragment {
     public static List<Movie> movies_favorites;
 
     public static GRID_CATEGORY grid_category = GRID_CATEGORY.MOST_POPULAR;
+    public static RelativeLayout noFavoritesHint;
+
     public enum GRID_CATEGORY {
         MOST_POPULAR,
         TOP_RATED,
@@ -72,6 +77,7 @@ public class MovieGridFragment extends Fragment {
         }
         toolbar.setDisplayHomeAsUpEnabled(false);
 
+        noFavoritesHint = (RelativeLayout) view.findViewById(R.id.noFavoritesHint);
         gridview =(GridView) view.findViewById(R.id.gridview);
         gridview.setAdapter(new MoviePosterAdapter(getActivity()));
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

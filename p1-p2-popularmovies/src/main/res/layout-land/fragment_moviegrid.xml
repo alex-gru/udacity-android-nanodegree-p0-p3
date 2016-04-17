@@ -2,6 +2,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/noFavoritesHint"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/favoriteIcon"
+            android:background="@drawable/ic_favorite_border_white_48dp"
+            android:backgroundTint="@color/materialGreenTranslucent"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gridBorderColor"
+            android:text="@string/noFavorites"
+            android:layout_below="@id/favoriteIcon"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="36dp"/>
+    </RelativeLayout>
+
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gridview"
         android:layout_width="match_parent"
