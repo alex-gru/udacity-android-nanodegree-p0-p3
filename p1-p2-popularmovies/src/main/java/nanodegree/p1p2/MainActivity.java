@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -36,8 +35,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public static Menu menu;
     private static Snackbar snackbar;
     public boolean offline = false;
-    public static CountDownTimer networkAlertTimer;
-    public static boolean showNetworkAlert = true;
     private View activityContainer;
 
     @Override
@@ -53,15 +50,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
 
 //        android.os.Debug.waitForDebugger();
-        networkAlertTimer = new CountDownTimer(10000, 10000) {
-
-            public void onTick(long millisUntilFinished) {
-            }
-
-            public void onFinish() {
-                showNetworkAlert = true;
-            }
-        };
         if (!checkIfNetworkAvailable()) {
             MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.FAVORITES;
         }
@@ -211,7 +199,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_most_popular));
 
                 MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.MOST_POPULAR;
-                MovieGridFragment.noFavoritesHint.setVisibility(View.GONE);
                 MoviePosterAdapter.updateCount();
                 MovieGridFragment.gridview.invalidateViews();
                 MovieGridFragment.gridview.smoothScrollToPosition(0);
@@ -223,7 +210,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 getSupportActionBar().setTitle(getResources().getString(R.string.toolbar_title_top_rated));
 
                 MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.TOP_RATED;
-                MovieGridFragment.noFavoritesHint.setVisibility(View.GONE);
                 MoviePosterAdapter.updateCount();
                 MovieGridFragment.gridview.invalidateViews();
                 MovieGridFragment.gridview.smoothScrollToPosition(0);
@@ -238,8 +224,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
                 MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.FAVORITES;
                 new LocalMovieLoaderAsyncTask(this).execute();
-                MoviePosterAdapter.updateCount();
-                MovieGridFragment.gridview.invalidateViews();
                 MovieGridFragment.gridview.smoothScrollToPosition(0);
                 return true;
         }

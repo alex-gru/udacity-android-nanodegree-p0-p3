@@ -29,6 +29,12 @@ public class MoviePosterAdapter extends BaseAdapter {
     }
 
     public int getCount() {
+
+        if (MovieGridFragment.grid_category.equals(MovieGridFragment.GRID_CATEGORY.FAVORITES)
+                && count == 0)
+            MovieGridFragment.noFavoritesHint.setVisibility(View.VISIBLE);
+        else
+            MovieGridFragment.noFavoritesHint.setVisibility(View.GONE);
         return count;
     }
 

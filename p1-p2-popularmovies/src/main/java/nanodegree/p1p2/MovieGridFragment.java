@@ -78,6 +78,7 @@ public class MovieGridFragment extends Fragment {
         toolbar.setDisplayHomeAsUpEnabled(false);
 
         noFavoritesHint = (RelativeLayout) view.findViewById(R.id.noFavoritesHint);
+
         gridview =(GridView) view.findViewById(R.id.gridview);
         gridview.setAdapter(new MoviePosterAdapter(getActivity()));
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

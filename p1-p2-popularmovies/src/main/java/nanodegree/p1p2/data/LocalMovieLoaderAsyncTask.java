@@ -80,11 +80,5 @@ public class LocalMovieLoaderAsyncTask extends AsyncTask<Void, Integer, Integer>
         MovieGridFragment.movies_favorites = movies_favorites;
         MoviePosterAdapter.updateCount();
         MovieGridFragment.gridview.invalidateViews();
-
-        if (MoviePosterAdapter.count == 0) {
-            MovieGridFragment.noFavoritesHint.setVisibility(View.VISIBLE);
-        } else {
-            MovieGridFragment.noFavoritesHint.setVisibility(View.GONE);
-        }
     }
 }
