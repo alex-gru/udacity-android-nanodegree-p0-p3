@@ -73,6 +73,15 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         movieDB.close();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        if (!movieDB.isOpen())  {
+            setupDB();
+        }
+    }
+
     private void setupDB() {
         localMovieHelper = new LocalMovieHelper(this);
         movieDB = localMovieHelper.getWritableDatabase();
