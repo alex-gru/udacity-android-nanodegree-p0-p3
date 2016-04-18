@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,11 +17,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -51,9 +50,8 @@ public class MovieDetailFragment extends Fragment {
     private static View view;
     private static ScrollView scrollView;
     public static ImageView posterImageView;
+    public static RelativeLayout posterFullScreenView;
     public static ImageView posterFullScreenImageView;
-    public static ImageView posterFullScreenIcon;
-    public static ImageView posterFullScreenExitIcon;
 
     public static ImageButton favoriteButton;
     public static ImageButton unfavoriteButton;
@@ -88,6 +86,14 @@ public class MovieDetailFragment extends Fragment {
             toolbar.setTitle(getResources().getString(R.string.toolbar_title_moviedetail));
             toolbar.setDisplayHomeAsUpEnabled(true);
             setHasOptionsMenu(false);
+        }
+
+        if (((MainActivity)getActivity()).checkIfNetworkAvailable()) {
+            trailerListView.setVisibility(View.VISIBLE);
+            reviewListView.setVisibility(View.VISIBLE);
+        } else {
+            trailerListView.setVisibility(View.GONE);
+            reviewListView.setVisibility(View.GONE);
         }
 
     }
@@ -178,6 +184,7 @@ public class MovieDetailFragment extends Fragment {
     }
 
     public void updateMovieDetailUI() {
+
         if (MoviePosterAdapter.count > 0 ) {
 
             boolean isFavorite = false;
@@ -233,13 +240,14 @@ public class MovieDetailFragment extends Fragment {
                 unfavoriteButton.setVisibility(View.GONE);
             }
 
+            posterFullScreenView = (RelativeLayout) view.findViewById(R.id.posterFullScreenView);
+            posterFullScreenView.setVisibility(View.GONE);
             posterFullScreenImageView = (ImageView) view.findViewById(R.id.posterFullScreenImageView);
-            posterFullScreenImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            posterFullScreenImageView.setOnClickListener(new View.OnClickListener() {
+            posterFullScreenImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            posterFullScreenView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    posterFullScreenImageView.setVisibility(View.GONE);
-                    posterFullScreenExitIcon.setVisibility(View.GONE);
+                    posterFullScreenView.setVisibility(View.GONE);
                 }
             });
             posterImageView = (ImageView) view.findViewById(R.id.posterImageView);
@@ -249,8 +257,7 @@ public class MovieDetailFragment extends Fragment {
             posterImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    posterFullScreenImageView.setVisibility(View.VISIBLE);
-                    posterFullScreenExitIcon.setVisibility(View.VISIBLE);
+                    posterFullScreenView.setVisibility(View.VISIBLE);
                     MainActivity.progressBar.setVisibility(View.VISIBLE);
                     Picasso.with(getContext()).load(movie.getFullPosterPathHighRes()).placeholder(R.color.posterPlaceholderColor).into(posterFullScreenImageView, new MainActivity.ProgressBarCallBack((MainActivity) getActivity()));
                 }
@@ -258,11 +265,6 @@ public class MovieDetailFragment extends Fragment {
 
             MainActivity.progressBar.setVisibility(View.VISIBLE);
             Picasso.with(getContext()).load(movie.getFullPosterPath()).placeholder(R.color.posterPlaceholderColor).into(posterImageView, new MainActivity.ProgressBarCallBack((MainActivity) getActivity()));
-
-            posterFullScreenIcon = (ImageView) view.findViewById(R.id.posterIcon);
-            posterFullScreenIcon.setVisibility(View.VISIBLE);
-            posterFullScreenExitIcon = (ImageView) view.findViewById(R.id.posterFullScreenIcon);
-            posterFullScreenExitIcon.setVisibility(View.GONE);
 
             TextView titleTextView = (TextView) view.findViewById(R.id.titleTextView);
             titleTextView.setText(movie.getTitle());

@@ -83,11 +83,7 @@ public class TrailerAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View v) {
-                if (!activity.checkIfNetworkAvailable()) {
-
-                } else {
-                    mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(MovieDetailFragment.movie.getTrailers().get(trailerIdx).getYoutubeURL())));
-                }
+                mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(MovieDetailFragment.movie.getTrailers().get(trailerIdx).getYoutubeURL())));
             }
     }
 }

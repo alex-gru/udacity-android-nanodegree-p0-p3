@@ -76,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private void setupDB() {
         localMovieHelper = new LocalMovieHelper(this);
         movieDB = localMovieHelper.getWritableDatabase();
-//        localMovieHelper.onUpgrade(movieDB,0,0);
-
         new LocalMovieLoaderAsyncTask(this).execute();
     }
 
@@ -265,10 +263,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
             MainActivity.progressBar.setVisibility(View.GONE);
 
-            if (MovieDetailFragment.posterFullScreenImageView != null)
-                MovieDetailFragment.posterFullScreenImageView.setVisibility(View.GONE);
-            if (MovieDetailFragment.posterFullScreenExitIcon != null)
-                MovieDetailFragment.posterFullScreenExitIcon.setVisibility(View.GONE);
+            if (MovieDetailFragment.posterFullScreenView != null)
+                MovieDetailFragment.posterFullScreenView.setVisibility(View.GONE);
 
             activity.checkIfNetworkAvailable();
         }
