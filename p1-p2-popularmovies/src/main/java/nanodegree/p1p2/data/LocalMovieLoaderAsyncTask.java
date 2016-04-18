@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,5 +80,6 @@ public class LocalMovieLoaderAsyncTask extends AsyncTask<Void, Integer, Integer>
         MovieGridFragment.movies_favorites = movies_favorites;
         MoviePosterAdapter.updateCount();
         MovieGridFragment.gridview.invalidateViews();
+        MainActivity.progressBar.setVisibility(View.GONE);
     }
 }
