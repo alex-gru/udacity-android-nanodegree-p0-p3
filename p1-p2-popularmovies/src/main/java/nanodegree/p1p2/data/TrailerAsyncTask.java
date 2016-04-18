@@ -48,6 +48,7 @@ public class TrailerAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
         if (!((MainActivity)activity).checkIfNetworkAvailable()) {
             trailerListView.setVisibility(View.GONE);
+            MainActivity.progressBar.setVisibility(View.GONE);
             cancel(false);
         }
     }

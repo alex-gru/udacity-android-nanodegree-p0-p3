@@ -49,6 +49,7 @@ public class ReviewAsyncTask extends AsyncTask<Void, Integer, Integer> {
 
         if (!((MainActivity)activity).checkIfNetworkAvailable()) {
             reviewListView.setVisibility(View.GONE);
+            MainActivity.progressBar.setVisibility(View.GONE);
             cancel(false);
         }
     }

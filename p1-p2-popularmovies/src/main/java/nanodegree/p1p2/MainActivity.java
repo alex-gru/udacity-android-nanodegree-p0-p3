@@ -223,6 +223,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 MovieGridFragment.grid_category = MovieGridFragment.GRID_CATEGORY.FAVORITES;
                 new LocalMovieLoaderAsyncTask(this).execute();
                 MovieGridFragment.gridview.smoothScrollToPosition(0);
+                progressBar.setVisibility(View.GONE);
                 return true;
         }
         return super.onOptionsItemSelected(item);

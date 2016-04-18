@@ -4,18 +4,15 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import nanodegree.p1p2.data.Movie;
-import nanodegree.p1p2.data.MovieAsyncTask;
 
 public class MoviePosterAdapter extends BaseAdapter {
     private static final int POSTER_HEIGHT_TABLET = 500;

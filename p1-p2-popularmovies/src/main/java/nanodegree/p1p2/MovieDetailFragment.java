@@ -186,6 +186,7 @@ public class MovieDetailFragment extends Fragment {
     public void updateMovieDetailUI() {
 
         if (MoviePosterAdapter.count > 0 ) {
+            scrollView.setVisibility(View.VISIBLE);
 
             boolean isFavorite = false;
             switch (MovieGridFragment.grid_category) {
@@ -204,7 +205,6 @@ public class MovieDetailFragment extends Fragment {
                     break;
             }
 
-//            android.os.Debug.waitForDebugger();
             if (movie.getTrailers() == null) {
                 new TrailerAsyncTask(movie, (AppCompatActivity) getActivity(),trailerListView).execute();
             } else {
@@ -274,6 +274,8 @@ public class MovieDetailFragment extends Fragment {
             voteAverageTextView.setText(movie.getVote_average() + "/10");
             TextView overviewTextView = (TextView) view.findViewById(R.id.overviewTextView);
             overviewTextView.setText(movie.getOverview());
+        } else {
+            scrollView.setVisibility(View.GONE);
         }
     }
 

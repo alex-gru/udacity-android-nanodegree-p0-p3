@@ -48,6 +48,7 @@ public class MovieAsyncTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         if (!((MainActivity)activity).checkIfNetworkAvailable()) {
+            MainActivity.progressBar.setVisibility(View.GONE);
             cancel(false);
         } else {
             MainActivity.progressBar.setVisibility(View.VISIBLE);
