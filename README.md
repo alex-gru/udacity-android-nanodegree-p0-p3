@@ -19,11 +19,11 @@ resources folder /res/raw (create if not exists). The file only has one single l
 [Screenrecord Phone](https://www.youtube.com/watch?v=iGYWjl--L5s)
 
 [Screenshots Tablet 1]
-(http://de.tinypic.com/r/jtpgl2/9)
+(http://oi66.tinypic.com/jtpgl2.jpg)
 
 [Screenshots Tablet 2]
-(http://de.tinypic.com/r/hx6x6t/9)
+(http://oi66.tinypic.com/hx6x6t.jpg)
 
 [Screenshots Tablet 3]
-(http://de.tinypic.com/r/2eqgo6v/9)
+(http://oi67.tinypic.com/2eqgo6v.jpg)
 
