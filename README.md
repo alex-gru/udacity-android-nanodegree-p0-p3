@@ -1,4 +1,5 @@
-# android_dev_nanodegree_udacity
+# Android Developer Nanodegree
+
 Projects while attending the Android Developer Nanodegree program at Udacity
 
 IMPORTANT API KEY note for Project 1/2 - Popular Movies App:
