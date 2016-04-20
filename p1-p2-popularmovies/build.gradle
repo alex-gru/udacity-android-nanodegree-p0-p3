@@ -24,10 +24,6 @@ android {
     }
 }
 
-task appStart(type: Exec, dependsOn: 'installDebug') {
-    commandLine 'cmd', '/c adb shell am start -n nanodegree.p1p2/.MainActivity'
-}
-
 repositories {
     mavenCentral()
 }
