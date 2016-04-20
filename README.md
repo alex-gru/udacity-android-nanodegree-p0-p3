@@ -11,7 +11,7 @@ resources folder /res/raw (create if not exists). The file only has one single l
 
 This simple app shows buttons, which start the apps developed in the course projects. 
 
-<img style="position: center;" src="static/screenshots/P0 - My Portfolio App.png" width="200">
+<img style="position: center;" src="static/screenshots/P0 - My Portfolio App.png" width="300">
 
 **P1 - Popular Movies Stage 1**
 
@@ -27,11 +27,11 @@ Finally, the app design is optimized for tablet usage, providing a master-detail
 
 [Screenrecord Phone Layout on Youtube](https://www.youtube.com/watch?v=iGYWjl--L5s)
 
-<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Phone_1.png" width="200">
-<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Phone_2.png" width="200">
+<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Phone_1.png" width="300">
+<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Phone_2.png" width="300">
 
-<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_1.png" width="500">
-<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_2.png" width="500">
-<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_3.png" width="500">
+<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_1.png" width="600">
+<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_2.png" width="600">
+<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_3.png" width="600">
 
 
