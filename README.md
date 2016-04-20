@@ -27,8 +27,11 @@ Finally, the app design is optimized for tablet usage, providing a master-detail
 
 [Screenrecord Phone Layout on Youtube](https://www.youtube.com/watch?v=iGYWjl--L5s)
 
-<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_1.png" width="400">
-<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_2.png" width="400">
-<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_3.png" width="400">
+<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Phone_1.png" width="200">
+<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Phone_2.png" width="200">
+
+<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_1.png" width="500">
+<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_2.png" width="500">
+<img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_3.png" width="500">
 
 
