@@ -49,7 +49,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   private ItemTouchHelper mItemTouchHelper;
   private static final int CURSOR_LOADER_ID = 0;
   private QuoteCursorAdapter mCursorAdapter;
-  private Context mContext;
+  public static Context mContext;
   private Cursor mCursor;
   boolean isConnected;
 
