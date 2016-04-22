@@ -1,5 +1,6 @@
 package com.sam_chordas.android.stockhawk.ui;
 
+import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -8,6 +9,8 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -51,29 +54,29 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   private QuoteCursorAdapter mCursorAdapter;
   public static Context mContext;
   private Cursor mCursor;
-  boolean isConnected;
+  private View activityContainer;
+  private static Snackbar snackbar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mContext = this;
-    ConnectivityManager cm =
-        (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-    NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-    isConnected = activeNetwork != null &&
-        activeNetwork.isConnectedOrConnecting();
     setContentView(R.layout.activity_my_stocks);
+
+    activityContainer = findViewById(R.id.activityContainer);
+    snackbar = Snackbar.make(activityContainer, "No connection", Snackbar.LENGTH_INDEFINITE)
+            .setAction("REFRESH",new SnackBarClickListener(this));
+
     // The intent service is for executing immediate pulls from the Yahoo API
     // GCMTaskService can only schedule tasks, they cannot execute immediately
     mServiceIntent = new Intent(this, StockIntentService.class);
     if (savedInstanceState == null){
       // Run the initialize task service so that some stocks appear upon an empty database
       mServiceIntent.putExtra("tag", "init");
-      if (isConnected){
+      if (isConnected()){
         startService(mServiceIntent);
       } else{
-        networkToast();
+        snackbar.show();
       }
     }
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -95,7 +98,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     fab.attachToRecyclerView(recyclerView);
     fab.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        if (isConnected){
+        if (isConnected()){
           new MaterialDialog.Builder(mContext).title(R.string.symbol_search)
               .content(R.string.content_test)
               .inputType(InputType.TYPE_CLASS_TEXT)
@@ -114,16 +117,26 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                     toast.show();
                     return;
                   } else {
+                    String inputString = input.toString();
+
+                    if (inputString.isEmpty()) {
+                      ((Activity)MyStocksActivity.mContext).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                          Toast.makeText(MyStocksActivity.mContext,"No Stock Symbol provided.",Toast.LENGTH_SHORT).show();
+                        }
+                      });
+                    }
                     // Add the stock to DB
                     mServiceIntent.putExtra("tag", "add");
-                    mServiceIntent.putExtra("symbol", input.toString());
+                    mServiceIntent.putExtra("symbol", inputString);
                     startService(mServiceIntent);
                   }
                 }
               })
               .show();
         } else {
-          networkToast();
+          snackbar.show();
         }
 
       }
@@ -134,7 +147,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     mItemTouchHelper.attachToRecyclerView(recyclerView);
 
     mTitle = getTitle();
-    if (isConnected){
+    if (isConnected()){
       long period = 3600L;
       long flex = 10L;
       String periodicTag = "periodic";
@@ -155,15 +168,19 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     }
   }
 
+  private boolean isConnected() {
+    ConnectivityManager cm =
+            (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+    return activeNetwork != null &&
+        activeNetwork.isConnectedOrConnecting();
+  }
+
 
   @Override
   public void onResume() {
     super.onResume();
     getLoaderManager().restartLoader(CURSOR_LOADER_ID, null, this);
-  }
-
-  public void networkToast(){
-    Toast.makeText(mContext, getString(R.string.network_toast), Toast.LENGTH_SHORT).show();
   }
 
   public void restoreActionBar() {
@@ -223,4 +240,18 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     mCursorAdapter.swapCursor(null);
   }
 
+  private class SnackBarClickListener implements View.OnClickListener {
+
+    private final MyStocksActivity activity;
+
+    public SnackBarClickListener(MyStocksActivity activity) {
+      this.activity = activity;
+    }
+    @Override
+    public void onClick(View v) {
+      if (isConnected()) {
+        startService(mServiceIntent);
+      }
+    }
+  }
 }
