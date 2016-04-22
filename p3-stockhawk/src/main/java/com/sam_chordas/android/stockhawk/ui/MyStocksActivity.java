@@ -55,7 +55,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   public static Context mContext;
   private Cursor mCursor;
   private View activityContainer;
-  private static Snackbar snackbar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     setContentView(R.layout.activity_my_stocks);
 
     activityContainer = findViewById(R.id.activityContainer);
-    snackbar = Snackbar.make(activityContainer, "No connection", Snackbar.LENGTH_INDEFINITE)
+    Snackbar snackbar = Snackbar.make(activityContainer, "No connection", Snackbar.LENGTH_INDEFINITE)
             .setAction("REFRESH",new SnackBarClickListener(this));
 
     // The intent service is for executing immediate pulls from the Yahoo API
@@ -136,7 +135,9 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
               })
               .show();
         } else {
-          snackbar.show();
+          Snackbar.make(activityContainer, "No connection", Snackbar.LENGTH_INDEFINITE)
+                  .setAction("REFRESH",new SnackBarClickListener((MyStocksActivity) mContext))
+                  .show();
         }
 
       }
