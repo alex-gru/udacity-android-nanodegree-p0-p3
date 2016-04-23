@@ -34,4 +34,9 @@ Finally, the app design is optimized for tablet usage, providing a master-detail
 <img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_2.png" width="600">
 <img style="position: center;" src="static/screenshots/P2 - Popular Movies Stage 2_Tablet_3.png" width="600">
 
+##P3 - Stock Hawk
+
+During this project a basically working app should be enhanced in a way, so it is "ready for production", for publishment e.g. via the Google Play Store. Stock Hawk is an app, which provides data from the Yahoo Finance API. The user can search for stock symbols and add them to his watch list (stored in a local database). 
+
+Based on user feedback, certain aspects should be enhanced/implemented, including Accessibility (A11y) features, localization (L10n), adding a widget, providing a chart which shows the values over time and finally, some error handling and better user feedback.
 
