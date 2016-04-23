@@ -22,6 +22,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sam_chordas.android.stockhawk.R;
@@ -55,6 +56,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   public static Context mContext;
   private Cursor mCursor;
   private View activityContainer;
+  public TextView quoteListEmptyTextView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     setContentView(R.layout.activity_my_stocks);
 
     activityContainer = findViewById(R.id.activityContainer);
+    quoteListEmptyTextView =(TextView) findViewById(R.id.quote_list_empty);
     Snackbar snackbar = Snackbar.make(activityContainer, "No connection", Snackbar.LENGTH_INDEFINITE)
             .setAction("REFRESH",new SnackBarClickListener(this));
 
@@ -234,6 +237,11 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   public void onLoadFinished(Loader<Cursor> loader, Cursor data){
     mCursorAdapter.swapCursor(data);
     mCursor = data;
+    if (data.getCount() == 0) {
+      quoteListEmptyTextView.setVisibility(View.VISIBLE);
+    } else {
+      quoteListEmptyTextView.setVisibility(View.GONE);
+    }
   }
 
   @Override

@@ -12,6 +12,20 @@
       android:layout_height="match_parent"
       />
 
+  <TextView
+      android:id="@+id/quote_list_empty"
+      android:text="@string/quote_list_empty_string"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center_horizontal"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:paddingTop="@dimen/activity_vertical_margin"
+      android:paddingBottom="@dimen/activity_vertical_margin"
+      android:elevation="4dp"
+      android:visibility="gone"
+      />
+
   <com.melnykov.fab.FloatingActionButton
       android:id="@+id/fab"
       android:layout_width="wrap_content"
@@ -26,5 +40,6 @@
       fab:fab_type="normal"
       fab:layout_anchor="recycler_view"
       fab:layout_anchorGravity="bottom | end"
+      android:contentDescription="@string/fabContentDescription"
       />
 </FrameLayout>
