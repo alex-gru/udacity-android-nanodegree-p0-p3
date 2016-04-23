@@ -11,4 +11,8 @@
   <string name="input_prefill"></string>
   <string name="fabContentDescription">Add Stock Symbol</string>
   <string name="quote_list_empty_string">No saved Stock Symbols</string>
+  <string name="no_connection">No connection</string>
+  <string name="action_refresh">REFRESH</string>
+  <string name="stock_already_saved">This stock is already saved!</string>
+  <string name="no_symbol_provided">No Stock Symbol provided.</string>
 </resources>

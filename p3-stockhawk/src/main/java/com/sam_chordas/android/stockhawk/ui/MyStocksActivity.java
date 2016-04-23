@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -66,8 +65,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
     activityContainer = findViewById(R.id.activityContainer);
     quoteListEmptyTextView =(TextView) findViewById(R.id.quote_list_empty);
-    Snackbar snackbar = Snackbar.make(activityContainer, "No connection", Snackbar.LENGTH_INDEFINITE)
-            .setAction("REFRESH",new SnackBarClickListener(this));
+    Snackbar snackbar = Snackbar.make(activityContainer, R.string.no_connection, Snackbar.LENGTH_INDEFINITE)
+            .setAction(R.string.action_refresh,new SnackBarClickListener(this));
 
     // The intent service is for executing immediate pulls from the Yahoo API
     // GCMTaskService can only schedule tasks, they cannot execute immediately
@@ -113,7 +112,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                       new String[] { input.toString() }, null);
                   if (c.getCount() != 0) {
                     Toast toast =
-                        Toast.makeText(MyStocksActivity.this, "This stock is already saved!",
+                        Toast.makeText(MyStocksActivity.this, R.string.stock_already_saved,
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, Gravity.CENTER, 0);
                     toast.show();
@@ -125,7 +124,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                       ((Activity)MyStocksActivity.mContext).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                          Toast.makeText(MyStocksActivity.mContext,"No Stock Symbol provided.",Toast.LENGTH_SHORT).show();
+                          Toast.makeText(MyStocksActivity.mContext, R.string.no_symbol_provided,Toast.LENGTH_SHORT).show();
                         }
                       });
                     }
@@ -138,8 +137,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
               })
               .show();
         } else {
-          Snackbar.make(activityContainer, "No connection", Snackbar.LENGTH_INDEFINITE)
-                  .setAction("REFRESH",new SnackBarClickListener((MyStocksActivity) mContext))
+          Snackbar.make(activityContainer, R.string.no_connection, Snackbar.LENGTH_INDEFINITE)
+                  .setAction(R.string.action_refresh,new SnackBarClickListener((MyStocksActivity) mContext))
                   .show();
         }
 
