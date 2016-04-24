@@ -12,4 +12,5 @@
   <string name="action_refresh">REFRESH</string>
   <string name="stock_already_saved">This stock is already saved!</string>
   <string name="no_symbol_provided">No Stock Symbol provided.</string>
+  <string name="title_widget">Stock Hawk</string>
 </resources>
