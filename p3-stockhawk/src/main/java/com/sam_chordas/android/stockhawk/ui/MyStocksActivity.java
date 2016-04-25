@@ -86,7 +86,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         snackbar.show();
       }
     }
-    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+    final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this);
 
@@ -95,8 +95,9 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
             new RecyclerViewItemClickListener.OnItemClickListener() {
               @Override public void onItemClick(View v, int position) {
                 //TODO: add selected element info
-                Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(mContext, GraphActivity.class);
+                intent.putExtra(GraphActivity.SELECTED_SYMBOL, ((TextView)(v.findViewById(R.id.stock_symbol))).getText());
+                mContext.startActivity(intent);
               }
             }));
     recyclerView.setAdapter(mCursorAdapter);
