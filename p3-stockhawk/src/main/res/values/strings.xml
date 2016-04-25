@@ -13,4 +13,5 @@
   <string name="stock_already_saved">This stock is already saved!</string>
   <string name="no_symbol_provided">No Stock Symbol provided.</string>
   <string name="title_widget">Stock Hawk</string>
+  <string name="no_matches">No matches.</string>
 </resources>

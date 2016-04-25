@@ -3,6 +3,7 @@ package com.sam_chordas.android.stockhawk.service;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
+import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.sam_chordas.android.stockhawk.rest.Utils;
@@ -32,7 +34,6 @@ import java.util.ArrayList;
  */
 public class StockTaskService extends GcmTaskService{
   private String LOG_TAG = StockTaskService.class.getSimpleName();
-
   private OkHttpClient client = new OkHttpClient();
   private Context mContext;
   private StringBuilder mStoredSymbols = new StringBuilder();
@@ -137,7 +138,7 @@ public class StockTaskService extends GcmTaskService{
                 ((Activity)MyStocksActivity.mContext).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(MyStocksActivity.mContext,"No matches.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyStocksActivity.mContext, R.string.no_matches,Toast.LENGTH_SHORT).show();
                     }
                 });
                 return -1;

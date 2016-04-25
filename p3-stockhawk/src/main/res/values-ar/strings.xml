@@ -3,13 +3,14 @@
   <!--TODO hey @translation team! please translate the strings to Arabic for the rollout in Egypt-->
 
   <string name="action_settings">Settings</string>
-    <string name="action_change_units">Change Units</string>
-    <string name="symbol_search">Symbol Search</string>
-    <string name="content_test">Search for a Stock Symbol</string>
-    <string name="fabContentDescription">Add Stock Symbol</string>
-    <string name="quote_list_empty_string">No saved Stock Symbols</string>
-    <string name="no_connection">No connection</string>
-    <string name="action_refresh">REFRESH</string>
-    <string name="stock_already_saved">This stock is already saved!</string>
-    <string name="no_symbol_provided">No Stock Symbol provided.</string>
+  <string name="action_change_units">Change Units</string>
+  <string name="symbol_search">Symbol Search</string>
+  <string name="content_test">Search for a Stock Symbol</string>
+  <string name="fabContentDescription">Add Stock Symbol</string>
+  <string name="quote_list_empty_string">No saved Stock Symbols</string>
+  <string name="no_connection">No connection</string>
+  <string name="action_refresh">REFRESH</string>
+  <string name="stock_already_saved">This stock is already saved!</string>
+  <string name="no_symbol_provided">No Stock Symbol provided.</string>
+  <string name="no_matches">No matches.</string>
 </resources>

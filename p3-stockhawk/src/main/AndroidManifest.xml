@@ -45,10 +45,12 @@
             android:label="@string/title_widget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.sam_chordas.android.stockhawk.ACTION_DATA_UPDATED" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/widget" />
         </receiver>
+        <service android:name=".widget.StockWidgetIntentService" />
     </application>
 
 </manifest>

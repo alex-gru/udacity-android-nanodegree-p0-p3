@@ -5,9 +5,13 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
 import com.sam_chordas.android.stockhawk.R;
+import com.sam_chordas.android.stockhawk.service.StockIntentService;
+import com.sam_chordas.android.stockhawk.service.StockTaskService;
 import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
 
 /**
@@ -17,15 +21,24 @@ public class StockWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        Intent intent = new Intent(context, StockWidgetIntentService.class);
+        intent.setAction(MyStocksActivity.ACTION_DATA_UPDATED);
+        context.startService(intent);
+    }
 
-        for (int appWidgetId : appWidgetIds) {
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
+                                          int appWidgetId, Bundle newOptions) {
+        Intent intent = new Intent(context, StockWidgetIntentService.class);
+        intent.setAction(MyStocksActivity.ACTION_DATA_UPDATED);
+        context.startService(intent);    }
 
-            Intent intent = new Intent(context, MyStocksActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            views.setOnClickPendingIntent(R.id.widget, pendingIntent);
-
-            appWidgetManager.updateAppWidget(appWidgetId, views);
-        }
+    @Override
+    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
+        super.onReceive(context, intent);
+        if (MyStocksActivity.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+            intent = new Intent(context, StockWidgetIntentService.class);
+            intent.setAction(MyStocksActivity.ACTION_DATA_UPDATED);
+            context.startService(intent);        }
     }
 }

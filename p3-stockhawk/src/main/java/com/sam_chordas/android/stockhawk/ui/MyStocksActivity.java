@@ -47,6 +47,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   /**
    * Used to store the last screen title. For use in {@link #restoreActionBar()}.
    */
+  public final static String TAG = "nanodegree.p3";
   private CharSequence mTitle;
   private Intent mServiceIntent;
   private ItemTouchHelper mItemTouchHelper;
@@ -57,6 +58,10 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   private View activityContainer;
   public TextView quoteListEmptyTextView;
 
+  public static final String ACTION_DATA_UPDATED =
+          "com.sam_chordas.android.stockhawk.ACTION_DATA_UPDATED";
+  public static final String ACTION_UPDATE_STOCKS =
+          "com.sam_chordas.android.stockhawk.ACTION_UPDATE_STOCKS";
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -71,6 +76,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     // The intent service is for executing immediate pulls from the Yahoo API
     // GCMTaskService can only schedule tasks, they cannot execute immediately
     mServiceIntent = new Intent(this, StockIntentService.class);
+    mServiceIntent.setAction(MyStocksActivity.ACTION_UPDATE_STOCKS);
     if (savedInstanceState == null){
       // Run the initialize task service so that some stocks appear upon an empty database
       mServiceIntent.putExtra("tag", "init");
@@ -241,6 +247,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     } else {
       quoteListEmptyTextView.setVisibility(View.GONE);
     }
+    Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED).setPackage(mContext.getPackageName());
+    mContext.sendBroadcast(dataUpdatedIntent);
   }
 
   @Override
