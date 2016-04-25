@@ -153,6 +153,9 @@ public class StockTaskService extends GcmTaskService{
       }
     }
 
+    Intent dataUpdatedIntent = new Intent(MyStocksActivity.ACTION_DATA_UPDATED).setPackage(mContext.getPackageName());
+    mContext.sendBroadcast(dataUpdatedIntent);
+
     return result;
   }
 

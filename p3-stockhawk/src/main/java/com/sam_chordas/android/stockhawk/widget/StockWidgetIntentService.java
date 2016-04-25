@@ -16,6 +16,7 @@ import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.sam_chordas.android.stockhawk.rest.QuoteCursorAdapter;
+import com.sam_chordas.android.stockhawk.rest.Utils;
 import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
 
 /**
@@ -48,7 +49,8 @@ public class StockWidgetIntentService extends IntentService {
                     new String[]{QuoteColumns.SYMBOL + ", " +
                             QuoteColumns.BIDPRICE + ", " +
                             QuoteColumns.CHANGE + ", " +
-                            QuoteColumns.PERCENT_CHANGE},
+                            QuoteColumns.PERCENT_CHANGE + ", " +
+                            QuoteColumns.ISUP},
                     QuoteColumns.ISCURRENT + " = ?",
                     new String[]{"1"}, null);
             Log.d(MyStocksActivity.TAG, "count from content resolver: " + data.getCount());
@@ -61,15 +63,16 @@ public class StockWidgetIntentService extends IntentService {
                 data.close();
                 return;
             }
+            int sdk = Build.VERSION.SDK_INT;
 
             // Perform this loop procedure for each widget
             for (int appWidgetId : appWidgetIds) {
                 int layoutId = R.layout.widget;
                 RemoteViews views = new RemoteViews(getPackageName(), layoutId);
 
-                views.setTextViewText(R.id.stock_symbol,data.getString(0));
-                views.setTextViewText(R.id.bid_price,data.getString(1));
-                views.setTextViewText(R.id.change,data.getString(2));
+                views.setTextViewText(R.id.stock_symbol,data.getString(data.getColumnIndex(QuoteColumns.SYMBOL)));
+                views.setTextViewText(R.id.bid_price,data.getString(data.getColumnIndex(QuoteColumns.BIDPRICE)));
+                views.setTextViewText(R.id.change, data.getString(data.getColumnIndex(QuoteColumns.CHANGE)));
 
                 Intent launchIntent = new Intent(this, MyStocksActivity.class);
                 PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, launchIntent, 0);

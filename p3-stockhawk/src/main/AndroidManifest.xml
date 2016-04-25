@@ -40,9 +40,10 @@
             android:authorities="com.sam_chordas.android.stockhawk.data.QuoteProvider"
             android:name="com.sam_chordas.android.stockhawk.data.generated.QuoteProvider"
             android:exported="false"/>
-        
+
+        <!--single stock widget-->
         <receiver android:name=".widget.StockWidgetProvider"
-            android:label="@string/title_widget">
+            android:label="@string/title_widget_single">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.sam_chordas.android.stockhawk.ACTION_DATA_UPDATED" />
@@ -51,6 +52,20 @@
                 android:resource="@xml/widget" />
         </receiver>
         <service android:name=".widget.StockWidgetIntentService" />
+
+        <!--list (collection) widget-->
+        <receiver
+            android:name=".widget.StockListWidgetProvider"
+            android:label="@string/title_widget_list" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.sam_chordas.android.stockhawk.ACTION_DATA_UPDATED" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/widget_list" />
+        </receiver>
+        <service android:name=".widget.StockListWidgetRemoteViewsService"
+                 android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

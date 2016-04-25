@@ -247,8 +247,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     } else {
       quoteListEmptyTextView.setVisibility(View.GONE);
     }
-    Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED).setPackage(mContext.getPackageName());
-    mContext.sendBroadcast(dataUpdatedIntent);
   }
 
   @Override
