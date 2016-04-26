@@ -55,7 +55,7 @@ public class StockWidgetIntentService extends IntentService {
                     new String[]{"1"}, null);
             Log.d(MyStocksActivity.TAG, "count from content resolver: " + data.getCount());
 
-            if (data.getCount() == 0 || data == null) {
+            if (data == null || data.getCount() < 2) {
               return;
             }
 
