@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
         intent.setComponent(new ComponentName("nanodegree.p1p2", "nanodegree.p1p2.MainActivity"));
         startActivity(intent);
     }
-    public void launchScoresApp(View view) throws Exception {
-        String text = "This button will launch " + ((Button) view).getText();
-        Toast.makeText(this.getApplicationContext(),text,Toast.LENGTH_SHORT).show();
-        //TODO: launch app
+    public void launchStockHawk(View view) throws Exception {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setComponent(new ComponentName("com.example.sam_chordas.stockhawk","com.sam_chordas.android.stockhawk.ui.MyStocksActivity"));
+        startActivity(intent);
     }
     public void launchLibraryApp(View view) throws Exception {
         String text = "This button will launch " + ((Button) view).getText();

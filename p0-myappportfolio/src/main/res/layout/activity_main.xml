@@ -27,31 +27,31 @@
 
         <Button
             android:id="@+id/btnPopMovies"
-            android:text="@string/button1"
+            android:text="@string/buttonP1P2"
             android:layout_below="@id/title"
 
             style="@style/ButtonStyle"
             android:onClick="launchPopMovies" />
 
         <Button
-            android:id="@+id/btnScoresApp"
-            android:text="@string/button2"
+            android:id="@+id/btnStockHawk"
+            android:text="@string/buttonP3"
             android:layout_below="@id/btnPopMovies"
 
             style="@style/ButtonStyle"
-            android:onClick="launchScoresApp" />
+            android:onClick="launchStockHawk" />
 
         <Button
             android:id="@+id/btnLibraryApp"
-            android:text="@string/button3"
-            android:layout_below="@id/btnScoresApp"
+            android:text="@string/buttonP4"
+            android:layout_below="@id/btnStockHawk"
 
             style="@style/ButtonStyle"
             android:onClick="launchLibraryApp" />
 
         <Button
             android:id="@+id/btnBuildItBigger"
-            android:text="@string/button4"
+            android:text="@string/buttonP5"
             android:layout_below="@id/btnLibraryApp"
 
             style="@style/ButtonStyle"
@@ -59,7 +59,7 @@
 
         <Button
             android:id="@+id/btnXYZReader"
-            android:text="@string/button5"
+            android:text="@string/buttonP6"
             android:layout_below="@id/btnBuildItBigger"
 
             style="@style/ButtonStyle"
@@ -67,7 +67,7 @@
 
         <Button
             android:id="@+id/btnCapstone"
-            android:text="@string/button6"
+            android:text="@string/buttonP7"
             android:layout_below="@id/btnXYZReader"
 
             style="@style/ButtonStyle"

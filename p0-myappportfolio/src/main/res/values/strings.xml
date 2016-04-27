@@ -2,10 +2,10 @@
     <string name="app_name">App Portfolio</string>
     <string name="action_settings">Settings</string>
     <string name="title">My Nanodegree Apps!</string>
-    <string name="button1">Pop Movies</string>
-    <string name="button2">Scores App</string>
-    <string name="button3">Library App</string>
-    <string name="button4">Build It Bigger</string>
-    <string name="button5">XYZ Reader</string>
-    <string name="button6">Capstone: My Own App</string>
+    <string name="buttonP1P2">Pop Movies</string>
+    <string name="buttonP3">Stock Hawk</string>
+    <string name="buttonP4">Library App</string>
+    <string name="buttonP5">Build It Bigger</string>
+    <string name="buttonP6">XYZ Reader</string>
+    <string name="buttonP7">Capstone: My Own App</string>
 </resources>
