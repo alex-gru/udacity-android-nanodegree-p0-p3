@@ -10,7 +10,8 @@ resources folder /res/raw (create if not exists). The file only has one single l
 Documentation: 
 
 [P0 - Portfolio App](P0.md)
-[P1, P2 - Popular Movies](P1-P2.md)
+[P1 - Popular Movies Stage 1](P1-P2.md#p1---popular-movies-stage-1)
+[P2 - Popular Movies Stage 2](P1-P2.md#p1---popular-movies-stage-2)
 [P3 - Stock Hawk](P3.md)
 
 
