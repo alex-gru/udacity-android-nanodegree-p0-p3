@@ -42,7 +42,6 @@ public class StockWidgetIntentService extends IntentService {
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this,
                     StockWidgetProvider.class));
 
-            Log.d(MyStocksActivity.TAG, "From StockWidgetIntentService!");
 
             // Get DB stock data, which "IS_CURRENT" (pseudo-boolean DB field)
             Cursor data = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
@@ -53,7 +52,6 @@ public class StockWidgetIntentService extends IntentService {
                             QuoteColumns.ISUP},
                     QuoteColumns.ISCURRENT + " = ?",
                     new String[]{"1"}, null);
-            Log.d(MyStocksActivity.TAG, "count from content resolver: " + data.getCount());
 
             if (data == null || data.getCount() < 2) {
               return;

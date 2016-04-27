@@ -15,4 +15,5 @@
   <string name="title_widget_single">Stock Hawk (1 element)</string>
   <string name="no_matches">No matches.</string>
   <string name="title_widget_list">Stock Hawk (list)</string>
+  <string name="no_graph_data_available_string">No graph data available yet. Come back later.</string>
 </resources>
