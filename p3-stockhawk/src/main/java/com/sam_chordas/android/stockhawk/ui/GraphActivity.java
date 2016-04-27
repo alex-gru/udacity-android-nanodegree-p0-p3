@@ -34,6 +34,9 @@ public class GraphActivity extends AppCompatActivity {
     public static final String SELECTED_SYMBOL = "SELECTED_SYMBOL";
     public static Context mContext;
     private LineChartView lineChartView;
+    private Cursor data;
+    private SimpleDateFormat format;
+    private SimpleDateFormat df;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,20 +44,31 @@ public class GraphActivity extends AppCompatActivity {
         mContext = this;
         setContentView(R.layout.activity_line_graph);
 
-        SimpleDateFormat format = new SimpleDateFormat(
+        format = new SimpleDateFormat(
                 "yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
-        SimpleDateFormat df = new SimpleDateFormat("MM-dd HH:mm");
+        df = new SimpleDateFormat("MM-dd HH:mm");
 
         String selectedSymbol = getIntent().getExtras().getString(SELECTED_SYMBOL);
         lineChartView = (LineChartView) findViewById(R.id.linechart);
 
-        Cursor data = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
+        data = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
                 new String[]{
                         QuoteColumns.BIDPRICE + ", " +
                         QuoteColumns.CREATED },
                 QuoteColumns.SYMBOL + " = ?",
                 new String[]{selectedSymbol}, null);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        lineChartView.dismiss();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         if (data == null || data.getCount() == 0) {
             return;
@@ -112,12 +126,7 @@ public class GraphActivity extends AppCompatActivity {
         lineChartView.setXAxis(false);
         lineChartView.setXLabels(AxisController.LabelPosition.OUTSIDE);
         lineChartView.setYLabels(AxisController.LabelPosition.INSIDE);
-        lineChartView.show();
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        lineChartView.dismiss();
+        lineChartView.show();
     }
 }
