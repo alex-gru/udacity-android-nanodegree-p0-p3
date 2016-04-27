@@ -79,11 +79,21 @@ public class GraphActivity extends AppCompatActivity {
             return;
         }
 
-        float points[] = new float[data.getCount()];
-        String labels[] = new String[data.getCount()];
+        int count = data.getCount();
+        float points[] = new float[count];
+        String labels[] = new String[count];
+
         float min = 99999999;
         float max = 0;
-        int count = data.getCount();
+        int step = 1;
+
+        if (count > 200) {
+            step = 20;
+            points = new float[count/step];
+            labels = new String[count/step];
+        }
+
+
         for(int index = 0; !data.isAfterLast(); index++) {
             float bidPrice = data.getFloat(0);
             String created = data.getString(1);
@@ -104,7 +114,14 @@ public class GraphActivity extends AppCompatActivity {
                 }
                 labels[index] = df.format(date);
             }
-            data.moveToNext();
+            if (index == points.length -1)
+                break;
+            int nextIndex = index + step;
+            int newIndex = index;
+            while (newIndex < nextIndex && newIndex < points.length - 1) {
+                data.moveToNext();
+                newIndex++;
+            }
         }
 
         LineSet dataset = new LineSet(labels, points);
