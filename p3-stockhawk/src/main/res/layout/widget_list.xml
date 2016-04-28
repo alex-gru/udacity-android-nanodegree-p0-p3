@@ -12,7 +12,7 @@
         android:layout_height="@dimen/actionbar_height"
         android:background="@color/widget_title_background"
         android:orientation="horizontal"
-        android:elevation="4dp">
+        android:elevation="@dimen/elevation_widget">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,8 @@
             android:layout_height="match_parent"
             android:text="@string/app_name"
             android:gravity="center_vertical"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="@dimen/marginStart_widget_list_title"
+            android:layout_marginStart="@dimen/marginStart_widget_list_title"
             style="@style/WidgetTitleTextStyle"/>
 
     </LinearLayout>

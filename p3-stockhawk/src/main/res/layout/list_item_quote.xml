@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="@dimen/height_list_item_quote"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="16dp"
-    android:paddingStart="16dp"
-    android:paddingRight="16dp"
-    android:paddingEnd="16dp"
+    android:paddingLeft="@dimen/paddingStart_list_item_quote"
+    android:paddingStart="@dimen/paddingStart_list_item_quote"
+    android:paddingRight="@dimen/paddingEnd_list_item_quote"
+    android:paddingEnd="@dimen/paddingEnd_list_item_quote"
     android:focusable="true">
   <TextView
       android:id="@+id/stock_symbol"
@@ -29,8 +29,8 @@
         style="@style/BidPriceTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="10sp"
-        android:paddingEnd="10sp"
+        android:paddingRight="@dimen/paddingEnd_bidprice"
+        android:paddingEnd="@dimen/paddingEnd_bidprice"
         tools:text="1000.00"
         />
     <TextView
@@ -39,10 +39,10 @@
         style="@style/PercentChangeTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="3dp"
-        android:paddingStart="3dp"
-        android:paddingRight="3dp"
-        android:paddingEnd="3dp"
+        android:paddingLeft="@dimen/paddingStartChange"
+        android:paddingStart="@dimen/paddingStartChange"
+        android:paddingRight="@dimen/paddingEndChange"
+        android:paddingEnd="@dimen/paddingEndChange"
         tools:text="100%"
         />
   </LinearLayout>

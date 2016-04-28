@@ -15,4 +15,20 @@
   <dimen name="widget_margin">12dp</dimen>
   <dimen name="actionbar_height">48dp</dimen>
   <dimen name="graph_margin">24dp</dimen>
+  <dimen name="elevation_line_graph">4dp</dimen>
+  <dimen name="elevation_quote_list_empty">4dp</dimen>
+  <dimen name="margin_fab">16dp</dimen>
+  <dimen name="height_list_item_quote">72dp</dimen>
+  <dimen name="paddingStart_list_item_quote">16dp</dimen>
+  <dimen name="paddingEnd_list_item_quote">16dp</dimen>
+  <dimen name="paddingEnd_bidprice">10sp</dimen>
+  <dimen name="paddingStartChange">3dp</dimen>
+  <dimen name="paddingEndChange">3dp</dimen>
+  <dimen name="paddingStartWidget">16dp</dimen>
+  <dimen name="paddingEndWidget">16dp</dimen>
+  <dimen name="elevation_widget">4dp</dimen>
+  <dimen name="marginStart_widget_list_title">24dp</dimen>
+  <dimen name="height_widget_list_item">72dp</dimen>
+  <dimen name="paddingStartWidgetListItem">16dp</dimen>
+  <dimen name="paddingEndWidgetListItem">16dp</dimen>
 </resources>
