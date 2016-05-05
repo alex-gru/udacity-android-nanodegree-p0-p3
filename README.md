@@ -14,7 +14,7 @@ Select project for further details:
 
 ###[P3 - Stock Hawk](P3.md)
 
-
+###[P4 - Build It Bigger](https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P4/blob/master/README.md) (in a separate repo)
 
 
 
