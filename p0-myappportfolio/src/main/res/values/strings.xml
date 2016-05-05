@@ -5,7 +5,8 @@
     <string name="buttonP1P2">Pop Movies</string>
     <string name="buttonP3">Stock Hawk</string>
     <string name="buttonP4">Library App</string>
-    <string name="buttonP5">Build It Bigger</string>
+    <string name="buttonP5Free">Jokes Free</string>
+    <string name="buttonP5Paid">Jokes Paid</string>
     <string name="buttonP6">XYZ Reader</string>
     <string name="buttonP7">Capstone: My Own App</string>
 </resources>

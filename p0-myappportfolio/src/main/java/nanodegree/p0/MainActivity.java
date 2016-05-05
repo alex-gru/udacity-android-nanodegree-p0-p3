@@ -15,6 +15,10 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    public static final String PACKAGE_P1P2 = "nanodegree.p1p2";
+    public static final String PACKAGE_P3 = "com.example.sam_chordas.stockhawk";
+    public static final String PACKAGE_P4 = "com.udacity.gradle.builditbigger";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,20 +49,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchPopMovies(View view) throws Exception {
         Intent intent = new Intent();
-        intent.setComponent(new ComponentName("nanodegree.p1p2", "nanodegree.p1p2.MainActivity"));
+        intent.setComponent(new ComponentName(PACKAGE_P1P2, PACKAGE_P1P2 + ".MainActivity"));
         startActivity(intent);
     }
     public void launchStockHawk(View view) throws Exception {
         Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setComponent(new ComponentName("com.example.sam_chordas.stockhawk","com.sam_chordas.android.stockhawk.ui.MyStocksActivity"));
+        intent.setComponent(new ComponentName(PACKAGE_P3,PACKAGE_P3 + ".ui.MyStocksActivity"));
+        startActivity(intent);
+    }
+    public void launchBuildItBiggerFree(View view) throws Exception {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setComponent(new ComponentName(PACKAGE_P4 + ".free",PACKAGE_P4 + ".MainActivity"));
+        startActivity(intent);
+    }
+    public void launchBuildItBiggerPaid(View view) throws Exception {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setComponent(new ComponentName(PACKAGE_P4 + ".paid",PACKAGE_P4 + ".MainActivity"));
         startActivity(intent);
     }
     public void launchLibraryApp(View view) throws Exception {
-        String text = "This button will launch " + ((Button) view).getText();
-        Toast.makeText(this.getApplicationContext(),text,Toast.LENGTH_SHORT).show();
-        //TODO: launch app
-    }
-    public void launchBuildItBigger(View view) throws Exception {
         String text = "This button will launch " + ((Button) view).getText();
         Toast.makeText(this.getApplicationContext(),text,Toast.LENGTH_SHORT).show();
         //TODO: launch app

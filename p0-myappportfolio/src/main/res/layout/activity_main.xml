@@ -41,26 +41,42 @@
             style="@style/ButtonStyle"
             android:onClick="launchStockHawk" />
 
+        <LinearLayout
+            android:layout_width="@dimen/buttonsWidth"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:id="@+id/btnBuildItBigger"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/btnStockHawk">
+
+            <Button
+                android:id="@+id/btnBuildItBiggerFree"
+                android:text="@string/buttonP5Free"
+                style="@style/ButtonStyle"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:onClick="launchBuildItBiggerFree" />
+            <Button
+                android:id="@+id/btnBuildItBiggerPremium"
+                android:text="@string/buttonP5Paid"
+                style="@style/ButtonStyle"
+                android:layout_weight="1"
+                android:onClick="launchBuildItBiggerPaid" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/btnLibraryApp"
             android:text="@string/buttonP4"
-            android:layout_below="@id/btnStockHawk"
+            android:layout_below="@id/btnBuildItBigger"
 
             style="@style/ButtonStyle"
             android:onClick="launchLibraryApp" />
 
         <Button
-            android:id="@+id/btnBuildItBigger"
-            android:text="@string/buttonP5"
-            android:layout_below="@id/btnLibraryApp"
-
-            style="@style/ButtonStyle"
-            android:onClick="launchBuildItBigger" />
-
-        <Button
             android:id="@+id/btnXYZReader"
             android:text="@string/buttonP6"
-            android:layout_below="@id/btnBuildItBigger"
+            android:layout_below="@id/btnLibraryApp"
 
             style="@style/ButtonStyle"
             android:onClick="launchXYZReader" />
