@@ -16,6 +16,7 @@ Select project for further details:
 
 ###[P4 - Build It Bigger](https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P4/blob/master/README.md) <img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P4/blob/master/app/src/free/res/mipmap-xxxhdpi/ic_launcher.png" width="50"> <img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P4/blob/master/app/src/paid/res/mipmap-xxxhdpi/ic_launcher.png" width="50">(in a separate repo)
 
+###[P4 - Make Your App Material](https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/README.md) <img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/XYZReader/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="50"> (in a separate repo)
 
 
 
