@@ -18,6 +18,7 @@ Select project for further details:
 
 ###[P5 - Make Your App Material](https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/README.md) <img style="position: center;" src="https://github.com/alex-gru/Udacity-Android-Dev-Nanodegre-P5/blob/master/XYZReader/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="50"> (in a separate repo)
 
+###[P6 - Go Ubiquitous](https://github.com/alex-gru/Nanodegree-P6/blob/master/README.md) <img style="position: center;" src="https://github.com/alex-gru/Nanodegree-P6/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="50"> (in a separate repo)
 
 
 
