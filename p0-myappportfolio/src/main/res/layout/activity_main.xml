@@ -52,39 +52,39 @@
 
             <Button
                 android:id="@+id/btnBuildItBiggerFree"
-                android:text="@string/buttonP5Free"
+                android:text="@string/buttonP4Free"
                 style="@style/ButtonStyle"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
                 android:onClick="launchBuildItBiggerFree" />
             <Button
                 android:id="@+id/btnBuildItBiggerPremium"
-                android:text="@string/buttonP5Paid"
+                android:text="@string/buttonP4Paid"
                 style="@style/ButtonStyle"
                 android:layout_weight="1"
                 android:onClick="launchBuildItBiggerPaid" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnLibraryApp"
-            android:text="@string/buttonP4"
-            android:layout_below="@id/btnBuildItBigger"
-
-            style="@style/ButtonStyle"
-            android:onClick="launchLibraryApp" />
-
-        <Button
             android:id="@+id/btnXYZReader"
-            android:text="@string/buttonP6"
-            android:layout_below="@id/btnLibraryApp"
+            android:text="@string/buttonP5"
+            android:layout_below="@id/btnBuildItBigger"
 
             style="@style/ButtonStyle"
             android:onClick="launchXYZReader" />
 
         <Button
+            android:id="@+id/btnSunshine"
+            android:text="@string/buttonP6"
+            android:layout_below="@id/btnXYZReader"
+
+            style="@style/ButtonStyle"
+            android:onClick="launchSunshine" />
+
+        <Button
             android:id="@+id/btnCapstone"
             android:text="@string/buttonP7"
-            android:layout_below="@id/btnXYZReader"
+            android:layout_below="@id/btnSunshine"
 
             style="@style/ButtonStyle"
             android:background="@color/colorBtnCapstone"

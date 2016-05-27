@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String PACKAGE_P1P2 = "nanodegree.p1p2";
     public static final String PACKAGE_P3 = "com.example.sam_chordas.stockhawk";
     public static final String PACKAGE_P4 = "com.udacity.gradle.builditbigger";
+    public static final String PACKAGE_P5 = "com.example.xyzreader";
+    public static final String PACKAGE_P6 = "com.example.android.sunshine.app";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,15 +69,15 @@ public class MainActivity extends AppCompatActivity {
         intent.setComponent(new ComponentName(PACKAGE_P4 + ".paid",PACKAGE_P4 + ".MainActivity"));
         startActivity(intent);
     }
-    public void launchLibraryApp(View view) throws Exception {
-        String text = "This button will launch " + ((Button) view).getText();
-        Toast.makeText(this.getApplicationContext(),text,Toast.LENGTH_SHORT).show();
-        //TODO: launch app
-    }
     public void launchXYZReader(View view) throws Exception {
-        String text = "This button will launch " + ((Button) view).getText();
-        Toast.makeText(this.getApplicationContext(),text,Toast.LENGTH_SHORT).show();
-        //TODO: launch app
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setComponent(new ComponentName(PACKAGE_P5 ,PACKAGE_P5 + ".ui.ArticleListActivity"));
+        startActivity(intent);
+    }
+    public void launchSunshine(View view) throws Exception {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setComponent(new ComponentName(PACKAGE_P6 ,PACKAGE_P6 + ".MainActivity"));
+        startActivity(intent);
     }
     public void launchCapstone(View view) throws Exception {
         String text = "This button will launch " + ((Button) view).getText();
