@@ -24,7 +24,7 @@ Select project for further details:
 
 ###[Capstone Project - GradeClimb!](https://github.com/alex-gru/Capstone-Project/blob/master/README.md) <img style="position: center;" src="https://github.com/alex-gru/Capstone-Project/blob/master/gradeclimb/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="50"> (in a separate repo)
 
-GradeClimb! is available via the Google Play Store. 
+GradeClimb! is an app for climbers and available via the Google Play Store. 
 Here you will find general information about the app:
 
 * German: https://docs.google.com/document/d/1krLcPeo3SwXwJObwCEEAjOTa6nKDeUdje51IOkIn4e8/edit?usp=sharing
