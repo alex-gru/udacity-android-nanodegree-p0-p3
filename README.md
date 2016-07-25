@@ -22,7 +22,7 @@ Select project for further details:
 
 ###[P6 - Go Ubiquitous](https://github.com/alex-gru/Nanodegree-P6/blob/master/README.md) <img style="position: center;" src="https://github.com/alex-gru/Nanodegree-P6/blob/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="50"> (in a separate repo)
 
-###Capstone Project - GradeClimb! <img style="position: center;" src="https://github.com/alex-gru/android_dev_nanodegree_udacity/blob/master/static/screenshots/ic_launcher.png" width="50">
+##Capstone Project - GradeClimb! <img style="position: center;" src="https://github.com/alex-gru/android_dev_nanodegree_udacity/blob/master/static/screenshots/ic_launcher.png" width="50">
 
 GradeClimb! is an app for climbers and available via the Google Play Store. 
 
