@@ -24,9 +24,10 @@ Select project for further details:
 
 ##Capstone Project - GradeClimb! <img style="position: center;" src="https://github.com/alex-gru/android_dev_nanodegree_udacity/blob/master/static/screenshots/ic_launcher.png" width="50">
 
-GradeClimb! is an app for climbers and available via the Google Play Store. 
+GradeClimb! is an app for climbers/boulderers, which provides a climbing grade converter and a climbing diary.
 
-Join the Alpha test now: https://play.google.com/apps/testing/com.gradeclimb.premium
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" href="https://play.google.com/store/apps/details?id=com.gradeclimb.free">
+
 
 Here you will find general information about the app:
 
