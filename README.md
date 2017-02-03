@@ -29,6 +29,7 @@ GradeClimb! is an app for climbers/boulderers, which provides a climbing grade c
 [Available on Google Play](https://play.google.com/store/apps/details?id=com.gradeclimb.free) 
 
 [Like on Facebook](https://www.facebook.com/gradeclimbapp/)
+
 Here you will find general information about the app:
 
 * German: https://docs.google.com/document/d/1krLcPeo3SwXwJObwCEEAjOTa6nKDeUdje51IOkIn4e8/edit?usp=sharing
