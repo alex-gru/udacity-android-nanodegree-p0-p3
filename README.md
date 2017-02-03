@@ -26,7 +26,7 @@ Select project for further details:
 
 GradeClimb! is an app for climbers/boulderers, which provides a climbing grade converter and a climbing diary.
 
-<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" href="https://play.google.com/store/apps/details?id=com.gradeclimb.free">
+[![Goole Play](https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png)]("https://play.google.com/store/apps/details?id=com.gradeclimb.free")
 
 
 Here you will find general information about the app:
