@@ -2,7 +2,7 @@
 
 ☑ completed: <a href="https://github.com/alex-gru/android_dev_nanodegree_udacity/blob/master/certificate.pdf">Certificate</a>
 
-Projects while attending the Android Developer Nanodegree program at Udacity
+Projects completed while attending the Android Developer Nanodegree program at Udacity (co-created by Google).
 
 Android Developer Nanodegree Home: https://www.udacity.com/course/android-developer-nanodegree--nd801
 
